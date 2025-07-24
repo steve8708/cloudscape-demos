@@ -15,7 +15,6 @@ import Spinner from '@cloudscape-design/components/spinner';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Select from '@cloudscape-design/components/select';
 
-
 interface WeatherData {
   current: {
     time: string;
@@ -47,11 +46,11 @@ interface Location {
 }
 
 const LOCATIONS: Location[] = [
-  { label: 'New York, NY', value: 'nyc', latitude: 40.7128, longitude: -74.0060 },
+  { label: 'New York, NY', value: 'nyc', latitude: 40.7128, longitude: -74.006 },
   { label: 'London, UK', value: 'london', latitude: 51.5074, longitude: -0.1278 },
   { label: 'Tokyo, Japan', value: 'tokyo', latitude: 35.6762, longitude: 139.6503 },
   { label: 'Sydney, Australia', value: 'sydney', latitude: -33.8688, longitude: 151.2093 },
-  { label: 'Berlin, Germany', value: 'berlin', latitude: 52.5200, longitude: 13.4050 },
+  { label: 'Berlin, Germany', value: 'berlin', latitude: 52.52, longitude: 13.405 },
 ];
 
 const getWeatherDescription = (code: number) => {
@@ -85,15 +84,15 @@ export function WeatherContent() {
   const fetchWeatherData = async (location: Location) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=auto&forecast_days=7`;
-      
+
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch weather data');
       }
-      
+
       const data = await response.json();
       setWeatherData(data);
     } catch (err) {
@@ -158,7 +157,9 @@ export function WeatherContent() {
         {loading ? (
           <Box textAlign="center" padding="l">
             <Spinner size="large" />
-            <Box variant="p" margin={{ top: 's' }}>Loading weather data...</Box>
+            <Box variant="p" margin={{ top: 's' }}>
+              Loading weather data...
+            </Box>
           </Box>
         ) : weatherData ? (
           <ColumnLayout columns={4} variant="text-grid">
@@ -189,9 +190,7 @@ export function WeatherContent() {
 
             <SpaceBetween size="xs">
               <Box variant="awsui-key-label">Last Updated</Box>
-              <Box fontSize="heading-s">
-                {formatTime(weatherData.current.time)}
-              </Box>
+              <Box fontSize="heading-s">{formatTime(weatherData.current.time)}</Box>
               <StatusIndicator type="success">Live</StatusIndicator>
             </SpaceBetween>
           </ColumnLayout>
@@ -248,9 +247,7 @@ export function WeatherContent() {
                       <Box>
                         <SpaceBetween direction="horizontal" size="xs">
                           <span>{weather.icon}</span>
-                          <Box fontWeight="bold">
-                            {Math.round(weatherData.daily.temperature_2m_max[index])}°
-                          </Box>
+                          <Box fontWeight="bold">{Math.round(weatherData.daily.temperature_2m_max[index])}°</Box>
                           <Box color="text-status-inactive">
                             {Math.round(weatherData.daily.temperature_2m_min[index])}°
                           </Box>
