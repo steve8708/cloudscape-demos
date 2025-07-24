@@ -162,7 +162,8 @@ export function WeatherContent() {
           </Box>
         ) : weatherData ? (
           <ColumnLayout columns={4} variant="text-grid">
-            <ValueWithLabel label="Temperature">
+            <SpaceBetween size="xs">
+              <Box variant="awsui-key-label">Temperature</Box>
               <Box fontSize="display-l" fontWeight="bold">
                 {Math.round(weatherData.current.temperature_2m)}°C
               </Box>
@@ -170,26 +171,29 @@ export function WeatherContent() {
                 {getWeatherDescription(weatherData.current.weather_code).icon}{' '}
                 {getWeatherDescription(weatherData.current.weather_code).description}
               </Box>
-            </ValueWithLabel>
-            
-            <ValueWithLabel label="Humidity">
+            </SpaceBetween>
+
+            <SpaceBetween size="xs">
+              <Box variant="awsui-key-label">Humidity</Box>
               <Box fontSize="heading-l" fontWeight="bold">
                 {weatherData.current.relative_humidity_2m}%
               </Box>
-            </ValueWithLabel>
-            
-            <ValueWithLabel label="Wind Speed">
+            </SpaceBetween>
+
+            <SpaceBetween size="xs">
+              <Box variant="awsui-key-label">Wind Speed</Box>
               <Box fontSize="heading-l" fontWeight="bold">
                 {Math.round(weatherData.current.wind_speed_10m)} km/h
               </Box>
-            </ValueWithLabel>
-            
-            <ValueWithLabel label="Last Updated">
+            </SpaceBetween>
+
+            <SpaceBetween size="xs">
+              <Box variant="awsui-key-label">Last Updated</Box>
               <Box fontSize="heading-s">
                 {formatTime(weatherData.current.time)}
               </Box>
               <StatusIndicator type="success">Live</StatusIndicator>
-            </ValueWithLabel>
+            </SpaceBetween>
           </ColumnLayout>
         ) : null}
       </Container>
