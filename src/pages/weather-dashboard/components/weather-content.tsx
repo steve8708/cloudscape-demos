@@ -164,38 +164,11 @@ export function WeatherContent() {
             </Box>
           </Box>
         ) : weatherData ? (
-          <ColumnLayout columns={4} variant="text-grid">
-            <SpaceBetween size="xs">
-              <Box variant="awsui-key-label">Temperature</Box>
-              <Box fontSize="display-l" fontWeight="bold">
-                {Math.round(weatherData.current.temperature_2m)}°C
-              </Box>
-              <Box variant="small" color="text-status-info">
-                {getWeatherDescription(weatherData.current.weather_code).icon}{' '}
-                {getWeatherDescription(weatherData.current.weather_code).description}
-              </Box>
-            </SpaceBetween>
-
-            <SpaceBetween size="xs">
-              <Box variant="awsui-key-label">Humidity</Box>
-              <Box fontSize="heading-l" fontWeight="bold">
-                {weatherData.current.relative_humidity_2m}%
-              </Box>
-            </SpaceBetween>
-
-            <SpaceBetween size="xs">
-              <Box variant="awsui-key-label">Wind Speed</Box>
-              <Box fontSize="heading-l" fontWeight="bold">
-                {Math.round(weatherData.current.wind_speed_10m)} km/h
-              </Box>
-            </SpaceBetween>
-
-            <SpaceBetween size="xs">
-              <Box variant="awsui-key-label">Last Updated</Box>
-              <Box fontSize="heading-s">{formatTime(weatherData.current.time)}</Box>
-              <StatusIndicator type="success">Live</StatusIndicator>
-            </SpaceBetween>
-          </ColumnLayout>
+          <CurrentWeatherDisplay
+            weatherData={weatherData}
+            getWeatherDescription={getWeatherDescription}
+            formatTime={formatTime}
+          />
         ) : null}
       </Container>
 
