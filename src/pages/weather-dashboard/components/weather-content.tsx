@@ -14,7 +14,7 @@ import Alert from '@cloudscape-design/components/alert';
 import Spinner from '@cloudscape-design/components/spinner';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Select from '@cloudscape-design/components/select';
-import ValueWithLabel from '@cloudscape-design/components/value-with-label';
+
 
 interface WeatherData {
   current: {
