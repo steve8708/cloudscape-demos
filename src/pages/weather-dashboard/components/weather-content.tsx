@@ -15,6 +15,8 @@ import Spinner from '@cloudscape-design/components/spinner';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Select from '@cloudscape-design/components/select';
 
+import { CurrentWeatherDisplay } from './current-weather-display';
+
 interface WeatherData {
   current: {
     time: string;
