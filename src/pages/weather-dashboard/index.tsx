@@ -262,14 +262,33 @@ export default function WeatherDashboard() {
     fetchWeatherData(currentLocation.latitude, currentLocation.longitude);
   }, [currentLocation]);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (citySearchValue) {
+        searchCities(citySearchValue);
+      }
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [citySearchValue, searchCities]);
+
   const handleLocationChange = (location: LocationData) => {
     setCurrentLocation(location);
+    setSelectedCity(null);
+    setCitySearchValue('');
+  };
+
+  const handleCitySelect = (option: { label: string; value: string; data: LocationData }) => {
+    setSelectedCity(option);
+    setCurrentLocation(option.data);
+    setCitySearchValue(option.label);
+    setCitySearchOptions([]);
   };
 
   const handleCustomLocationSubmit = () => {
     const lat = parseFloat(customLatitude);
     const lng = parseFloat(customLongitude);
-    
+
     if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
       const customLocation: LocationData = {
         latitude: lat,
@@ -279,6 +298,8 @@ export default function WeatherDashboard() {
       setCurrentLocation(customLocation);
       setCustomLatitude('');
       setCustomLongitude('');
+      setSelectedCity(null);
+      setCitySearchValue('');
     } else {
       setError('Please enter valid latitude (-90 to 90) and longitude (-180 to 180) values');
     }
@@ -286,12 +307,65 @@ export default function WeatherDashboard() {
 
   const getHourlyForecast = () => {
     if (!weatherData?.hourly) return [];
-    
+
     return weatherData.hourly.time.slice(0, 12).map((time, index) => ({
       time: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' }),
       temperature: weatherData.hourly.temperature_2m[index],
       precipitation: weatherData.hourly.precipitation_probability[index],
       weatherCode: weatherData.hourly.weather_code[index],
+    }));
+  };
+
+  const getDailyForecast = () => {
+    if (!weatherData?.daily) return [];
+
+    return weatherData.daily.time.map((time, index) => ({
+      date: new Date(time).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+      maxTemp: weatherData.daily.temperature_2m_max[index],
+      minTemp: weatherData.daily.temperature_2m_min[index],
+      precipitation: weatherData.daily.precipitation_sum[index],
+      weatherCode: weatherData.daily.weather_code[index],
+      windSpeed: weatherData.daily.wind_speed_10m_max[index],
+      precipitationProbability: weatherData.daily.precipitation_probability_max[index],
+      uvIndex: weatherData.daily.uv_index_max[index],
+      sunrise: weatherData.daily.sunrise[index],
+      sunset: weatherData.daily.sunset[index],
+    }));
+  };
+
+  const getTemperatureChartData = () => {
+    if (!weatherData?.hourly) return [];
+
+    return weatherData.hourly.time.slice(0, 24).map((time, index) => ({
+      x: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' }),
+      y: weatherData.hourly.temperature_2m[index]
+    }));
+  };
+
+  const getPrecipitationChartData = () => {
+    if (!weatherData?.hourly) return [];
+
+    return weatherData.hourly.time.slice(0, 24).map((time, index) => ({
+      x: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' }),
+      y: weatherData.hourly.precipitation[index]
+    }));
+  };
+
+  const getWeeklyTemperatureData = () => {
+    if (!weatherData?.daily) return [];
+
+    return weatherData.daily.time.map((time, index) => ({
+      x: new Date(time).toLocaleDateString('en-US', { weekday: 'short' }),
+      y: weatherData.daily.temperature_2m_max[index]
+    }));
+  };
+
+  const getWeeklyPrecipitationData = () => {
+    if (!weatherData?.daily) return [];
+
+    return weatherData.daily.time.map((time, index) => ({
+      x: new Date(time).toLocaleDateString('en-US', { weekday: 'short' }),
+      y: weatherData.daily.precipitation_sum[index]
     }));
   };
 
