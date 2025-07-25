@@ -504,9 +504,12 @@ export default function WeatherDashboard() {
                         <Box variant="p">
                           {getWeatherInfo(weatherData.current.weather_code).description}
                         </Box>
+                        <Box variant="small" color="text-body-secondary">
+                          Feels like {weatherData.current.apparent_temperature}°{weatherData.current_units.apparent_temperature}
+                        </Box>
                       </Box>
-                      
-                      <SpaceBetween size="s">
+
+                      <ColumnLayout columns={2} variant="text-grid">
                         <Box>
                           <Badge color="blue">Humidity</Badge>
                           <Box variant="h3">{weatherData.current.relative_humidity_2m}%</Box>
@@ -517,66 +520,245 @@ export default function WeatherDashboard() {
                             {weatherData.current.wind_speed_10m} {weatherData.current_units.wind_speed_10m}
                           </Box>
                         </Box>
-                      </SpaceBetween>
-                      
-                      <SpaceBetween size="s">
+                        <Box>
+                          <Badge color="red">Pressure</Badge>
+                          <Box variant="h3">
+                            {weatherData.current.pressure_msl} {weatherData.current_units.pressure_msl}
+                          </Box>
+                        </Box>
+                        <Box>
+                          <Badge color="grey">UV Index</Badge>
+                          <Box variant="h3">{weatherData.current.uv_index}</Box>
+                        </Box>
+                      </ColumnLayout>
+
+                      <ColumnLayout columns={2} variant="text-grid">
                         <Box>
                           <Badge color="grey">Wind Direction</Badge>
                           <Box variant="h3">{weatherData.current.wind_direction_10m}°</Box>
                         </Box>
                         <Box>
-                          <Badge color="red">Last Updated</Badge>
-                          <Box variant="p">
+                          <Badge color="blue">Visibility</Badge>
+                          <Box variant="h3">
+                            {weatherData.current.visibility} {weatherData.current_units.visibility}
+                          </Box>
+                        </Box>
+                        <Box>
+                          <Badge color="red">Precipitation</Badge>
+                          <Box variant="h3">
+                            {weatherData.current.precipitation} {weatherData.current_units.precipitation}
+                          </Box>
+                        </Box>
+                        <Box>
+                          <Badge color="green">Last Updated</Badge>
+                          <Box variant="small">
                             {new Date(weatherData.current.time).toLocaleString()}
                           </Box>
                         </Box>
-                      </SpaceBetween>
+                      </ColumnLayout>
                     </Grid>
                   </SpaceBetween>
                 </Container>
 
                 <Container>
                   <SpaceBetween size="m">
-                    <Box variant="h2">12-Hour Forecast</Box>
-                    <Cards
-                      ariaLabels={{
-                        itemSelectionLabel: (e, n) => `select ${n.time}`,
-                        selectionGroupLabel: 'Hourly forecast selection',
-                      }}
-                      cardDefinition={{
-                        header: item => item.time,
-                        sections: [
-                          {
-                            id: 'weather',
-                            content: item => (
-                              <SpaceBetween size="xs" alignItems="center">
-                                <Box textAlign="center" fontSize="heading-m">
-                                  {getWeatherInfo(item.weatherCode).icon}
+                    <Box variant="h2">7-Day Forecast</Box>
+                    <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
+                      <div style={{ display: 'flex', gap: '16px', minWidth: 'max-content' }}>
+                        {getDailyForecast().map((day, index) => (
+                          <div key={index} style={{
+                            minWidth: '200px',
+                            padding: '16px',
+                            border: '1px solid var(--color-border-divider-default)',
+                            borderRadius: '8px',
+                            backgroundColor: 'var(--color-background-container-content)'
+                          }}>
+                            <SpaceBetween size="s">
+                              <Box variant="h3" textAlign="center">{day.date}</Box>
+                              <Box textAlign="center" fontSize="heading-l">
+                                {getWeatherInfo(day.weatherCode).icon}
+                              </Box>
+                              <ColumnLayout columns={1} variant="text-grid">
+                                <Box textAlign="center">
+                                  <Box variant="h2" color="text-status-info">
+                                    {Math.round(day.maxTemp)}°
+                                  </Box>
+                                  <Box variant="p" color="text-body-secondary">
+                                    {Math.round(day.minTemp)}°
+                                  </Box>
                                 </Box>
-                                <Box textAlign="center" variant="h3">
-                                  {item.temperature}°{weatherData.hourly_units.temperature_2m}
+                                <Box textAlign="center">
+                                  <Badge color="blue">{day.precipitationProbability}% rain</Badge>
                                 </Box>
                                 <Box textAlign="center" variant="small">
-                                  {item.precipitation}% rain
+                                  💧 {day.precipitation}mm
                                 </Box>
-                              </SpaceBetween>
-                            ),
-                          },
-                        ],
-                      }}
-                      cardsPerRow={[
-                        { cards: 2, minWidth: 0 },
-                        { cards: 4, minWidth: 600 },
-                        { cards: 6, minWidth: 900 },
-                        { cards: 8, minWidth: 1200 },
-                      ]}
-                      items={getHourlyForecast()}
-                      loadingText="Loading forecast"
-                      trackBy="time"
-                      visibleSections={['weather']}
-                    />
+                                <Box textAlign="center" variant="small">
+                                  💨 {day.windSpeed} {weatherData.daily_units.wind_speed_10m_max}
+                                </Box>
+                                <Box textAlign="center" variant="small">
+                                  ☀️ UV {day.uvIndex}
+                                </Box>
+                              </ColumnLayout>
+                            </SpaceBetween>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </SpaceBetween>
                 </Container>
+
+                <Tabs
+                  tabs={[
+                    {
+                      id: 'overview',
+                      label: 'Overview',
+                      content: (
+                        <SpaceBetween size="l">
+                          <Container>
+                            <SpaceBetween size="m">
+                              <Box variant="h2">12-Hour Detailed Forecast</Box>
+                              <Cards
+                                ariaLabels={{
+                                  itemSelectionLabel: (e, n) => `select ${n.time}`,
+                                  selectionGroupLabel: 'Hourly forecast selection',
+                                }}
+                                cardDefinition={{
+                                  header: item => item.time,
+                                  sections: [
+                                    {
+                                      id: 'weather',
+                                      content: item => (
+                                        <SpaceBetween size="xs" alignItems="center">
+                                          <Box textAlign="center" fontSize="heading-m">
+                                            {getWeatherInfo(item.weatherCode).icon}
+                                          </Box>
+                                          <Box textAlign="center" variant="h3">
+                                            {item.temperature}°{weatherData.hourly_units.temperature_2m}
+                                          </Box>
+                                          <Box textAlign="center" variant="small">
+                                            {item.precipitation}% rain
+                                          </Box>
+                                        </SpaceBetween>
+                                      ),
+                                    },
+                                  ],
+                                }}
+                                cardsPerRow={[
+                                  { cards: 2, minWidth: 0 },
+                                  { cards: 4, minWidth: 600 },
+                                  { cards: 6, minWidth: 900 },
+                                  { cards: 8, minWidth: 1200 },
+                                ]}
+                                items={getHourlyForecast()}
+                                loadingText="Loading forecast"
+                                trackBy="time"
+                                visibleSections={['weather']}
+                              />
+                            </SpaceBetween>
+                          </Container>
+                        </SpaceBetween>
+                      ),
+                    },
+                    {
+                      id: 'charts',
+                      label: 'Charts & Analytics',
+                      content: (
+                        <SpaceBetween size="l">
+                          <Container>
+                            <SpaceBetween size="m">
+                              <Box variant="h2">24-Hour Temperature Trend</Box>
+                              <LineChart
+                                series={[
+                                  {
+                                    title: `Temperature (${weatherData.hourly_units.temperature_2m})`,
+                                    type: 'line',
+                                    data: getTemperatureChartData(),
+                                    color: '#FF6B6B'
+                                  }
+                                ]}
+                                xDomain={getTemperatureChartData().map(d => d.x)}
+                                yTitle={`Temperature (${weatherData.hourly_units.temperature_2m})`}
+                                xTitle="Time"
+                                height={300}
+                                hideFilter
+                                hideLegend
+                              />
+                            </SpaceBetween>
+                          </Container>
+
+                          <Container>
+                            <SpaceBetween size="m">
+                              <Box variant="h2">24-Hour Precipitation</Box>
+                              <BarChart
+                                series={[
+                                  {
+                                    title: `Precipitation (${weatherData.hourly_units.precipitation})`,
+                                    type: 'bar',
+                                    data: getPrecipitationChartData()
+                                  }
+                                ]}
+                                xDomain={getPrecipitationChartData().map(d => d.x)}
+                                yTitle={`Precipitation (${weatherData.hourly_units.precipitation})`}
+                                xTitle="Time"
+                                height={300}
+                                hideFilter
+                                hideLegend
+                              />
+                            </SpaceBetween>
+                          </Container>
+
+                          <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+                            <Container>
+                              <SpaceBetween size="m">
+                                <Box variant="h2">Weekly Temperature Highs</Box>
+                                <AreaChart
+                                  series={[
+                                    {
+                                      title: `Max Temp (${weatherData.daily_units.temperature_2m_max})`,
+                                      type: 'area',
+                                      data: getWeeklyTemperatureData(),
+                                      color: '#4ECDC4'
+                                    }
+                                  ]}
+                                  xDomain={getWeeklyTemperatureData().map(d => d.x)}
+                                  yTitle={`Temperature (${weatherData.daily_units.temperature_2m_max})`}
+                                  xTitle="Day"
+                                  height={250}
+                                  hideFilter
+                                  hideLegend
+                                />
+                              </SpaceBetween>
+                            </Container>
+
+                            <Container>
+                              <SpaceBetween size="m">
+                                <Box variant="h2">Weekly Precipitation</Box>
+                                <BarChart
+                                  series={[
+                                    {
+                                      title: `Precipitation (${weatherData.daily_units.precipitation_sum})`,
+                                      type: 'bar',
+                                      data: getWeeklyPrecipitationData()
+                                    }
+                                  ]}
+                                  xDomain={getWeeklyPrecipitationData().map(d => d.x)}
+                                  yTitle={`Precipitation (${weatherData.daily_units.precipitation_sum})`}
+                                  xTitle="Day"
+                                  height={250}
+                                  hideFilter
+                                  hideLegend
+                                />
+                              </SpaceBetween>
+                            </Container>
+                          </Grid>
+                        </SpaceBetween>
+                      ),
+                    },
+                  ]}
+                  activeTabId={activeTab}
+                  onChange={({ detail }) => setActiveTab(detail.activeTabId)}
+                />
               </>
             )}
           </SpaceBetween>
