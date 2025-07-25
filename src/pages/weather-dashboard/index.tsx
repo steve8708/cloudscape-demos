@@ -154,7 +154,7 @@ const getWeatherInfo = (code: number) => {
 };
 
 const defaultLocations: LocationData[] = [
-  { latitude: 40.7128, longitude: -74.0060, name: 'New York, NY' },
+  { latitude: 40.7128, longitude: -74.006, name: 'New York, NY' },
   { latitude: 34.0522, longitude: -118.2437, name: 'Los Angeles, CA' },
   { latitude: 51.5074, longitude: -0.1278, name: 'London, UK' },
   { latitude: 48.8566, longitude: 2.3522, name: 'Paris, France' },
@@ -169,7 +169,9 @@ export default function WeatherDashboard() {
   const [customLatitude, setCustomLatitude] = useState('');
   const [customLongitude, setCustomLongitude] = useState('');
   const [citySearchValue, setCitySearchValue] = useState('');
-  const [citySearchOptions, setCitySearchOptions] = useState<Array<{ label: string; value: string; data: LocationData }>>([]);
+  const [citySearchOptions, setCitySearchOptions] = useState<
+    Array<{ label: string; value: string; data: LocationData }>
+  >([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [selectedCity, setSelectedCity] = useState<{ label: string; value: string; data: LocationData } | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
@@ -182,9 +184,12 @@ export default function WeatherDashboard() {
       const params = new URLSearchParams({
         latitude: latitude.toString(),
         longitude: longitude.toString(),
-        current: 'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code,apparent_temperature,precipitation,pressure_msl,visibility,uv_index',
-        hourly: 'temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,relative_humidity_2m,pressure_msl,visibility,uv_index',
-        daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code,wind_speed_10m_max,wind_direction_10m_dominant,precipitation_probability_max,uv_index_max,sunrise,sunset',
+        current:
+          'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code,apparent_temperature,precipitation,pressure_msl,visibility,uv_index',
+        hourly:
+          'temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,relative_humidity_2m,pressure_msl,visibility,uv_index',
+        daily:
+          'temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code,wind_speed_10m_max,wind_direction_10m_dominant,precipitation_probability_max,uv_index_max,sunrise,sunset',
         forecast_days: '7',
         timezone: 'auto',
       });
@@ -217,7 +222,7 @@ export default function WeatherDashboard() {
         name: query,
         count: '10',
         language: 'en',
-        format: 'json'
+        format: 'json',
       });
 
       const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?${params}`);
@@ -229,7 +234,7 @@ export default function WeatherDashboard() {
       const data: { results?: GeocodingResult[] } = await response.json();
 
       if (data.results) {
-        const options = data.results.map((result) => {
+        const options = data.results.map(result => {
           const locationData: LocationData = {
             latitude: result.latitude,
             longitude: result.longitude,
@@ -237,7 +242,7 @@ export default function WeatherDashboard() {
             country: result.country,
             admin1: result.admin1,
             population: result.population,
-            id: result.id
+            id: result.id,
           };
 
           const displayName = `${result.name}${result.admin1 ? `, ${result.admin1}` : ''}, ${result.country}`;
@@ -245,7 +250,7 @@ export default function WeatherDashboard() {
           return {
             label: displayName,
             value: `${result.id}`,
-            data: locationData
+            data: locationData,
           };
         });
 
@@ -338,7 +343,7 @@ export default function WeatherDashboard() {
 
     return weatherData.hourly.time.slice(0, 24).map((time, index) => ({
       x: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' }),
-      y: weatherData.hourly.temperature_2m[index]
+      y: weatherData.hourly.temperature_2m[index],
     }));
   };
 
@@ -347,7 +352,7 @@ export default function WeatherDashboard() {
 
     return weatherData.hourly.time.slice(0, 24).map((time, index) => ({
       x: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' }),
-      y: weatherData.hourly.precipitation[index]
+      y: weatherData.hourly.precipitation[index],
     }));
   };
 
@@ -356,7 +361,7 @@ export default function WeatherDashboard() {
 
     return weatherData.daily.time.map((time, index) => ({
       x: new Date(time).toLocaleDateString('en-US', { weekday: 'short' }),
-      y: weatherData.daily.temperature_2m_max[index]
+      y: weatherData.daily.temperature_2m_max[index],
     }));
   };
 
@@ -365,7 +370,7 @@ export default function WeatherDashboard() {
 
     return weatherData.daily.time.map((time, index) => ({
       x: new Date(time).toLocaleDateString('en-US', { weekday: 'short' }),
-      y: weatherData.daily.precipitation_sum[index]
+      y: weatherData.daily.precipitation_sum[index],
     }));
   };
 
@@ -392,7 +397,7 @@ export default function WeatherDashboard() {
                         value={citySearchValue}
                         onChange={({ detail }) => setCitySearchValue(detail.value)}
                         placeholder="Type city name (e.g., Bangkok, London, New York...)"
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                           if (e.detail.key === 'Enter' && citySearchOptions.length > 0) {
                             handleCitySelect(citySearchOptions[0]);
                           }
@@ -402,12 +407,8 @@ export default function WeatherDashboard() {
                     {citySearchOptions.length > 0 && (
                       <Box>
                         <SpaceBetween size="xs">
-                          {citySearchOptions.slice(0, 5).map((option) => (
-                            <Button
-                              key={option.value}
-                              variant="link"
-                              onClick={() => handleCitySelect(option)}
-                            >
+                          {citySearchOptions.slice(0, 5).map(option => (
+                            <Button key={option.value} variant="link" onClick={() => handleCitySelect(option)}>
                               {option.label}
                               {option.data.population && ` (Pop: ${option.data.population.toLocaleString()})`}
                             </Button>
@@ -425,7 +426,7 @@ export default function WeatherDashboard() {
                   <SpaceBetween size="s">
                     <Box variant="h3">Quick Locations</Box>
                     <SpaceBetween size="xs">
-                      {defaultLocations.map((location) => (
+                      {defaultLocations.map(location => (
                         <Button
                           key={`${location.latitude}-${location.longitude}`}
                           variant={currentLocation.name === location.name ? 'primary' : 'normal'}
@@ -501,11 +502,10 @@ export default function WeatherDashboard() {
                         <Box variant="h1" color="text-status-info">
                           {weatherData.current.temperature_2m}°{weatherData.current_units.temperature_2m}
                         </Box>
-                        <Box variant="p">
-                          {getWeatherInfo(weatherData.current.weather_code).description}
-                        </Box>
+                        <Box variant="p">{getWeatherInfo(weatherData.current.weather_code).description}</Box>
                         <Box variant="small" color="text-body-secondary">
-                          Feels like {weatherData.current.apparent_temperature}°{weatherData.current_units.apparent_temperature}
+                          Feels like {weatherData.current.apparent_temperature}°
+                          {weatherData.current_units.apparent_temperature}
                         </Box>
                       </Box>
 
@@ -551,9 +551,7 @@ export default function WeatherDashboard() {
                         </Box>
                         <Box>
                           <Badge color="green">Last Updated</Badge>
-                          <Box variant="small">
-                            {new Date(weatherData.current.time).toLocaleString()}
-                          </Box>
+                          <Box variant="small">{new Date(weatherData.current.time).toLocaleString()}</Box>
                         </Box>
                       </ColumnLayout>
                     </Grid>
@@ -566,15 +564,20 @@ export default function WeatherDashboard() {
                     <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
                       <div style={{ display: 'flex', gap: '16px', minWidth: 'max-content' }}>
                         {getDailyForecast().map((day, index) => (
-                          <div key={index} style={{
-                            minWidth: '200px',
-                            padding: '16px',
-                            border: '1px solid var(--color-border-divider-default)',
-                            borderRadius: '8px',
-                            backgroundColor: 'var(--color-background-container-content)'
-                          }}>
+                          <div
+                            key={index}
+                            style={{
+                              minWidth: '200px',
+                              padding: '16px',
+                              border: '1px solid var(--color-border-divider-default)',
+                              borderRadius: '8px',
+                              backgroundColor: 'var(--color-background-container-content)',
+                            }}
+                          >
                             <SpaceBetween size="s">
-                              <Box variant="h3" textAlign="center">{day.date}</Box>
+                              <Box variant="h3" textAlign="center">
+                                {day.date}
+                              </Box>
                               <Box textAlign="center" fontSize="heading-l">
                                 {getWeatherInfo(day.weatherCode).icon}
                               </Box>
@@ -674,8 +677,8 @@ export default function WeatherDashboard() {
                                     title: `Temperature (${weatherData.hourly_units.temperature_2m})`,
                                     type: 'line',
                                     data: getTemperatureChartData(),
-                                    color: '#FF6B6B'
-                                  }
+                                    color: '#FF6B6B',
+                                  },
                                 ]}
                                 xDomain={getTemperatureChartData().map(d => d.x)}
                                 yTitle={`Temperature (${weatherData.hourly_units.temperature_2m})`}
@@ -695,8 +698,8 @@ export default function WeatherDashboard() {
                                   {
                                     title: `Precipitation (${weatherData.hourly_units.precipitation})`,
                                     type: 'bar',
-                                    data: getPrecipitationChartData()
-                                  }
+                                    data: getPrecipitationChartData(),
+                                  },
                                 ]}
                                 xDomain={getPrecipitationChartData().map(d => d.x)}
                                 yTitle={`Precipitation (${weatherData.hourly_units.precipitation})`}
@@ -718,8 +721,8 @@ export default function WeatherDashboard() {
                                       title: `Max Temp (${weatherData.daily_units.temperature_2m_max})`,
                                       type: 'area',
                                       data: getWeeklyTemperatureData(),
-                                      color: '#4ECDC4'
-                                    }
+                                      color: '#4ECDC4',
+                                    },
                                   ]}
                                   xDomain={getWeeklyTemperatureData().map(d => d.x)}
                                   yTitle={`Temperature (${weatherData.daily_units.temperature_2m_max})`}
@@ -739,8 +742,8 @@ export default function WeatherDashboard() {
                                     {
                                       title: `Precipitation (${weatherData.daily_units.precipitation_sum})`,
                                       type: 'bar',
-                                      data: getWeeklyPrecipitationData()
-                                    }
+                                      data: getWeeklyPrecipitationData(),
+                                    },
                                   ]}
                                   xDomain={getWeeklyPrecipitationData().map(d => d.x)}
                                   yTitle={`Precipitation (${weatherData.daily_units.precipitation_sum})`}
