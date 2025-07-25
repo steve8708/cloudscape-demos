@@ -492,72 +492,11 @@ export default function WeatherDashboard() {
 
             {weatherData && !loading && (
               <>
-                <Container>
-                  <SpaceBetween size="m">
-                    <Box variant="h2">Current Weather - {currentLocation.name}</Box>
-                    <Grid gridDefinition={[{ colspan: 4 }, { colspan: 4 }, { colspan: 4 }]}>
-                      <Box textAlign="center">
-                        <Box fontSize="display-l" color="text-status-info">
-                          {getWeatherInfo(weatherData.current.weather_code).icon}
-                        </Box>
-                        <Box variant="h1" color="text-status-info">
-                          {weatherData.current.temperature_2m}°{weatherData.current_units.temperature_2m}
-                        </Box>
-                        <Box variant="p">{getWeatherInfo(weatherData.current.weather_code).description}</Box>
-                        <Box variant="small" color="text-body-secondary">
-                          Feels like {weatherData.current.apparent_temperature}°
-                          {weatherData.current_units.apparent_temperature}
-                        </Box>
-                      </Box>
-
-                      <ColumnLayout columns={2} variant="text-grid">
-                        <Box>
-                          <Badge color="blue">Humidity</Badge>
-                          <Box variant="h3">{weatherData.current.relative_humidity_2m}%</Box>
-                        </Box>
-                        <Box>
-                          <Badge color="green">Wind Speed</Badge>
-                          <Box variant="h3">
-                            {weatherData.current.wind_speed_10m} {weatherData.current_units.wind_speed_10m}
-                          </Box>
-                        </Box>
-                        <Box>
-                          <Badge color="red">Pressure</Badge>
-                          <Box variant="h3">
-                            {weatherData.current.pressure_msl} {weatherData.current_units.pressure_msl}
-                          </Box>
-                        </Box>
-                        <Box>
-                          <Badge color="grey">UV Index</Badge>
-                          <Box variant="h3">{weatherData.current.uv_index}</Box>
-                        </Box>
-                      </ColumnLayout>
-
-                      <ColumnLayout columns={2} variant="text-grid">
-                        <Box>
-                          <Badge color="grey">Wind Direction</Badge>
-                          <Box variant="h3">{weatherData.current.wind_direction_10m}°</Box>
-                        </Box>
-                        <Box>
-                          <Badge color="blue">Visibility</Badge>
-                          <Box variant="h3">
-                            {weatherData.current.visibility} {weatherData.current_units.visibility}
-                          </Box>
-                        </Box>
-                        <Box>
-                          <Badge color="red">Precipitation</Badge>
-                          <Box variant="h3">
-                            {weatherData.current.precipitation} {weatherData.current_units.precipitation}
-                          </Box>
-                        </Box>
-                        <Box>
-                          <Badge color="green">Last Updated</Badge>
-                          <Box variant="small">{new Date(weatherData.current.time).toLocaleString()}</Box>
-                        </Box>
-                      </ColumnLayout>
-                    </Grid>
-                  </SpaceBetween>
-                </Container>
+                <CurrentWeather
+                  currentWeather={weatherData.current}
+                  units={weatherData.current_units}
+                  locationName={currentLocation.name}
+                />
 
                 <Container>
                   <SpaceBetween size="m">
