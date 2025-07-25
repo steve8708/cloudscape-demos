@@ -22,6 +22,7 @@ import LineChart from '@cloudscape-design/components/line-chart';
 import AreaChart from '@cloudscape-design/components/area-chart';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Tabs from '@cloudscape-design/components/tabs';
+import CurrentWeather from './current-weather';
 
 interface WeatherData {
   current: {
