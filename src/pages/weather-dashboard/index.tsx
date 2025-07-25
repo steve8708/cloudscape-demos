@@ -384,8 +384,44 @@ export default function WeatherDashboard() {
           <SpaceBetween size="l">
             <Container>
               <SpaceBetween size="m">
-                <Box variant="h2">Location</Box>
-                <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+                <Box variant="h2">Location Search</Box>
+                <Grid gridDefinition={[{ colspan: 8 }, { colspan: 4 }]}>
+                  <SpaceBetween size="s">
+                    <FormField label="Search for any city">
+                      <Input
+                        value={citySearchValue}
+                        onChange={({ detail }) => setCitySearchValue(detail.value)}
+                        placeholder="Type city name (e.g., Bangkok, London, New York...)"
+                        onKeyDown={(e) => {
+                          if (e.detail.key === 'Enter' && citySearchOptions.length > 0) {
+                            handleCitySelect(citySearchOptions[0]);
+                          }
+                        }}
+                      />
+                    </FormField>
+                    {citySearchOptions.length > 0 && (
+                      <Box>
+                        <SpaceBetween size="xs">
+                          {citySearchOptions.slice(0, 5).map((option) => (
+                            <Button
+                              key={option.value}
+                              variant="link"
+                              onClick={() => handleCitySelect(option)}
+                            >
+                              {option.label}
+                              {option.data.population && ` (Pop: ${option.data.population.toLocaleString()})`}
+                            </Button>
+                          ))}
+                        </SpaceBetween>
+                      </Box>
+                    )}
+                    {searchLoading && (
+                      <Box>
+                        <Spinner size="normal" /> Searching cities...
+                      </Box>
+                    )}
+                  </SpaceBetween>
+
                   <SpaceBetween size="s">
                     <Box variant="h3">Quick Locations</Box>
                     <SpaceBetween size="xs">
@@ -400,9 +436,11 @@ export default function WeatherDashboard() {
                       ))}
                     </SpaceBetween>
                   </SpaceBetween>
-                  
+                </Grid>
+
+                <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
                   <SpaceBetween size="s">
-                    <Box variant="h3">Custom Location</Box>
+                    <Box variant="h3">Custom Coordinates</Box>
                     <FormField label="Latitude">
                       <Input
                         value={customLatitude}
@@ -410,6 +448,10 @@ export default function WeatherDashboard() {
                         placeholder="e.g., 40.7128"
                       />
                     </FormField>
+                  </SpaceBetween>
+
+                  <SpaceBetween size="s">
+                    <Box variant="h3">&nbsp;</Box>
                     <FormField label="Longitude">
                       <Input
                         value={customLongitude}
