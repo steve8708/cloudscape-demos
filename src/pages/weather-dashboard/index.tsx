@@ -168,6 +168,11 @@ export default function WeatherDashboard() {
   const [currentLocation, setCurrentLocation] = useState<LocationData>(defaultLocations[0]);
   const [customLatitude, setCustomLatitude] = useState('');
   const [customLongitude, setCustomLongitude] = useState('');
+  const [citySearchValue, setCitySearchValue] = useState('');
+  const [citySearchOptions, setCitySearchOptions] = useState<Array<{ label: string; value: string; data: LocationData }>>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<{ label: string; value: string; data: LocationData } | null>(null);
+  const [activeTab, setActiveTab] = useState('overview');
 
   const fetchWeatherData = async (latitude: number, longitude: number) => {
     setLoading(true);
@@ -177,18 +182,19 @@ export default function WeatherDashboard() {
       const params = new URLSearchParams({
         latitude: latitude.toString(),
         longitude: longitude.toString(),
-        current: 'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code',
-        hourly: 'temperature_2m,precipitation_probability,weather_code',
-        forecast_days: '1',
+        current: 'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code,apparent_temperature,precipitation,pressure_msl,visibility,uv_index',
+        hourly: 'temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,relative_humidity_2m,pressure_msl,visibility,uv_index',
+        daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code,wind_speed_10m_max,wind_direction_10m_dominant,precipitation_probability_max,uv_index_max,sunrise,sunset',
+        forecast_days: '7',
         timezone: 'auto',
       });
 
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data: WeatherData = await response.json();
       setWeatherData(data);
     } catch (err) {
@@ -198,6 +204,59 @@ export default function WeatherDashboard() {
       setLoading(false);
     }
   };
+
+  const searchCities = useCallback(async (query: string) => {
+    if (query.length < 2) {
+      setCitySearchOptions([]);
+      return;
+    }
+
+    setSearchLoading(true);
+    try {
+      const params = new URLSearchParams({
+        name: query,
+        count: '10',
+        language: 'en',
+        format: 'json'
+      });
+
+      const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?${params}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: { results?: GeocodingResult[] } = await response.json();
+
+      if (data.results) {
+        const options = data.results.map((result) => {
+          const locationData: LocationData = {
+            latitude: result.latitude,
+            longitude: result.longitude,
+            name: result.name,
+            country: result.country,
+            admin1: result.admin1,
+            population: result.population,
+            id: result.id
+          };
+
+          const displayName = `${result.name}${result.admin1 ? `, ${result.admin1}` : ''}, ${result.country}`;
+
+          return {
+            label: displayName,
+            value: `${result.id}`,
+            data: locationData
+          };
+        });
+
+        setCitySearchOptions(options);
+      }
+    } catch (err) {
+      console.error('Error searching cities:', err);
+    } finally {
+      setSearchLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchWeatherData(currentLocation.latitude, currentLocation.longitude);
