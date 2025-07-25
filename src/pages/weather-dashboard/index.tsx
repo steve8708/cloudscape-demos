@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import AppLayout from '@cloudscape-design/components/app-layout';
 import ContentLayout from '@cloudscape-design/components/content-layout';
 import Header from '@cloudscape-design/components/header';
@@ -16,6 +16,12 @@ import Cards from '@cloudscape-design/components/cards';
 import Badge from '@cloudscape-design/components/badge';
 import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import Spinner from '@cloudscape-design/components/spinner';
+import Select from '@cloudscape-design/components/select';
+import BarChart from '@cloudscape-design/components/bar-chart';
+import LineChart from '@cloudscape-design/components/line-chart';
+import AreaChart from '@cloudscape-design/components/area-chart';
+import ColumnLayout from '@cloudscape-design/components/column-layout';
+import Tabs from '@cloudscape-design/components/tabs';
 
 interface WeatherData {
   current: {
