@@ -77,7 +77,7 @@ export default function WeatherDashboard() {
   const searchLocation = async (query: string) => {
     try {
       const response = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=en&format=json`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=en&format=json`,
       );
 
       if (!response.ok) {
@@ -103,7 +103,7 @@ export default function WeatherDashboard() {
   const fetchWeatherData = async (lat: number, lon: number) => {
     try {
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max&hourly=temperature_2m,relative_humidity_2m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=7`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max&hourly=temperature_2m,relative_humidity_2m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=7`,
       );
 
       if (!response.ok) {
@@ -167,7 +167,7 @@ export default function WeatherDashboard() {
       longitude: -122.4194,
       name: 'San Francisco',
       admin1: 'California',
-      country: 'United States'
+      country: 'United States',
     };
 
     setCurrentLocation(testLocation);
@@ -195,11 +195,7 @@ export default function WeatherDashboard() {
       navigationHide
       toolsHide
       content={
-        <ContentLayout
-          header={
-            <Header variant="h1">Weather Dashboard</Header>
-          }
-        >
+        <ContentLayout header={<Header variant="h1">Weather Dashboard</Header>}>
           <SpaceBetween size="l">
             {/* Location Search */}
             <Container>
@@ -210,26 +206,17 @@ export default function WeatherDashboard() {
                     value={locationQuery}
                     onChange={({ detail }) => setLocationQuery(detail.value)}
                     placeholder="Enter city name..."
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.detail.key === 'Enter') {
                         handleLocationSearch();
                       }
                     }}
                   />
                   <SpaceBetween direction="horizontal" size="s">
-                    <Button
-                      variant="primary"
-                      onClick={handleLocationSearch}
-                      loading={loading}
-                      iconName="search"
-                    >
+                    <Button variant="primary" onClick={handleLocationSearch} loading={loading} iconName="search">
                       Search
                     </Button>
-                    <Button
-                      onClick={testKnownLocation}
-                      loading={loading}
-                      iconName="status-positive"
-                    >
+                    <Button onClick={testKnownLocation} loading={loading} iconName="status-positive">
                       Test SF
                     </Button>
                   </SpaceBetween>
@@ -247,7 +234,9 @@ export default function WeatherDashboard() {
               <Container>
                 <Box textAlign="center" padding="xl">
                   <Spinner size="large" />
-                  <Box variant="p" padding={{ top: 's' }}>Loading weather data...</Box>
+                  <Box variant="p" padding={{ top: 's' }}>
+                    Loading weather data...
+                  </Box>
                 </Box>
               </Container>
             )}
@@ -266,7 +255,8 @@ export default function WeatherDashboard() {
                         {currentLocation.name}, {currentLocation.admin1}
                       </Box>
                       <Box variant="p">
-                        {getWeatherInfo(weatherData.current.weather_code).icon} {getWeatherInfo(weatherData.current.weather_code).description}
+                        {getWeatherInfo(weatherData.current.weather_code).icon}{' '}
+                        {getWeatherInfo(weatherData.current.weather_code).description}
                       </Box>
                     </SpaceBetween>
                     <SpaceBetween size="s">
@@ -298,25 +288,21 @@ export default function WeatherDashboard() {
                             padding: '16px',
                             minWidth: '120px',
                             textAlign: 'center',
-                            backgroundColor: '#fafbfc'
+                            backgroundColor: '#fafbfc',
                           }}
                         >
                           <SpaceBetween size="xs">
                             <Box variant="small" fontWeight="bold">
                               {formatDate(date)}
                             </Box>
-                            <Box fontSize="body-s">
-                              {getWeatherInfo(weatherData.daily.weather_code[index]).icon}
-                            </Box>
+                            <Box fontSize="body-s">{getWeatherInfo(weatherData.daily.weather_code[index]).icon}</Box>
                             <Box variant="small" fontWeight="bold">
                               {Math.round(weatherData.daily.temperature_2m_max[index])}°
                             </Box>
                             <Box variant="small" color="text-status-inactive">
                               {Math.round(weatherData.daily.temperature_2m_min[index])}°
                             </Box>
-                            <Box variant="small">
-                              🌧️ {weatherData.daily.precipitation_sum[index]}"
-                            </Box>
+                            <Box variant="small">🌧️ {weatherData.daily.precipitation_sum[index]}"</Box>
                           </SpaceBetween>
                         </div>
                       ))}
@@ -334,13 +320,23 @@ export default function WeatherDashboard() {
                   <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
                     <SpaceBetween size="s">
                       <Box variant="h3">Today's Hourly Temperature</Box>
-                      <div style={{ height: '200px', display: 'flex', alignItems: 'end', gap: '4px', border: '1px solid #e1e5e9', borderRadius: '8px', padding: '16px' }}>
+                      <div
+                        style={{
+                          height: '200px',
+                          display: 'flex',
+                          alignItems: 'end',
+                          gap: '4px',
+                          border: '1px solid #e1e5e9',
+                          borderRadius: '8px',
+                          padding: '16px',
+                        }}
+                      >
                         {weatherData.hourly.time.slice(0, 24).map((time, index) => {
                           const temp = weatherData.hourly.temperature_2m[index];
                           const maxTemp = Math.max(...weatherData.hourly.temperature_2m.slice(0, 24));
                           const minTemp = Math.min(...weatherData.hourly.temperature_2m.slice(0, 24));
                           const height = ((temp - minTemp) / (maxTemp - minTemp)) * 150 + 20;
-                          
+
                           return (
                             <div
                               key={time}
@@ -349,16 +345,18 @@ export default function WeatherDashboard() {
                                 backgroundColor: '#0073bb',
                                 width: '8px',
                                 borderRadius: '2px',
-                                position: 'relative'
+                                position: 'relative',
                               }}
                               title={`${new Date(time).getHours()}:00 - ${Math.round(temp)}°F`}
                             />
                           );
                         })}
                       </div>
-                      <Box variant="small" textAlign="center">Hourly temperature for the next 24 hours</Box>
+                      <Box variant="small" textAlign="center">
+                        Hourly temperature for the next 24 hours
+                      </Box>
                     </SpaceBetween>
-                    
+
                     <SpaceBetween size="s">
                       <Box variant="h3">Weekly Trends</Box>
                       <Box padding="s" style={{ border: '1px solid #e1e5e9', borderRadius: '8px' }}>
@@ -367,18 +365,20 @@ export default function WeatherDashboard() {
                             <Box variant="small">Avg High:</Box>
                             <Box variant="small" fontWeight="bold">
                               {Math.round(
-                                weatherData.daily.temperature_2m_max.reduce((a, b) => a + b, 0) / 
-                                weatherData.daily.temperature_2m_max.length
-                              )}°F
+                                weatherData.daily.temperature_2m_max.reduce((a, b) => a + b, 0) /
+                                  weatherData.daily.temperature_2m_max.length,
+                              )}
+                              °F
                             </Box>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Box variant="small">Avg Low:</Box>
                             <Box variant="small" fontWeight="bold">
                               {Math.round(
-                                weatherData.daily.temperature_2m_min.reduce((a, b) => a + b, 0) / 
-                                weatherData.daily.temperature_2m_min.length
-                              )}°F
+                                weatherData.daily.temperature_2m_min.reduce((a, b) => a + b, 0) /
+                                  weatherData.daily.temperature_2m_min.length,
+                              )}
+                              °F
                             </Box>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
