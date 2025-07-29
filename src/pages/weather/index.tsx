@@ -126,24 +126,30 @@ export default function WeatherDashboard() {
     setLoading(true);
     setError(null);
 
-    const location = await searchLocation(locationQuery);
-    if (!location) {
-      setError('Location not found. Please try a different search term.');
-      setLoading(false);
-      return;
-    }
+    try {
+      const location = await searchLocation(locationQuery);
+      if (!location) {
+        setError(`Location "${locationQuery}" not found. Try searching for a city name like "New York" or "London".`);
+        setLoading(false);
+        return;
+      }
 
-    setCurrentLocation(location);
-    const weather = await fetchWeatherData(location.latitude, location.longitude);
-    
-    if (!weather) {
-      setError('Failed to fetch weather data. Please try again.');
-      setLoading(false);
-      return;
-    }
+      setCurrentLocation(location);
+      const weather = await fetchWeatherData(location.latitude, location.longitude);
 
-    setWeatherData(weather);
-    setLoading(false);
+      if (!weather) {
+        setError('Failed to fetch weather data. Please check your internet connection and try again.');
+        setLoading(false);
+        return;
+      }
+
+      setWeatherData(weather);
+    } catch (err) {
+      console.error('Search failed:', err);
+      setError('Network error occurred. Please check your internet connection and try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
