@@ -79,8 +79,21 @@ export default function WeatherDashboard() {
       const response = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=en&format=json`
       );
+
+      if (!response.ok) {
+        console.error('Geocoding API response not ok:', response.status, response.statusText);
+        return null;
+      }
+
       const data = await response.json();
-      return data.results?.[0] || null;
+      console.log('Geocoding API response:', data);
+
+      if (!data.results || data.results.length === 0) {
+        console.log('No results found for location:', query);
+        return null;
+      }
+
+      return data.results[0];
     } catch (err) {
       console.error('Location search failed:', err);
       return null;
