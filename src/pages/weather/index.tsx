@@ -153,8 +153,33 @@ export default function WeatherDashboard() {
   };
 
   useEffect(() => {
-    handleLocationSearch();
+    // Don't auto-search on page load to avoid API issues
+    // handleLocationSearch();
   }, []);
+
+  const testKnownLocation = async () => {
+    setLoading(true);
+    setError(null);
+
+    // Test with known coordinates for San Francisco
+    const testLocation = {
+      latitude: 37.7749,
+      longitude: -122.4194,
+      name: 'San Francisco',
+      admin1: 'California',
+      country: 'United States'
+    };
+
+    setCurrentLocation(testLocation);
+    const weather = await fetchWeatherData(testLocation.latitude, testLocation.longitude);
+
+    if (!weather) {
+      setError('Failed to fetch weather data. API may be unavailable.');
+    } else {
+      setWeatherData(weather);
+    }
+    setLoading(false);
+  };
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
