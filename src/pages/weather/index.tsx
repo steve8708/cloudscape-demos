@@ -68,7 +68,7 @@ const WEATHER_CODES: { [key: number]: { description: string; icon: string } } = 
 };
 
 export default function WeatherDashboard() {
-  const [locationQuery, setLocationQuery] = useState('San Francisco, CA');
+  const [locationQuery, setLocationQuery] = useState('San Francisco');
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [currentLocation, setCurrentLocation] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState(false);
