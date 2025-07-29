@@ -105,7 +105,14 @@ export default function WeatherDashboard() {
       const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max&hourly=temperature_2m,relative_humidity_2m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=7`
       );
+
+      if (!response.ok) {
+        console.error('Weather API response not ok:', response.status, response.statusText);
+        return null;
+      }
+
       const data = await response.json();
+      console.log('Weather API response:', data);
       return data;
     } catch (err) {
       console.error('Weather fetch failed:', err);
