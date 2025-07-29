@@ -268,14 +268,13 @@ export default function InteractiveCharts({ weatherData }: InteractiveChartsProp
                       zIndex: 10,
                     }}
                   >
-                    {item.value.toFixed(1)}{item.unit}
+                    {item.value.toFixed(1)}
+                    {item.unit}
                   </div>
                 )}
               </div>
               <Box variant="small" textAlign="center" padding={{ top: 'xs' }}>
-                {typeof item.label === 'string' && item.label.length > 6 
-                  ? item.label.substring(0, 3) 
-                  : item.label}
+                {typeof item.label === 'string' && item.label.length > 6 ? item.label.substring(0, 3) : item.label}
               </Box>
             </div>
           );
@@ -309,7 +308,7 @@ export default function InteractiveCharts({ weatherData }: InteractiveChartsProp
     <Container>
       <SpaceBetween size="m">
         <Box variant="h2">Interactive Weather Charts</Box>
-        
+
         <ButtonGroup
           items={[
             { text: 'Temperature', id: 'temperature' },
@@ -322,7 +321,7 @@ export default function InteractiveCharts({ weatherData }: InteractiveChartsProp
         />
 
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {['temperature', 'humidity', 'wind', 'precipitation'].map((type) => (
+          {['temperature', 'humidity', 'wind', 'precipitation'].map(type => (
             <Button
               key={type}
               variant={activeChart === type ? 'primary' : 'normal'}
