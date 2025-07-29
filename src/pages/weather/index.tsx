@@ -11,10 +11,10 @@ import Grid from '@cloudscape-design/components/grid';
 import Box from '@cloudscape-design/components/box';
 import Input from '@cloudscape-design/components/input';
 import Button from '@cloudscape-design/components/button';
-import Icon from '@cloudscape-design/components/icon';
-import Spinner from '@cloudscape-design/components/spinner';
 import Alert from '@cloudscape-design/components/alert';
 import Badge from '@cloudscape-design/components/badge';
+import WeatherLoadingState from './components/WeatherLoadingState';
+import InteractiveCharts from './components/InteractiveCharts';
 
 interface WeatherData {
   current: {
