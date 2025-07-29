@@ -230,16 +230,7 @@ export default function WeatherDashboard() {
               </Alert>
             )}
 
-            {loading && (
-              <Container>
-                <Box textAlign="center" padding="xl">
-                  <Spinner size="large" />
-                  <Box variant="p" padding={{ top: 's' }}>
-                    Loading weather data...
-                  </Box>
-                </Box>
-              </Container>
-            )}
+            {loading && <WeatherLoadingState />}
 
             {/* Current Weather */}
             {weatherData && currentLocation && !loading && (
