@@ -216,14 +216,23 @@ export default function WeatherDashboard() {
                       }
                     }}
                   />
-                  <Button 
-                    variant="primary" 
-                    onClick={handleLocationSearch}
-                    loading={loading}
-                    iconName="search"
-                  >
-                    Search
-                  </Button>
+                  <SpaceBetween direction="horizontal" size="s">
+                    <Button
+                      variant="primary"
+                      onClick={handleLocationSearch}
+                      loading={loading}
+                      iconName="search"
+                    >
+                      Search
+                    </Button>
+                    <Button
+                      onClick={testKnownLocation}
+                      loading={loading}
+                      iconName="status-positive"
+                    >
+                      Test SF
+                    </Button>
+                  </SpaceBetween>
                 </Grid>
               </SpaceBetween>
             </Container>
