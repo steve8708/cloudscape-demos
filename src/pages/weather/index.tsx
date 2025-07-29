@@ -391,6 +391,9 @@ export default function WeatherDashboard() {
                 </SpaceBetween>
               </Container>
             )}
+
+            {/* Interactive Charts */}
+            {weatherData && !loading && <InteractiveCharts weatherData={weatherData} />}
           </SpaceBetween>
         </ContentLayout>
       }
