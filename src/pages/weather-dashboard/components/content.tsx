@@ -74,7 +74,7 @@ export function Content() {
   }
 
   const weatherDescription = weatherService.getWeatherDescription(weatherData.current.weather_code);
-  
+
   // Prepare chart data (24 hours)
   const temperatureData = weatherService.getTemperatureTrend(weatherData.hourly, 24);
   const windData = weatherService.getWindSpeedData(weatherData.hourly, 24);
@@ -91,19 +91,10 @@ export function Content() {
               {currentLocation.name}, {currentLocation.country}
             </span>
           </SpaceBetween>
-          <Button
-            variant="normal"
-            iconName="search"
-            onClick={() => setShowCitySearch(true)}
-          >
+          <Button variant="normal" iconName="search" onClick={() => setShowCitySearch(true)}>
             Change Location
           </Button>
-          <Button
-            variant="normal"
-            iconName="refresh"
-            onClick={() => fetchWeatherData()}
-            loading={loading}
-          >
+          <Button variant="normal" iconName="refresh" onClick={() => fetchWeatherData()} loading={loading}>
             Refresh
           </Button>
         </SpaceBetween>
@@ -136,11 +127,7 @@ export function Content() {
 
       {/* Wind and Humidity Section */}
       <Container>
-        <WindHumidityChart 
-          windData={windData} 
-          humidityData={humidityData} 
-          height={350} 
-        />
+        <WindHumidityChart windData={windData} humidityData={humidityData} height={350} />
       </Container>
 
       {/* Hourly Forecast Section */}
@@ -153,9 +140,12 @@ export function Content() {
       >
         <ColumnLayout columns={1}>
           <div style={{ fontSize: '14px', color: '#5f6b7a' }}>
-            <strong>Location:</strong> {currentLocation.name}, {currentLocation.country}<br />
-            <strong>Coordinates:</strong> {weatherData.latitude}°N, {weatherData.longitude}°E<br />
-            <strong>Last Updated:</strong> {new Date(weatherData.current.time).toLocaleString()}<br />
+            <strong>Location:</strong> {currentLocation.name}, {currentLocation.country}
+            <br />
+            <strong>Coordinates:</strong> {weatherData.latitude}°N, {weatherData.longitude}°E
+            <br />
+            <strong>Last Updated:</strong> {new Date(weatherData.current.time).toLocaleString()}
+            <br />
             <strong>Data Source:</strong> Open Meteo API - Free Weather API
           </div>
         </ColumnLayout>

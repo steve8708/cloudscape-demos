@@ -60,23 +60,21 @@ export function CitySearch({ visible, onDismiss, onLocationSelect, currentLocati
     value: `${result.latitude},${result.longitude}`,
     description: geocodingService.formatCityDescription(result),
     tags: [result.country_code, result.timezone || ''].filter(Boolean),
-    labelTag: result.population ? `${Math.round(result.population / 1000)}K` : undefined
+    labelTag: result.population ? `${Math.round(result.population / 1000)}K` : undefined,
   }));
 
   const handleLocationSelect = () => {
     if (!selectedOption) return;
 
     const [lat, lng] = selectedOption.value.split(',').map(Number);
-    const selectedResult = searchResults.find(
-      result => result.latitude === lat && result.longitude === lng
-    );
+    const selectedResult = searchResults.find(result => result.latitude === lat && result.longitude === lng);
 
     if (selectedResult) {
       const newLocation: LocationData = {
         latitude: selectedResult.latitude,
         longitude: selectedResult.longitude,
         name: selectedResult.name,
-        country: selectedResult.country
+        country: selectedResult.country,
       };
 
       onLocationSelect(newLocation);
@@ -105,11 +103,7 @@ export function CitySearch({ visible, onDismiss, onLocationSelect, currentLocati
             <Button variant="link" onClick={handleDismiss}>
               Cancel
             </Button>
-            <Button 
-              variant="primary" 
-              onClick={handleLocationSelect}
-              disabled={!selectedOption}
-            >
+            <Button variant="primary" onClick={handleLocationSelect} disabled={!selectedOption}>
               Select City
             </Button>
           </SpaceBetween>
@@ -164,9 +158,7 @@ export function CitySearch({ visible, onDismiss, onLocationSelect, currentLocati
             <Box variant="h3" padding={{ bottom: 's' }}>
               Selected City
             </Box>
-            <StatusIndicator type="info">
-              {selectedOption.label}
-            </StatusIndicator>
+            <StatusIndicator type="info">{selectedOption.label}</StatusIndicator>
             {selectedOption.description && (
               <Box variant="small" color="text-status-subdued" padding={{ top: 'xs' }}>
                 {selectedOption.description}

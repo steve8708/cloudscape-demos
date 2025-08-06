@@ -19,7 +19,24 @@ interface CurrentWeatherWidgetProps {
 
 export function CurrentWeatherWidget({ weather, location, weatherDescription }: CurrentWeatherWidgetProps) {
   const getWindDirection = (degrees: number): string => {
-    const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    const directions = [
+      'N',
+      'NNE',
+      'NE',
+      'ENE',
+      'E',
+      'ESE',
+      'SE',
+      'SSE',
+      'S',
+      'SSW',
+      'SW',
+      'WSW',
+      'W',
+      'WNW',
+      'NW',
+      'NNW',
+    ];
     const index = Math.round(degrees / 22.5) % 16;
     return directions[index];
   };
@@ -59,9 +76,7 @@ export function CurrentWeatherWidget({ weather, location, weatherDescription }: 
                 </StatusIndicator>
               </Box>
               <Box>
-                <StatusIndicator type="info">
-                  Humidity: {weather.relative_humidity_2m}%
-                </StatusIndicator>
+                <StatusIndicator type="info">Humidity: {weather.relative_humidity_2m}%</StatusIndicator>
               </Box>
               <Box>
                 <StatusIndicator type="info">

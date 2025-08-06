@@ -27,7 +27,7 @@ const commonChartProps: Partial<LineChartProps<Date>> = {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       }),
     yTickFormatter: (value: number, series) => {
       if (series?.title === 'Wind Speed') {
@@ -38,11 +38,11 @@ const commonChartProps: Partial<LineChartProps<Date>> = {
   },
 };
 
-export function WindHumidityChart({ 
-  windData, 
-  humidityData, 
-  title = 'Wind Speed & Humidity', 
-  height = 300 
+export function WindHumidityChart({
+  windData,
+  humidityData,
+  title = 'Wind Speed & Humidity',
+  height = 300,
 }: WindHumidityChartProps) {
   const series: LineChartProps<Date>['series'] = [
     {
@@ -62,11 +62,11 @@ export function WindHumidityChart({
   ];
 
   const xDomain = windData.length > 0 ? [windData[0].x, windData[windData.length - 1].x] : undefined;
-  
+
   const windValues = windData.map(point => point.y);
   const windMin = Math.min(...windValues);
   const windMax = Math.max(...windValues);
-  
+
   const humidityValues = humidityData.map(point => point.y);
   const humidityMin = Math.min(...humidityValues);
   const humidityMax = Math.max(...humidityValues);

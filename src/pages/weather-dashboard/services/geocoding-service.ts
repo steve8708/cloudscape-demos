@@ -31,12 +31,12 @@ class GeocodingService {
       name: query,
       count: count.toString(),
       language: 'en',
-      format: 'json'
+      format: 'json',
     });
 
     try {
       const response = await fetch(`${this.baseUrl}?${params}`);
-      
+
       if (!response.ok) {
         throw new Error(`Geocoding API error: ${response.status}`);
       }
@@ -51,35 +51,35 @@ class GeocodingService {
 
   formatCityName(result: GeocodingResult): string {
     let displayName = result.name;
-    
+
     if (result.admin1) {
       displayName += `, ${result.admin1}`;
     }
-    
+
     displayName += `, ${result.country}`;
-    
+
     return displayName;
   }
 
   formatCityDescription(result: GeocodingResult): string {
     const parts = [];
-    
+
     if (result.admin2 && result.admin2 !== result.admin1) {
       parts.push(result.admin2);
     }
-    
+
     if (result.admin1) {
       parts.push(result.admin1);
     }
-    
+
     parts.push(result.country);
-    
+
     let description = parts.join(', ');
-    
+
     if (result.population) {
       description += ` • Population: ${result.population.toLocaleString()}`;
     }
-    
+
     return description;
   }
 }

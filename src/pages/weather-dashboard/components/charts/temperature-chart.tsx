@@ -26,7 +26,7 @@ const commonChartProps: Partial<LineChartProps<Date>> = {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       }),
     yTickFormatter: (value: number) => `${value.toFixed(1)}°C`,
   },

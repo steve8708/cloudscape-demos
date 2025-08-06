@@ -38,7 +38,7 @@ const DEFAULT_LOCATION: LocationData = {
   latitude: 52.52,
   longitude: 13.41,
   name: 'Berlin',
-  country: 'Germany'
+  country: 'Germany',
 };
 
 // Weather code descriptions
@@ -60,7 +60,7 @@ export const WEATHER_CODES: Record<number, string> = {
   75: 'Heavy snow fall',
   95: 'Thunderstorm',
   96: 'Thunderstorm with slight hail',
-  99: 'Thunderstorm with heavy hail'
+  99: 'Thunderstorm with heavy hail',
 };
 
 class WeatherService {
@@ -69,30 +69,22 @@ class WeatherService {
 
   async fetchWeatherData(location?: LocationData): Promise<WeatherResponse> {
     const loc = location || this.currentLocation;
-    
+
     const params = new URLSearchParams({
       latitude: loc.latitude.toString(),
       longitude: loc.longitude.toString(),
-      current: [
-        'temperature_2m',
-        'relative_humidity_2m',
-        'wind_speed_10m',
-        'wind_direction_10m',
-        'weather_code'
-      ].join(','),
-      hourly: [
-        'temperature_2m',
-        'relative_humidity_2m',
-        'wind_speed_10m',
-        'wind_direction_10m',
-        'weather_code'
-      ].join(','),
+      current: ['temperature_2m', 'relative_humidity_2m', 'wind_speed_10m', 'wind_direction_10m', 'weather_code'].join(
+        ',',
+      ),
+      hourly: ['temperature_2m', 'relative_humidity_2m', 'wind_speed_10m', 'wind_direction_10m', 'weather_code'].join(
+        ',',
+      ),
       timezone: 'auto',
-      forecast_days: '7'
+      forecast_days: '7',
     });
 
     const response = await fetch(`${this.baseUrl}?${params}`);
-    
+
     if (!response.ok) {
       throw new Error(`Weather API error: ${response.status}`);
     }
@@ -116,7 +108,7 @@ class WeatherService {
   getTemperatureTrend(hourlyData: HourlyWeather, hours: number = 24) {
     return hourlyData.time.slice(0, hours).map((time, index) => ({
       x: new Date(time),
-      y: hourlyData.temperature_2m[index]
+      y: hourlyData.temperature_2m[index],
     }));
   }
 
@@ -124,7 +116,7 @@ class WeatherService {
   getWindSpeedData(hourlyData: HourlyWeather, hours: number = 24) {
     return hourlyData.time.slice(0, hours).map((time, index) => ({
       x: new Date(time),
-      y: hourlyData.wind_speed_10m[index]
+      y: hourlyData.wind_speed_10m[index],
     }));
   }
 
@@ -132,7 +124,7 @@ class WeatherService {
   getHumidityData(hourlyData: HourlyWeather, hours: number = 24) {
     return hourlyData.time.slice(0, hours).map((time, index) => ({
       x: new Date(time),
-      y: hourlyData.relative_humidity_2m[index]
+      y: hourlyData.relative_humidity_2m[index],
     }));
   }
 }
