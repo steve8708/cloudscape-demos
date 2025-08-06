@@ -147,27 +147,25 @@ export function NetworkAdminContent() {
   const [sortingColumn, setSortingColumn] = useState(columnDefinitions[0]);
   const [isDescending, setIsDescending] = useState(false);
 
-  const filteredItems = deviceData.filter(item =>
-    item.deviceName.toLowerCase().includes(filteringText.toLowerCase()) ||
-    item.ipAddress.toLowerCase().includes(filteringText.toLowerCase()) ||
-    item.type.toLowerCase().includes(filteringText.toLowerCase()) ||
-    item.location.toLowerCase().includes(filteringText.toLowerCase())
+  const filteredItems = deviceData.filter(
+    item =>
+      item.deviceName.toLowerCase().includes(filteringText.toLowerCase()) ||
+      item.ipAddress.toLowerCase().includes(filteringText.toLowerCase()) ||
+      item.type.toLowerCase().includes(filteringText.toLowerCase()) ||
+      item.location.toLowerCase().includes(filteringText.toLowerCase()),
   );
 
   const sortedItems = [...filteredItems].sort((a, b) => {
     const aVal = a[sortingColumn.sortingField as keyof typeof a];
     const bVal = b[sortingColumn.sortingField as keyof typeof b];
-    
+
     if (typeof aVal === 'string' && typeof bVal === 'string') {
       return isDescending ? bVal.localeCompare(aVal) : aVal.localeCompare(bVal);
     }
     return 0;
   });
 
-  const paginatedItems = sortedItems.slice(
-    (currentPageIndex - 1) * pageSize,
-    currentPageIndex * pageSize
-  );
+  const paginatedItems = sortedItems.slice((currentPageIndex - 1) * pageSize, currentPageIndex * pageSize);
 
   return (
     <ContentLayout
@@ -193,11 +191,7 @@ export function NetworkAdminContent() {
             { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } },
           ]}
         >
-          <Container
-            header={
-              <Header variant="h2">Network traffic</Header>
-            }
-          >
+          <Container header={<Header variant="h2">Network traffic</Header>}>
             <SpaceBetween size="m">
               <AreaChart
                 series={[
@@ -222,8 +216,8 @@ export function NetworkAdminContent() {
                   filterSelectedAriaLabel: 'selected',
                   legendAriaLabel: 'Legend',
                   chartAriaRoleDescription: 'area chart',
-                  xTickFormatter: (value) => value,
-                  yTickFormatter: (value) => `y${value}`,
+                  xTickFormatter: value => value,
+                  yTickFormatter: value => `y${value}`,
                 }}
                 ariaLabel="Network traffic area chart"
                 errorText="Error loading data."
@@ -272,11 +266,7 @@ export function NetworkAdminContent() {
             </SpaceBetween>
           </Container>
 
-          <Container
-            header={
-              <Header variant="h2">Credit Usage</Header>
-            }
-          >
+          <Container header={<Header variant="h2">Credit Usage</Header>}>
             <SpaceBetween size="m">
               <BarChart
                 series={[
@@ -295,8 +285,8 @@ export function NetworkAdminContent() {
                   filterSelectedAriaLabel: 'selected',
                   legendAriaLabel: 'Legend',
                   chartAriaRoleDescription: 'bar chart',
-                  xTickFormatter: (value) => value,
-                  yTickFormatter: (value) => `y${Math.floor(value / 50) + 1}`,
+                  xTickFormatter: value => value,
+                  yTickFormatter: value => `y${Math.floor(value / 50) + 1}`,
                 }}
                 ariaLabel="Credit usage bar chart"
                 errorText="Error loading data."
@@ -382,46 +372,54 @@ export function NetworkAdminContent() {
                     onChange={({ detail }) => setFilteringText(detail.filteringText)}
                   />
                 }
-            pagination={
-              <Pagination
-                currentPageIndex={currentPageIndex}
-                onChange={({ detail }) => setCurrentPageIndex(detail.currentPageIndex)}
-                pagesCount={Math.ceil(filteredItems.length / pageSize)}
-                ariaLabels={{
-                  nextPageLabel: 'Next page',
-                  previousPageLabel: 'Previous page',
-                  pageLabel: pageNumber => `Page ${pageNumber} of all pages`,
+                pagination={
+                  <Pagination
+                    currentPageIndex={currentPageIndex}
+                    onChange={({ detail }) => setCurrentPageIndex(detail.currentPageIndex)}
+                    pagesCount={Math.ceil(filteredItems.length / pageSize)}
+                    ariaLabels={{
+                      nextPageLabel: 'Next page',
+                      previousPageLabel: 'Previous page',
+                      pageLabel: pageNumber => `Page ${pageNumber} of all pages`,
+                    }}
+                  />
+                }
+                preferences={
+                  <CollectionPreferences
+                    title="Preferences"
+                    confirmLabel="Confirm"
+                    cancelLabel="Cancel"
+                    preferences={{
+                      pageSize,
+                      visibleContent: [
+                        'deviceName',
+                        'ipAddress',
+                        'status',
+                        'type',
+                        'location',
+                        'lastSeen',
+                        'bandwidth',
+                      ],
+                    }}
+                    pageSizePreference={{
+                      title: 'Page size',
+                      options: [
+                        { value: 10, label: '10 devices' },
+                        { value: 20, label: '20 devices' },
+                        { value: 50, label: '50 devices' },
+                      ],
+                    }}
+                    onConfirm={({ detail }) => {
+                      setPageSize(detail.pageSize);
+                    }}
+                  />
+                }
+                sortingColumn={sortingColumn}
+                sortingDescending={isDescending}
+                onSortingChange={({ detail }) => {
+                  setSortingColumn(detail.sortingColumn);
+                  setIsDescending(detail.isDescending);
                 }}
-              />
-            }
-            preferences={
-              <CollectionPreferences
-                title="Preferences"
-                confirmLabel="Confirm"
-                cancelLabel="Cancel"
-                preferences={{
-                  pageSize,
-                  visibleContent: ['deviceName', 'ipAddress', 'status', 'type', 'location', 'lastSeen', 'bandwidth'],
-                }}
-                pageSizePreference={{
-                  title: 'Page size',
-                  options: [
-                    { value: 10, label: '10 devices' },
-                    { value: 20, label: '20 devices' },
-                    { value: 50, label: '50 devices' },
-                  ],
-                }}
-                onConfirm={({ detail }) => {
-                  setPageSize(detail.pageSize);
-                }}
-              />
-            }
-            sortingColumn={sortingColumn}
-            sortingDescending={isDescending}
-            onSortingChange={({ detail }) => {
-              setSortingColumn(detail.sortingColumn);
-              setIsDescending(detail.isDescending);
-            }}
               />
             </Container>
           </SpaceBetween>
