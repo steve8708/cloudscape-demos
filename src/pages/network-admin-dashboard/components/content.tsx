@@ -343,44 +343,45 @@ export function NetworkAdminContent() {
         </Grid>
 
         {/* My Devices Section */}
-        <Container>
-          <Table
-            columnDefinitions={columnDefinitions}
-            items={paginatedItems}
-            loadingText="Loading devices"
-            selectedItems={selectedItems}
-            onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
-            selectionType="multi"
-            trackBy="id"
-            empty={
-              <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
-                <SpaceBetween size="m">
-                  <b>No devices</b>
-                  <Button>Add Device</Button>
-                </SpaceBetween>
-              </Box>
-            }
-            filter={
-              <TextFilter
-                filteringText={filteringText}
-                filteringPlaceholder="Placeholder"
-                filteringAriaLabel="Filter devices"
-                onChange={({ detail }) => setFilteringText(detail.filteringText)}
-              />
-            }
-            header={
-              <Header
-                variant="h2"
-                counter={`(${filteredItems.length})`}
-                actions={
-                  <Button variant="primary" iconName="external" iconAlign="right">
-                    Add Device
-                  </Button>
+        <div className={styles.devicesSection}>
+          <SpaceBetween size="m">
+            <Header
+              variant="h1"
+              description="Devices on your local network"
+              actions={
+                <Button variant="primary" iconName="external" iconAlign="right">
+                  Add Device
+                </Button>
+              }
+            >
+              My Devices
+            </Header>
+
+            <Container>
+              <Table
+                columnDefinitions={columnDefinitions}
+                items={paginatedItems}
+                loadingText="Loading devices"
+                selectedItems={selectedItems}
+                onSelectionChange={({ detail }) => setSelectedItems(detail.selectedItems)}
+                selectionType="multi"
+                trackBy="id"
+                empty={
+                  <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
+                    <SpaceBetween size="m">
+                      <b>No devices</b>
+                      <Button>Add Device</Button>
+                    </SpaceBetween>
+                  </Box>
                 }
-              >
-                My Devices
-              </Header>
-            }
+                filter={
+                  <TextFilter
+                    filteringText={filteringText}
+                    filteringPlaceholder="Placeholder"
+                    filteringAriaLabel="Filter devices"
+                    onChange={({ detail }) => setFilteringText(detail.filteringText)}
+                  />
+                }
             pagination={
               <Pagination
                 currentPageIndex={currentPageIndex}
@@ -421,8 +422,10 @@ export function NetworkAdminContent() {
               setSortingColumn(detail.sortingColumn);
               setIsDescending(detail.isDescending);
             }}
-          />
-        </Container>
+              />
+            </Container>
+          </SpaceBetween>
+        </div>
       </SpaceBetween>
     </ContentLayout>
   );
