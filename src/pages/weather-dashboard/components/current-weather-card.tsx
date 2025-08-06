@@ -6,9 +6,9 @@ import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import ColumnLayout from '@cloudscape-design/components/column-layout';
 
 import { WeatherData, WeatherAPI } from '../services/weather-api';
+import { WeatherDetailsGrid } from './weather-details-grid';
 
 interface CurrentWeatherCardProps {
   weatherData: WeatherData;
