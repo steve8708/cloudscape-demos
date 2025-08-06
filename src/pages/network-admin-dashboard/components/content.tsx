@@ -332,10 +332,7 @@ export function NetworkAdminContent() {
               <Box margin={{ top: 's' }}>
                 <SpaceBetween direction="horizontal" size="l">
                   <Box display="flex" alignItems="center">
-                    <Box
-                      className={`${styles.legendColor} ${styles.barLegend}`}
-                      margin={{ right: 'xs' }}
-                    />
+                    <Box className={`${styles.legendColor} ${styles.barLegend}`} margin={{ right: 'xs' }} />
                     <Box variant="span" className={styles.legendText}>
                       Site 1
                     </Box>
