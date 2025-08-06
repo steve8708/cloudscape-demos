@@ -3,13 +3,15 @@
 import React, { useEffect, useState } from 'react';
 
 import Alert from '@cloudscape-design/components/alert';
+import Button from '@cloudscape-design/components/button';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import Spinner from '@cloudscape-design/components/spinner';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import { WeatherResponse, weatherService } from '../services/weather-service';
+import { LocationData, WeatherResponse, weatherService } from '../services/weather-service';
+import { CitySearch } from './city-search';
 import { TemperatureChart } from './charts/temperature-chart';
 import { WindHumidityChart } from './charts/wind-humidity-chart';
 import { WeatherSummaryChart } from './charts/weather-summary-chart';
@@ -19,26 +21,36 @@ export function Content() {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showCitySearch, setShowCitySearch] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState<LocationData>(weatherService.getCurrentLocation());
+
+  const fetchWeatherData = async (location?: LocationData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await weatherService.fetchWeatherData(location);
+      setWeatherData(data);
+      if (location) {
+        setCurrentLocation(location);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch weather data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLocationChange = (newLocation: LocationData) => {
+    weatherService.setLocation(newLocation);
+    fetchWeatherData(newLocation);
+  };
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await weatherService.fetchWeatherData();
-        setWeatherData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch weather data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchWeatherData();
-    
+
     // Refresh data every 10 minutes
-    const interval = setInterval(fetchWeatherData, 10 * 60 * 1000);
-    
+    const interval = setInterval(() => fetchWeatherData(), 10 * 60 * 1000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -61,7 +73,6 @@ export function Content() {
     );
   }
 
-  const currentLocation = weatherService.getCurrentLocation();
   const weatherDescription = weatherService.getWeatherDescription(weatherData.current.weather_code);
   
   // Prepare chart data (24 hours)
@@ -71,6 +82,41 @@ export function Content() {
 
   return (
     <SpaceBetween size="l">
+      {/* Location Controls */}
+      <Container>
+        <SpaceBetween direction="horizontal" size="s" alignItems="center">
+          <SpaceBetween direction="horizontal" size="xs" alignItems="center">
+            <span style={{ fontSize: '14px', fontWeight: 'bold' }}>📍</span>
+            <span style={{ fontSize: '14px' }}>
+              {currentLocation.name}, {currentLocation.country}
+            </span>
+          </SpaceBetween>
+          <Button
+            variant="normal"
+            iconName="search"
+            onClick={() => setShowCitySearch(true)}
+          >
+            Change Location
+          </Button>
+          <Button
+            variant="normal"
+            iconName="refresh"
+            onClick={() => fetchWeatherData()}
+            loading={loading}
+          >
+            Refresh
+          </Button>
+        </SpaceBetween>
+      </Container>
+
+      {/* City Search Modal */}
+      <CitySearch
+        visible={showCitySearch}
+        onDismiss={() => setShowCitySearch(false)}
+        onLocationSelect={handleLocationChange}
+        currentLocation={currentLocation}
+      />
+
       {/* Current Weather Section */}
       <CurrentWeatherWidget
         weather={weatherData.current}
