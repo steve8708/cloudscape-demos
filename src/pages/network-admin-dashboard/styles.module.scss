@@ -37,18 +37,7 @@
   letter-spacing: -0.64px;
 }
 
-.chart-legend {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+// Chart legend styles are now handled by Cloudscape Box components
 
 .legend-color {
   width: 14px;
