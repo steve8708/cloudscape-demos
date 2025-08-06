@@ -11,6 +11,7 @@ import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import Spinner from '@cloudscape-design/components/spinner';
 
 import { WeatherData, Location, weatherApi } from '../services/weather-api';
+import { HorizontalForecast } from './horizontal-forecast';
 
 interface CurrentWeatherWidgetProps {
   weatherData: WeatherData | null;
