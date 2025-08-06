@@ -14,6 +14,7 @@ import Box from '@cloudscape-design/components/box';
 import TextFilter from '@cloudscape-design/components/text-filter';
 import Pagination from '@cloudscape-design/components/pagination';
 import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
+import styles from '../styles.module.scss';
 
 // Sample data for the charts
 const networkTrafficData = [
