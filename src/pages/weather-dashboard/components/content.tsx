@@ -12,6 +12,7 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import { LocationData, WeatherResponse, weatherService } from '../services/weather-service';
 import { CitySearch } from './city-search';
+import { LocationControls } from './location-controls';
 import { TemperatureChart } from './charts/temperature-chart';
 import { WindHumidityChart } from './charts/wind-humidity-chart';
 import { WeatherSummaryChart } from './charts/weather-summary-chart';
@@ -83,22 +84,12 @@ export function Content() {
   return (
     <SpaceBetween size="l">
       {/* Location Controls */}
-      <Container>
-        <SpaceBetween direction="horizontal" size="s" alignItems="center">
-          <SpaceBetween direction="horizontal" size="xs" alignItems="center">
-            <span style={{ fontSize: '14px', fontWeight: 'bold' }}>📍</span>
-            <span style={{ fontSize: '14px' }}>
-              {currentLocation.name}, {currentLocation.country}
-            </span>
-          </SpaceBetween>
-          <Button variant="normal" iconName="search" onClick={() => setShowCitySearch(true)}>
-            Change Location
-          </Button>
-          <Button variant="normal" iconName="refresh" onClick={() => fetchWeatherData()} loading={loading}>
-            Refresh
-          </Button>
-        </SpaceBetween>
-      </Container>
+      <LocationControls
+        currentLocation={currentLocation}
+        onSearchClick={() => setShowCitySearch(true)}
+        onRefreshClick={() => fetchWeatherData()}
+        loading={loading}
+      />
 
       {/* City Search Modal */}
       <CitySearch
