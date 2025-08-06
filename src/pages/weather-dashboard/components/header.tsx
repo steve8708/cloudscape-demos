@@ -63,12 +63,7 @@ export function WeatherHeader({
         </SpaceBetween>
       }
     >
-      <SpaceBetween direction="horizontal" size="s" alignItems="center">
-        Weather Dashboard
-        <Box variant="span" color="text-status-info">
-          {selectedLocation.name}
-        </Box>
-      </SpaceBetween>
+      Weather Dashboard
     </Header>
   );
 }
