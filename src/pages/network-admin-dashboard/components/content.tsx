@@ -198,57 +198,78 @@ export function NetworkAdminContent() {
               <Header variant="h2">Network traffic</Header>
             }
           >
-            <AreaChart
-              series={[
-                {
-                  title: 'Site 1',
-                  type: 'area',
-                  data: networkTrafficData.map(item => ({ x: item.x, y: item.y + 10 })),
-                  color: '#688AE8',
-                },
-                {
-                  title: 'Site 2',
-                  type: 'area',
-                  data: networkTrafficData,
-                  color: '#C33D69',
-                },
-              ]}
-              xDomain={networkTrafficData.map(item => item.x)}
-              yDomain={[0, 60]}
-              i18nStrings={{
-                filterLabel: 'Filter displayed data',
-                filterPlaceholder: 'Filter data',
-                filterSelectedAriaLabel: 'selected',
-                legendAriaLabel: 'Legend',
-                chartAriaRoleDescription: 'area chart',
-                xTickFormatter: (value) => value,
-                yTickFormatter: (value) => `${value}%`,
-              }}
-              ariaLabel="Network traffic area chart"
-              errorText="Error loading data."
-              height={300}
-              loadingText="Loading chart"
-              recoveryText="Retry"
-              xScaleType="categorical"
-              xTitle="Day"
-              yTitle="Traffic %"
-              empty={
-                <Box textAlign="center" color="inherit">
-                  <b>No data available</b>
-                  <Box variant="p" color="inherit">
-                    There is no data available
+            <SpaceBetween size="m">
+              <AreaChart
+                series={[
+                  {
+                    title: 'Site 1',
+                    type: 'area',
+                    data: networkTrafficData.map(item => ({ x: item.x, y: item.y + 10 })),
+                    color: '#688AE8',
+                  },
+                  {
+                    title: 'Site 2',
+                    type: 'area',
+                    data: networkTrafficData,
+                    color: '#C33D69',
+                  },
+                ]}
+                xDomain={networkTrafficData.map(item => item.x)}
+                yDomain={[0, 60]}
+                i18nStrings={{
+                  filterLabel: 'Filter displayed data',
+                  filterPlaceholder: 'Filter data',
+                  filterSelectedAriaLabel: 'selected',
+                  legendAriaLabel: 'Legend',
+                  chartAriaRoleDescription: 'area chart',
+                  xTickFormatter: (value) => value,
+                  yTickFormatter: (value) => `y${value}`,
+                }}
+                ariaLabel="Network traffic area chart"
+                errorText="Error loading data."
+                height={300}
+                loadingText="Loading chart"
+                recoveryText="Retry"
+                xScaleType="categorical"
+                xTitle="Day"
+                yTitle=""
+                hideLegend={true}
+                hideFilter={true}
+                empty={
+                  <Box textAlign="center" color="inherit">
+                    <b>No data available</b>
+                    <Box variant="p" color="inherit">
+                      There is no data available
+                    </Box>
                   </Box>
-                </Box>
-              }
-              noMatch={
-                <Box textAlign="center" color="inherit">
-                  <b>No matching data</b>
-                  <Box variant="p" color="inherit">
-                    There is no matching data to display
+                }
+                noMatch={
+                  <Box textAlign="center" color="inherit">
+                    <b>No matching data</b>
+                    <Box variant="p" color="inherit">
+                      There is no matching data to display
+                    </Box>
                   </Box>
-                </Box>
-              }
-            />
+                }
+              />
+              <div className={styles.chartLegend}>
+                <div className={styles.legendItem}>
+                  <div className={`${styles.legendColor} ${styles.areaLegend} ${styles.site1}`}></div>
+                  <span className={styles.legendText}>Site 1</span>
+                </div>
+                <div className={styles.legendItem}>
+                  <div className={`${styles.legendColor} ${styles.areaLegend} ${styles.site2}`}></div>
+                  <span className={styles.legendText}>Site 2</span>
+                </div>
+                <div className={styles.legendItem}>
+                  <div className={styles.thresholdLegend}>
+                    <div className={styles.thresholdSegment}></div>
+                    <div className={styles.thresholdSegment}></div>
+                  </div>
+                  <span className={styles.legendText}>Performance goal</span>
+                </div>
+              </div>
+            </SpaceBetween>
           </Container>
 
           <Container
@@ -256,51 +277,68 @@ export function NetworkAdminContent() {
               <Header variant="h2">Credit Usage</Header>
             }
           >
-            <BarChart
-              series={[
-                {
-                  title: 'Site 1',
-                  type: 'bar',
-                  data: creditUsageData,
-                  color: '#688AE8',
-                },
-              ]}
-              xDomain={creditUsageData.map(item => item.x)}
-              yDomain={[0, 300]}
-              i18nStrings={{
-                filterLabel: 'Filter displayed data',
-                filterPlaceholder: 'Filter data',
-                filterSelectedAriaLabel: 'selected',
-                legendAriaLabel: 'Legend',
-                chartAriaRoleDescription: 'bar chart',
-                xTickFormatter: (value) => value,
-                yTickFormatter: (value) => value.toString(),
-              }}
-              ariaLabel="Credit usage bar chart"
-              errorText="Error loading data."
-              height={300}
-              loadingText="Loading chart"
-              recoveryText="Retry"
-              xScaleType="categorical"
-              xTitle="Day"
-              yTitle="Credits"
-              empty={
-                <Box textAlign="center" color="inherit">
-                  <b>No data available</b>
-                  <Box variant="p" color="inherit">
-                    There is no data available
+            <SpaceBetween size="m">
+              <BarChart
+                series={[
+                  {
+                    title: 'Site 1',
+                    type: 'bar',
+                    data: creditUsageData,
+                    color: '#688AE8',
+                  },
+                ]}
+                xDomain={creditUsageData.map(item => item.x)}
+                yDomain={[0, 300]}
+                i18nStrings={{
+                  filterLabel: 'Filter displayed data',
+                  filterPlaceholder: 'Filter data',
+                  filterSelectedAriaLabel: 'selected',
+                  legendAriaLabel: 'Legend',
+                  chartAriaRoleDescription: 'bar chart',
+                  xTickFormatter: (value) => value,
+                  yTickFormatter: (value) => `y${Math.floor(value / 50) + 1}`,
+                }}
+                ariaLabel="Credit usage bar chart"
+                errorText="Error loading data."
+                height={300}
+                loadingText="Loading chart"
+                recoveryText="Retry"
+                xScaleType="categorical"
+                xTitle="Day"
+                yTitle=""
+                hideLegend={true}
+                hideFilter={true}
+                empty={
+                  <Box textAlign="center" color="inherit">
+                    <b>No data available</b>
+                    <Box variant="p" color="inherit">
+                      There is no data available
+                    </Box>
                   </Box>
-                </Box>
-              }
-              noMatch={
-                <Box textAlign="center" color="inherit">
-                  <b>No matching data</b>
-                  <Box variant="p" color="inherit">
-                    There is no matching data to display
+                }
+                noMatch={
+                  <Box textAlign="center" color="inherit">
+                    <b>No matching data</b>
+                    <Box variant="p" color="inherit">
+                      There is no matching data to display
+                    </Box>
                   </Box>
-                </Box>
-              }
-            />
+                }
+              />
+              <div className={styles.chartLegend}>
+                <div className={styles.legendItem}>
+                  <div className={`${styles.legendColor} ${styles.barLegend}`}></div>
+                  <span className={styles.legendText}>Site 1</span>
+                </div>
+                <div className={styles.legendItem}>
+                  <div className={styles.thresholdLegend}>
+                    <div className={styles.thresholdSegment}></div>
+                    <div className={styles.thresholdSegment}></div>
+                  </div>
+                  <span className={styles.legendText}>Performance goal</span>
+                </div>
+              </div>
+            </SpaceBetween>
           </Container>
         </Grid>
 
