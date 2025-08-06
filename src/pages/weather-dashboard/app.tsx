@@ -33,14 +33,9 @@ export function App() {
           <SpaceBetween size="m">
           <WeatherHeader
             actions={
-              <SpaceBetween direction="horizontal" size="xs">
-                <Button variant="normal" iconName="search">
-                  Search Cities
-                </Button>
-                <Button variant="primary" iconName="refresh">
-                  Refresh Data
-                </Button>
-              </SpaceBetween>
+              <Button variant="primary" iconName="refresh">
+                Refresh Data
+              </Button>
             }
           />
           <Content />
