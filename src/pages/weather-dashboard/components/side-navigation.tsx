@@ -13,7 +13,7 @@ const items: SideNavigationProps.Item[] = [
       { type: 'link', text: 'Hourly Forecast', href: '#hourly' },
       { type: 'link', text: 'Daily Forecast', href: '#daily' },
       { type: 'link', text: 'Charts & Graphs', href: '#charts' },
-    ]
+    ],
   },
   {
     type: 'section',
@@ -21,16 +21,10 @@ const items: SideNavigationProps.Item[] = [
     items: [
       { type: 'link', text: 'Open Meteo API', href: 'https://open-meteo.com', external: true },
       { type: 'link', text: 'Documentation', href: 'https://open-meteo.com/en/docs', external: true },
-    ]
-  }
+    ],
+  },
 ];
 
 export function WeatherSideNavigation() {
-  return (
-    <SideNavigation
-      activeHref="#current"
-      header={{ href: '#/', text: 'Weather Dashboard' }}
-      items={items}
-    />
-  );
+  return <SideNavigation activeHref="#current" header={{ href: '#/', text: 'Weather Dashboard' }} items={items} />;
 }

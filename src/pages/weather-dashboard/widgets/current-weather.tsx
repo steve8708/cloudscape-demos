@@ -37,9 +37,7 @@ export function CurrentWeatherWidget({ weatherData, loading, location }: Current
     return (
       <Container>
         <Box textAlign="center" padding={{ vertical: 'xl' }}>
-          <StatusIndicator type="error">
-            Unable to load weather data
-          </StatusIndicator>
+          <StatusIndicator type="error">Unable to load weather data</StatusIndicator>
         </Box>
       </Container>
     );
@@ -66,9 +64,7 @@ export function CurrentWeatherWidget({ weatherData, loading, location }: Current
 
         <div>
           <Box variant="awsui-key-label">Humidity</Box>
-          <Box variant="h2">
-            {current.relative_humidity_2m}%
-          </Box>
+          <Box variant="h2">{current.relative_humidity_2m}%</Box>
           <Box variant="small" color="text-status-inactive">
             Relative humidity
           </Box>
@@ -76,9 +72,7 @@ export function CurrentWeatherWidget({ weatherData, loading, location }: Current
 
         <div>
           <Box variant="awsui-key-label">Wind</Box>
-          <Box variant="h2">
-            {windSpeed}
-          </Box>
+          <Box variant="h2">{windSpeed}</Box>
           <Box variant="small" color="text-status-inactive">
             {windDirection} direction
           </Box>
@@ -86,9 +80,7 @@ export function CurrentWeatherWidget({ weatherData, loading, location }: Current
 
         <div>
           <Box variant="awsui-key-label">Precipitation</Box>
-          <Box variant="h2">
-            {current.precipitation} mm
-          </Box>
+          <Box variant="h2">{current.precipitation} mm</Box>
           <Box variant="small" color="text-status-inactive">
             Current rainfall
           </Box>

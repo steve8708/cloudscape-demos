@@ -39,17 +39,17 @@ export function PrecipitationChart({ weatherData, loading }: PrecipitationChartP
   }
 
   const { hourly } = weatherData;
-  
+
   // Take every 3 hours for the next 24 hours to reduce clutter
   const precipitationData = hourly.time
     .slice(0, 24)
     .filter((_, index) => index % 3 === 0)
     .map((time, index) => ({
-      x: new Date(time).toLocaleTimeString(undefined, { 
-        hour: '2-digit', 
-        minute: '2-digit' 
+      x: new Date(time).toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
       }),
-      y: hourly.precipitation[index * 3] || 0
+      y: hourly.precipitation[index * 3] || 0,
     }));
 
   const series = [
@@ -57,8 +57,8 @@ export function PrecipitationChart({ weatherData, loading }: PrecipitationChartP
       title: 'Precipitation',
       type: 'bar' as const,
       data: precipitationData,
-      color: '#0084c7'
-    }
+      color: '#0084c7',
+    },
   ];
 
   return (
@@ -81,7 +81,7 @@ export function PrecipitationChart({ weatherData, loading }: PrecipitationChartP
           detailPopoverDismissAriaLabel: 'Dismiss',
           legendAriaLabel: 'Legend',
           chartAriaRoleDescription: 'bar chart',
-          yTickFormatter: (value) => `${value} mm`,
+          yTickFormatter: value => `${value} mm`,
         }}
         ariaLabel="Precipitation forecast over 24 hours"
         ariaDescription="Bar chart showing expected precipitation amounts over the next 24 hours"

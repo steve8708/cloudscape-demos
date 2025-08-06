@@ -39,11 +39,11 @@ export function TemperatureChart({ weatherData, loading }: TemperatureChartProps
   }
 
   const { hourly } = weatherData;
-  
+
   // Take first 24 hours for better visualization
   const temperatureData = hourly.time.slice(0, 24).map((time, index) => ({
     x: new Date(time),
-    y: hourly.temperature_2m[index]
+    y: hourly.temperature_2m[index],
   }));
 
   const series = [
@@ -51,8 +51,8 @@ export function TemperatureChart({ weatherData, loading }: TemperatureChartProps
       title: 'Temperature',
       type: 'line' as const,
       data: temperatureData,
-      color: '#0073bb'
-    }
+      color: '#0073bb',
+    },
   ];
 
   return (
@@ -76,14 +76,14 @@ export function TemperatureChart({ weatherData, loading }: TemperatureChartProps
           detailPopoverDismissAriaLabel: 'Dismiss',
           legendAriaLabel: 'Legend',
           chartAriaRoleDescription: 'line chart',
-          xTickFormatter: (value) => {
+          xTickFormatter: value => {
             const date = new Date(value);
-            return date.toLocaleDateString(undefined, { 
-              hour: '2-digit', 
-              minute: '2-digit' 
+            return date.toLocaleDateString(undefined, {
+              hour: '2-digit',
+              minute: '2-digit',
             });
           },
-          yTickFormatter: (value) => `${Math.round(value)}°C`,
+          yTickFormatter: value => `${Math.round(value)}°C`,
         }}
         ariaLabel="Temperature trend over 24 hours"
         ariaDescription="Line chart showing temperature changes over the next 24 hours"

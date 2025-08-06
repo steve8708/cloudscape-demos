@@ -39,11 +39,11 @@ export interface Location {
 
 // Default locations for demo
 export const defaultLocations: Location[] = [
-  { name: 'New York', latitude: 40.7128, longitude: -74.0060, country: 'US' },
+  { name: 'New York', latitude: 40.7128, longitude: -74.006, country: 'US' },
   { name: 'London', latitude: 51.5074, longitude: -0.1278, country: 'GB' },
   { name: 'Tokyo', latitude: 35.6762, longitude: 139.6503, country: 'JP' },
   { name: 'Sydney', latitude: -33.8688, longitude: 151.2093, country: 'AU' },
-  { name: 'Berlin', latitude: 52.5200, longitude: 13.4050, country: 'DE' },
+  { name: 'Berlin', latitude: 52.52, longitude: 13.405, country: 'DE' },
   { name: 'San Francisco', latitude: 37.7749, longitude: -122.4194, country: 'US' },
 ];
 
@@ -92,7 +92,7 @@ export class WeatherApiService {
         'precipitation',
         'weather_code',
         'wind_speed_10m',
-        'wind_direction_10m'
+        'wind_direction_10m',
       ].join(','),
       hourly: [
         'temperature_2m',
@@ -100,17 +100,17 @@ export class WeatherApiService {
         'precipitation',
         'wind_speed_10m',
         'wind_direction_10m',
-        'weather_code'
+        'weather_code',
       ].join(','),
       daily: [
         'temperature_2m_max',
         'temperature_2m_min',
         'precipitation_sum',
         'wind_speed_10m_max',
-        'weather_code'
+        'weather_code',
       ].join(','),
       timezone: 'auto',
-      forecast_days: '7'
+      forecast_days: '7',
     });
 
     try {
@@ -134,7 +134,7 @@ export class WeatherApiService {
       name: query,
       count: '10',
       language: 'en',
-      format: 'json'
+      format: 'json',
     });
 
     try {
@@ -142,14 +142,16 @@ export class WeatherApiService {
       if (!response.ok) {
         throw new Error(`Geocoding API error: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      return data.results?.map((result: any) => ({
-        name: result.name,
-        latitude: result.latitude,
-        longitude: result.longitude,
-        country: result.country_code || result.country || 'Unknown'
-      })) || [];
+      return (
+        data.results?.map((result: any) => ({
+          name: result.name,
+          latitude: result.latitude,
+          longitude: result.longitude,
+          country: result.country_code || result.country || 'Unknown',
+        })) || []
+      );
     } catch (error) {
       console.error('Failed to search locations:', error);
       return defaultLocations;
@@ -169,7 +171,24 @@ export class WeatherApiService {
   }
 
   formatWindDirection(direction: number): string {
-    const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    const directions = [
+      'N',
+      'NNE',
+      'NE',
+      'ENE',
+      'E',
+      'ESE',
+      'SE',
+      'SSE',
+      'S',
+      'SSW',
+      'SW',
+      'WSW',
+      'W',
+      'WNW',
+      'NW',
+      'NNW',
+    ];
     const index = Math.round(direction / 22.5) % 16;
     return directions[index];
   }

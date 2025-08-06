@@ -17,22 +17,22 @@ interface WeatherHeaderProps {
   isLoading?: boolean;
 }
 
-export function WeatherHeader({ 
-  selectedLocation = defaultLocations[0], 
+export function WeatherHeader({
+  selectedLocation = defaultLocations[0],
   onLocationChange,
   onRefresh,
-  isLoading = false
+  isLoading = false,
 }: WeatherHeaderProps) {
   const [selectedOption, setSelectedOption] = useState({
     label: `${selectedLocation.name}, ${selectedLocation.country}`,
     value: selectedLocation.name,
-    description: `${selectedLocation.latitude.toFixed(2)}, ${selectedLocation.longitude.toFixed(2)}`
+    description: `${selectedLocation.latitude.toFixed(2)}, ${selectedLocation.longitude.toFixed(2)}`,
   });
 
   const locationOptions = defaultLocations.map(location => ({
     label: `${location.name}, ${location.country}`,
     value: location.name,
-    description: `${location.latitude.toFixed(2)}, ${location.longitude.toFixed(2)}`
+    description: `${location.latitude.toFixed(2)}, ${location.longitude.toFixed(2)}`,
   }));
 
   const handleLocationChange = (option: any) => {
@@ -57,12 +57,7 @@ export function WeatherHeader({
             loadingText="Loading locations"
             statusType={isLoading ? 'loading' : 'finished'}
           />
-          <Button
-            iconName="refresh"
-            variant="normal"
-            onClick={onRefresh}
-            loading={isLoading}
-          >
+          <Button iconName="refresh" variant="normal" onClick={onRefresh} loading={isLoading}>
             Refresh
           </Button>
         </SpaceBetween>

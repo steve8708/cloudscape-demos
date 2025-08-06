@@ -39,11 +39,11 @@ export function HumidityChart({ weatherData, loading }: HumidityChartProps) {
   }
 
   const { hourly } = weatherData;
-  
+
   // Take first 24 hours for better visualization
   const humidityData = hourly.time.slice(0, 24).map((time, index) => ({
     x: new Date(time),
-    y: hourly.relative_humidity_2m[index]
+    y: hourly.relative_humidity_2m[index],
   }));
 
   const series = [
@@ -51,8 +51,8 @@ export function HumidityChart({ weatherData, loading }: HumidityChartProps) {
       title: 'Relative Humidity',
       type: 'area' as const,
       data: humidityData,
-      color: '#037f0c'
-    }
+      color: '#037f0c',
+    },
   ];
 
   return (
@@ -77,14 +77,14 @@ export function HumidityChart({ weatherData, loading }: HumidityChartProps) {
           detailPopoverDismissAriaLabel: 'Dismiss',
           legendAriaLabel: 'Legend',
           chartAriaRoleDescription: 'area chart',
-          xTickFormatter: (value) => {
+          xTickFormatter: value => {
             const date = new Date(value);
-            return date.toLocaleDateString(undefined, { 
-              hour: '2-digit', 
-              minute: '2-digit' 
+            return date.toLocaleDateString(undefined, {
+              hour: '2-digit',
+              minute: '2-digit',
             });
           },
-          yTickFormatter: (value) => `${Math.round(value)}%`,
+          yTickFormatter: value => `${Math.round(value)}%`,
         }}
         ariaLabel="Humidity levels over 24 hours"
         ariaDescription="Area chart showing relative humidity changes over the next 24 hours"

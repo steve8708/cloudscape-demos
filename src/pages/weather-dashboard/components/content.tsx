@@ -27,7 +27,7 @@ export function WeatherContent() {
   const fetchWeatherData = async (location: Location) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = await weatherApi.getCurrentWeather(location.latitude, location.longitude);
       setWeatherData(data);
@@ -52,7 +52,7 @@ export function WeatherContent() {
 
   return (
     <SpaceBetween size="l">
-      <WeatherHeader 
+      <WeatherHeader
         selectedLocation={selectedLocation}
         onLocationChange={handleLocationChange}
         onRefresh={handleRefresh}
@@ -71,11 +71,7 @@ export function WeatherContent() {
           Current Conditions
         </Header>
         <ColumnLayout columns={1}>
-          <CurrentWeatherWidget 
-            weatherData={weatherData} 
-            loading={loading}
-            location={selectedLocation}
-          />
+          <CurrentWeatherWidget weatherData={weatherData} loading={loading} location={selectedLocation} />
         </ColumnLayout>
       </Container>
 
@@ -89,7 +85,7 @@ export function WeatherContent() {
             { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } },
             { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } },
             { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } },
-            { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } }
+            { colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 } },
           ]}
         >
           <TemperatureChart weatherData={weatherData} loading={loading} />

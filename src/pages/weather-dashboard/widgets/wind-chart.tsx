@@ -39,7 +39,7 @@ export function WindChart({ weatherData, loading }: WindChartProps) {
   }
 
   const { hourly } = weatherData;
-  
+
   // Take every 2 hours for the next 24 hours
   const windData = hourly.time
     .slice(0, 24)
@@ -47,12 +47,12 @@ export function WindChart({ weatherData, loading }: WindChartProps) {
     .map((time, index) => {
       const dataIndex = index * 2;
       return {
-        x: new Date(time).toLocaleTimeString(undefined, { 
-          hour: '2-digit', 
-          minute: '2-digit' 
+        x: new Date(time).toLocaleTimeString(undefined, {
+          hour: '2-digit',
+          minute: '2-digit',
         }),
         y: hourly.wind_speed_10m[dataIndex] || 0,
-        direction: weatherApi.formatWindDirection(hourly.wind_direction_10m[dataIndex] || 0)
+        direction: weatherApi.formatWindDirection(hourly.wind_direction_10m[dataIndex] || 0),
       };
     });
 
@@ -61,8 +61,8 @@ export function WindChart({ weatherData, loading }: WindChartProps) {
       title: 'Wind Speed',
       type: 'bar' as const,
       data: windData.map(d => ({ x: d.x, y: d.y })),
-      color: '#d13212'
-    }
+      color: '#d13212',
+    },
   ];
 
   return (
@@ -85,13 +85,13 @@ export function WindChart({ weatherData, loading }: WindChartProps) {
           detailPopoverDismissAriaLabel: 'Dismiss',
           legendAriaLabel: 'Legend',
           chartAriaRoleDescription: 'bar chart',
-          yTickFormatter: (value) => `${Math.round(value)} km/h`,
+          yTickFormatter: value => `${Math.round(value)} km/h`,
         }}
         detailPopoverSeriesContent={({ series, x, y }) => {
           const dataPoint = windData.find(d => d.x === x);
           return {
             key: 'Wind Details',
-            value: `${Math.round(y)} km/h ${dataPoint?.direction || ''}`
+            value: `${Math.round(y)} km/h ${dataPoint?.direction || ''}`,
           };
         }}
         ariaLabel="Wind conditions over 24 hours"

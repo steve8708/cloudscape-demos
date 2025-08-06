@@ -47,12 +47,12 @@ export function HorizontalForecast({ weatherData, loading }: HorizontalForecastP
 
   const { daily } = weatherData;
   const today = new Date();
-  
+
   const forecastDays = daily.time.slice(0, 7).map((date, index) => {
     const dateObj = new Date(date);
     const isToday = dateObj.toDateString() === today.toDateString();
     const isTomorrow = dateObj.toDateString() === new Date(today.getTime() + 24 * 60 * 60 * 1000).toDateString();
-    
+
     let dayLabel = dateObj.toLocaleDateString(undefined, { weekday: 'short' });
     if (isToday) dayLabel = 'Today';
     else if (isTomorrow) dayLabel = 'Tomorrow';
@@ -64,44 +64,54 @@ export function HorizontalForecast({ weatherData, loading }: HorizontalForecastP
       maxTemp: Math.round(daily.temperature_2m_max[index]),
       minTemp: Math.round(daily.temperature_2m_min[index]),
       precipitation: daily.precipitation_sum[index],
-      description: weatherApi.getWeatherDescription(daily.weather_code[index])
+      description: weatherApi.getWeatherDescription(daily.weather_code[index]),
     };
   });
 
   return (
-    <div style={{ 
-      overflowX: 'auto', 
-      paddingBottom: '8px',
-      scrollBehavior: 'smooth'
-    }}>
-      <div style={{ 
-        display: 'flex', 
-        gap: '16px', 
-        minWidth: 'max-content',
-        padding: '0 4px'
-      }}>
+    <div
+      style={{
+        overflowX: 'auto',
+        paddingBottom: '8px',
+        scrollBehavior: 'smooth',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          gap: '16px',
+          minWidth: 'max-content',
+          padding: '0 4px',
+        }}
+      >
         {forecastDays.map((day, index) => (
           <div
             key={index}
             style={{
               minWidth: '120px',
               padding: '16px 12px',
-              backgroundColor: index === 0 ? 'var(--color-background-layout-panel-content)' : 'var(--color-background-container-content)',
-              border: index === 0 ? '2px solid var(--color-border-control-checked)' : '1px solid var(--color-border-divider-default)',
+              backgroundColor:
+                index === 0
+                  ? 'var(--color-background-layout-panel-content)'
+                  : 'var(--color-background-container-content)',
+              border:
+                index === 0
+                  ? '2px solid var(--color-border-control-checked)'
+                  : '1px solid var(--color-border-divider-default)',
               borderRadius: '8px',
               textAlign: 'center',
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              boxShadow: index === 0 ? '0 2px 8px rgba(0, 0, 0, 0.1)' : 'none'
+              boxShadow: index === 0 ? '0 2px 8px rgba(0, 0, 0, 0.1)' : 'none',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               if (index !== 0) {
                 e.currentTarget.style.backgroundColor = 'var(--color-background-layout-panel-content)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
               }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               if (index !== 0) {
                 e.currentTarget.style.backgroundColor = 'var(--color-background-container-content)';
                 e.currentTarget.style.transform = 'translateY(0)';
@@ -116,16 +126,10 @@ export function HorizontalForecast({ weatherData, loading }: HorizontalForecastP
               <Box variant="small" color="text-status-inactive">
                 {day.date}
               </Box>
-              <div style={{ fontSize: '32px', lineHeight: '1' }}>
-                {day.emoji}
-              </div>
+              <div style={{ fontSize: '32px', lineHeight: '1' }}>{day.emoji}</div>
               <Box variant="small" textAlign="center">
-                <div style={{ fontWeight: 'bold' }}>
-                  {day.maxTemp}°
-                </div>
-                <div style={{ color: 'var(--color-text-status-inactive)' }}>
-                  {day.minTemp}°
-                </div>
+                <div style={{ fontWeight: 'bold' }}>{day.maxTemp}°</div>
+                <div style={{ color: 'var(--color-text-status-inactive)' }}>{day.minTemp}°</div>
               </Box>
               {day.precipitation > 0 && (
                 <Box variant="small" color="text-status-info">

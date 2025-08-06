@@ -51,23 +51,23 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
   }
 
   const { daily } = weatherData;
-  
+
   const forecastData: ForecastDay[] = daily.time.map((date, index) => {
     const dateObj = new Date(date);
     return {
-      date: dateObj.toLocaleDateString(undefined, { 
-        month: 'short', 
-        day: 'numeric' 
+      date: dateObj.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
       }),
-      dayName: dateObj.toLocaleDateString(undefined, { 
-        weekday: 'short' 
+      dayName: dateObj.toLocaleDateString(undefined, {
+        weekday: 'short',
       }),
       maxTemp: daily.temperature_2m_max[index],
       minTemp: daily.temperature_2m_min[index],
       precipitation: daily.precipitation_sum[index],
       windSpeed: daily.wind_speed_10m_max[index],
       weatherCode: daily.weather_code[index],
-      weatherDescription: weatherApi.getWeatherDescription(daily.weather_code[index])
+      weatherDescription: weatherApi.getWeatherDescription(daily.weather_code[index]),
     };
   });
 
@@ -101,11 +101,13 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
             cell: item => (
               <div>
                 <Box variant="strong">{item.dayName}</Box>
-                <Box variant="small" color="text-status-inactive">{item.date}</Box>
+                <Box variant="small" color="text-status-inactive">
+                  {item.date}
+                </Box>
               </div>
             ),
             sortingField: 'dayName',
-            minWidth: 80
+            minWidth: 80,
           },
           {
             id: 'weather',
@@ -116,7 +118,7 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
                 <Box variant="span">{item.weatherDescription}</Box>
               </div>
             ),
-            minWidth: 150
+            minWidth: 150,
           },
           {
             id: 'temperature',
@@ -130,7 +132,7 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
               </div>
             ),
             sortingField: 'maxTemp',
-            minWidth: 100
+            minWidth: 100,
           },
           {
             id: 'precipitation',
@@ -143,19 +145,15 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
               </div>
             ),
             sortingField: 'precipitation',
-            minWidth: 120
+            minWidth: 120,
           },
           {
             id: 'wind',
             header: 'Wind',
-            cell: item => (
-              <Box variant="span">
-                {weatherApi.formatWindSpeed(item.windSpeed)}
-              </Box>
-            ),
+            cell: item => <Box variant="span">{weatherApi.formatWindSpeed(item.windSpeed)}</Box>,
             sortingField: 'windSpeed',
-            minWidth: 80
-          }
+            minWidth: 80,
+          },
         ]}
         items={forecastData}
         loadingText="Loading forecast..."
@@ -166,11 +164,7 @@ export function WeatherForecast({ weatherData, loading }: WeatherForecastProps) 
             </Box>
           </Box>
         }
-        header={
-          <Header counter={`(${forecastData.length})`}>
-            Daily forecasts
-          </Header>
-        }
+        header={<Header counter={`(${forecastData.length})`}>Daily forecasts</Header>}
       />
     </Container>
   );
