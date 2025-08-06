@@ -246,23 +246,37 @@ export function NetworkAdminContent() {
                   </Box>
                 }
               />
-              <div className={styles.chartLegend}>
-                <div className={styles.legendItem}>
-                  <div className={`${styles.legendColor} ${styles.areaLegend} ${styles.site1}`}></div>
-                  <span className={styles.legendText}>Site 1</span>
-                </div>
-                <div className={styles.legendItem}>
-                  <div className={`${styles.legendColor} ${styles.areaLegend} ${styles.site2}`}></div>
-                  <span className={styles.legendText}>Site 2</span>
-                </div>
-                <div className={styles.legendItem}>
-                  <div className={styles.thresholdLegend}>
-                    <div className={styles.thresholdSegment}></div>
-                    <div className={styles.thresholdSegment}></div>
-                  </div>
-                  <span className={styles.legendText}>Performance goal</span>
-                </div>
-              </div>
+              <Box margin={{ top: 's' }}>
+                <SpaceBetween direction="horizontal" size="l">
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      className={`${styles.legendColor} ${styles.areaLegend} ${styles.site1}`}
+                      margin={{ right: 'xs' }}
+                    />
+                    <Box variant="span" className={styles.legendText}>
+                      Site 1
+                    </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      className={`${styles.legendColor} ${styles.areaLegend} ${styles.site2}`}
+                      margin={{ right: 'xs' }}
+                    />
+                    <Box variant="span" className={styles.legendText}>
+                      Site 2
+                    </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Box className={styles.thresholdLegend} margin={{ right: 'xs' }}>
+                      <Box className={styles.thresholdSegment} display="inline-block" />
+                      <Box className={styles.thresholdSegment} display="inline-block" />
+                    </Box>
+                    <Box variant="span" className={styles.legendText}>
+                      Performance goal
+                    </Box>
+                  </Box>
+                </SpaceBetween>
+              </Box>
             </SpaceBetween>
           </Container>
 
@@ -315,25 +329,34 @@ export function NetworkAdminContent() {
                   </Box>
                 }
               />
-              <div className={styles.chartLegend}>
-                <div className={styles.legendItem}>
-                  <div className={`${styles.legendColor} ${styles.barLegend}`}></div>
-                  <span className={styles.legendText}>Site 1</span>
-                </div>
-                <div className={styles.legendItem}>
-                  <div className={styles.thresholdLegend}>
-                    <div className={styles.thresholdSegment}></div>
-                    <div className={styles.thresholdSegment}></div>
-                  </div>
-                  <span className={styles.legendText}>Performance goal</span>
-                </div>
-              </div>
+              <Box margin={{ top: 's' }}>
+                <SpaceBetween direction="horizontal" size="l">
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      className={`${styles.legendColor} ${styles.barLegend}`}
+                      margin={{ right: 'xs' }}
+                    />
+                    <Box variant="span" className={styles.legendText}>
+                      Site 1
+                    </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Box className={styles.thresholdLegend} margin={{ right: 'xs' }}>
+                      <Box className={styles.thresholdSegment} display="inline-block" />
+                      <Box className={styles.thresholdSegment} display="inline-block" />
+                    </Box>
+                    <Box variant="span" className={styles.legendText}>
+                      Performance goal
+                    </Box>
+                  </Box>
+                </SpaceBetween>
+              </Box>
             </SpaceBetween>
           </Container>
         </Grid>
 
         {/* My Devices Section */}
-        <div className={styles.devicesSection}>
+        <Box className={styles.devicesSection}>
           <SpaceBetween size="m">
             <Header
               variant="h1"
@@ -423,7 +446,7 @@ export function NetworkAdminContent() {
               />
             </Container>
           </SpaceBetween>
-        </div>
+        </Box>
       </SpaceBetween>
     </ContentLayout>
   );
