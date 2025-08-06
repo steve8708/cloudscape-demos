@@ -52,46 +52,55 @@ export function CurrentWeatherWidget({ weatherData, loading, location }: Current
   const windDirection = weatherApi.formatWindDirection(current.wind_direction_10m);
 
   return (
-    <ColumnLayout columns={4} variant="text-grid">
+    <SpaceBetween size="l">
+      <ColumnLayout columns={4} variant="text-grid">
+        <div>
+          <Box variant="awsui-key-label">Temperature</Box>
+          <Box variant="h1" color="text-status-info">
+            {temperature}
+          </Box>
+          <Box variant="small" color="text-status-inactive">
+            {weatherDescription}
+          </Box>
+        </div>
+
+        <div>
+          <Box variant="awsui-key-label">Humidity</Box>
+          <Box variant="h2">
+            {current.relative_humidity_2m}%
+          </Box>
+          <Box variant="small" color="text-status-inactive">
+            Relative humidity
+          </Box>
+        </div>
+
+        <div>
+          <Box variant="awsui-key-label">Wind</Box>
+          <Box variant="h2">
+            {windSpeed}
+          </Box>
+          <Box variant="small" color="text-status-inactive">
+            {windDirection} direction
+          </Box>
+        </div>
+
+        <div>
+          <Box variant="awsui-key-label">Precipitation</Box>
+          <Box variant="h2">
+            {current.precipitation} mm
+          </Box>
+          <Box variant="small" color="text-status-inactive">
+            Current rainfall
+          </Box>
+        </div>
+      </ColumnLayout>
+
       <div>
-        <Box variant="awsui-key-label">Temperature</Box>
-        <Box variant="h1" color="text-status-info">
-          {temperature}
+        <Box variant="h3" margin={{ bottom: 's' }}>
+          7-Day Forecast
         </Box>
-        <Box variant="small" color="text-status-inactive">
-          {weatherDescription}
-        </Box>
+        <HorizontalForecast weatherData={weatherData} loading={loading} />
       </div>
-      
-      <div>
-        <Box variant="awsui-key-label">Humidity</Box>
-        <Box variant="h2">
-          {current.relative_humidity_2m}%
-        </Box>
-        <Box variant="small" color="text-status-inactive">
-          Relative humidity
-        </Box>
-      </div>
-      
-      <div>
-        <Box variant="awsui-key-label">Wind</Box>
-        <Box variant="h2">
-          {windSpeed}
-        </Box>
-        <Box variant="small" color="text-status-inactive">
-          {windDirection} direction
-        </Box>
-      </div>
-      
-      <div>
-        <Box variant="awsui-key-label">Precipitation</Box>
-        <Box variant="h2">
-          {current.precipitation} mm
-        </Box>
-        <Box variant="small" color="text-status-inactive">
-          Current rainfall
-        </Box>
-      </div>
-    </ColumnLayout>
+    </SpaceBetween>
   );
 }
