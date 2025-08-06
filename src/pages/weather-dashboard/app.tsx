@@ -31,9 +31,20 @@ export function App() {
         ref={appLayout}
         content={
           <SpaceBetween size="m">
-            <WeatherHeader actions={<Button variant="primary">Refresh Data</Button>} />
-            <Content />
-          </SpaceBetween>
+          <WeatherHeader
+            actions={
+              <SpaceBetween direction="horizontal" size="xs">
+                <Button variant="normal" iconName="search">
+                  Search Cities
+                </Button>
+                <Button variant="primary" iconName="refresh">
+                  Refresh Data
+                </Button>
+              </SpaceBetween>
+            }
+          />
+          <Content />
+        </SpaceBetween>
         }
         breadcrumbs={<Breadcrumbs items={[{ text: 'Weather Dashboard', href: '#/' }]} />}
         navigation={<WeatherSideNavigation />}
