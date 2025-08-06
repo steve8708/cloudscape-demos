@@ -30,9 +30,7 @@ export function CurrentWeatherCard({ weatherData }: CurrentWeatherCardProps) {
           <Box variant="h3" color="text-status-info">
             {weatherDescription}
           </Box>
-          <Box variant="small">
-            Feels like {Math.round(current.apparent_temperature)}°C
-          </Box>
+          <Box variant="small">Feels like {Math.round(current.apparent_temperature)}°C</Box>
         </Box>
 
         <ColumnLayout columns={2} variant="text-grid">
@@ -50,7 +48,9 @@ export function CurrentWeatherCard({ weatherData }: CurrentWeatherCardProps) {
           </div>
           <div>
             <Box variant="awsui-key-label">Wind Direction</Box>
-            <Box>{windDirection} ({Math.round(current.wind_direction_10m)}°)</Box>
+            <Box>
+              {windDirection} ({Math.round(current.wind_direction_10m)}°)
+            </Box>
           </div>
           <div>
             <Box variant="awsui-key-label">Precipitation</Box>
@@ -59,9 +59,9 @@ export function CurrentWeatherCard({ weatherData }: CurrentWeatherCardProps) {
           <div>
             <Box variant="awsui-key-label">Updated</Box>
             <Box variant="small">
-              {new Date(current.time).toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit' 
+              {new Date(current.time).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
               })}
             </Box>
           </div>

@@ -27,7 +27,7 @@ interface DayForecast {
 
 export function DailyForecastCard({ weatherData }: DailyForecastCardProps) {
   const daily = weatherData.daily;
-  
+
   const forecastData: DayForecast[] = daily.time.map((dateStr, index) => {
     const date = new Date(dateStr);
     return {
@@ -68,9 +68,9 @@ export function DailyForecastCard({ weatherData }: DailyForecastCardProps) {
               <Box>
                 <Box fontWeight="bold">{item.dayName}</Box>
                 <Box variant="small">
-                  {new Date(item.date).toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric' 
+                  {new Date(item.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
                   })}
                 </Box>
               </Box>
@@ -80,24 +80,16 @@ export function DailyForecastCard({ weatherData }: DailyForecastCardProps) {
           {
             id: 'weather',
             header: 'Condition',
-            cell: item => (
-              <Box variant="small">
-                {item.weatherDescription}
-              </Box>
-            ),
+            cell: item => <Box variant="small">{item.weatherDescription}</Box>,
           },
           {
             id: 'temperature',
             header: 'Temperature',
             cell: item => (
               <Box>
-                <Badge color={getTemperatureBadgeColor(item.maxTemp)}>
-                  {item.maxTemp}°
-                </Badge>
+                <Badge color={getTemperatureBadgeColor(item.maxTemp)}>{item.maxTemp}°</Badge>
                 {' / '}
-                <Badge color={getTemperatureBadgeColor(item.minTemp)}>
-                  {item.minTemp}°
-                </Badge>
+                <Badge color={getTemperatureBadgeColor(item.minTemp)}>{item.minTemp}°</Badge>
               </Box>
             ),
           },
@@ -107,20 +99,14 @@ export function DailyForecastCard({ weatherData }: DailyForecastCardProps) {
             cell: item => (
               <Box>
                 {getPrecipitationBadge(item.precipitation)}
-                <Box variant="small">
-                  {item.precipitation > 0 && `${item.precipitation} mm`}
-                </Box>
+                <Box variant="small">{item.precipitation > 0 && `${item.precipitation} mm`}</Box>
               </Box>
             ),
           },
           {
             id: 'wind',
             header: 'Wind',
-            cell: item => (
-              <Box variant="small">
-                {item.windSpeed} km/h
-              </Box>
-            ),
+            cell: item => <Box variant="small">{item.windSpeed} km/h</Box>,
           },
         ]}
         items={forecastData}

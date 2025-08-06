@@ -51,7 +51,7 @@ export interface WeatherLocation {
 // Default locations for demonstration
 export const DEFAULT_LOCATIONS: WeatherLocation[] = [
   { name: 'San Francisco, CA', latitude: 37.7749, longitude: -122.4194 },
-  { name: 'New York, NY', latitude: 40.7128, longitude: -74.0060 },
+  { name: 'New York, NY', latitude: 40.7128, longitude: -74.006 },
   { name: 'London, UK', latitude: 51.5074, longitude: -0.1278 },
   { name: 'Tokyo, Japan', latitude: 35.6762, longitude: 139.6503 },
   { name: 'Sydney, Australia', latitude: -33.8688, longitude: 151.2093 },
@@ -139,7 +139,24 @@ export class WeatherAPI {
   }
 
   static getWindDirection(degrees: number): string {
-    const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+    const directions = [
+      'N',
+      'NNE',
+      'NE',
+      'ENE',
+      'E',
+      'ESE',
+      'SE',
+      'SSE',
+      'S',
+      'SSW',
+      'SW',
+      'WSW',
+      'W',
+      'WNW',
+      'NW',
+      'NNW',
+    ];
     const index = Math.round(degrees / 22.5) % 16;
     return directions[index];
   }

@@ -47,11 +47,7 @@ export function WeatherMainInfo() {
           <Box variant="awsui-key-label">Data source</Box>
           <Box>
             Weather data is sourced from{' '}
-            <InfoLink
-              external={true}
-              href="https://open-meteo.com"
-              ariaLabel="Learn more about Open-Meteo API"
-            >
+            <InfoLink external={true} href="https://open-meteo.com" ariaLabel="Learn more about Open-Meteo API">
               Open-Meteo API
             </InfoLink>
             , a free and open-source weather API that provides accurate weather forecasts worldwide.
