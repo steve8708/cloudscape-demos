@@ -17,7 +17,6 @@ interface CurrentWeatherCardProps {
 export function CurrentWeatherCard({ weatherData }: CurrentWeatherCardProps) {
   const current = weatherData.current;
   const weatherDescription = WeatherAPI.getWeatherDescription(current.weather_code);
-  const windDirection = WeatherAPI.getWindDirection(current.wind_direction_10m);
 
   return (
     <Container>
@@ -33,39 +32,7 @@ export function CurrentWeatherCard({ weatherData }: CurrentWeatherCardProps) {
           <Box variant="small">Feels like {Math.round(current.apparent_temperature)}°C</Box>
         </Box>
 
-        <ColumnLayout columns={2} variant="text-grid">
-          <div>
-            <Box variant="awsui-key-label">Humidity</Box>
-            <Box>{current.relative_humidity_2m}%</Box>
-          </div>
-          <div>
-            <Box variant="awsui-key-label">Pressure</Box>
-            <Box>{Math.round(current.surface_pressure)} hPa</Box>
-          </div>
-          <div>
-            <Box variant="awsui-key-label">Wind Speed</Box>
-            <Box>{Math.round(current.wind_speed_10m)} km/h</Box>
-          </div>
-          <div>
-            <Box variant="awsui-key-label">Wind Direction</Box>
-            <Box>
-              {windDirection} ({Math.round(current.wind_direction_10m)}°)
-            </Box>
-          </div>
-          <div>
-            <Box variant="awsui-key-label">Precipitation</Box>
-            <Box>{current.precipitation} mm</Box>
-          </div>
-          <div>
-            <Box variant="awsui-key-label">Updated</Box>
-            <Box variant="small">
-              {new Date(current.time).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </Box>
-          </div>
-        </ColumnLayout>
+        <WeatherDetailsGrid current={current} />
       </SpaceBetween>
     </Container>
   );
