@@ -15,7 +15,12 @@ interface LocationControlsProps {
   loading?: boolean;
 }
 
-export function LocationControls({ currentLocation, onSearchClick, onRefreshClick, loading = false }: LocationControlsProps) {
+export function LocationControls({
+  currentLocation,
+  onSearchClick,
+  onRefreshClick,
+  loading = false,
+}: LocationControlsProps) {
   return (
     <Container>
       <SpaceBetween direction="horizontal" size="s" alignItems="center">
