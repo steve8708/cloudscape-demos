@@ -9,7 +9,7 @@ import ExpandableSection from '@cloudscape-design/components/expandable-section'
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import { ExternalLinkItem } from '../../commons';
+import { ExternalLink } from '../../commons';
 
 export function WeatherHeader({ actions, location }: { actions: React.ReactNode; location: string }) {
   return (
@@ -56,10 +56,9 @@ export function WeatherHelpInfo() {
 
       <ExpandableSection defaultExpanded headerText="API Information">
         <SpaceBetween size="s">
-          <ExternalLinkItem
-            href="https://open-meteo.com/"
-            text="Open Meteo API Documentation"
-          />
+          <ExternalLink href="https://open-meteo.com/">
+            Open Meteo API Documentation
+          </ExternalLink>
           <Box variant="small">
             Open Meteo provides free weather forecast APIs for open-source developers and 
             non-commercial use. No API key required.
