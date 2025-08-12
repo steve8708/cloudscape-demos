@@ -66,13 +66,13 @@ const formatDate = (dateString: string): { dayName: string; date: string } => {
   return { dayName, date: dateStr };
 };
 
-function DayForecastCard({ 
-  time, 
-  tempMax, 
-  tempMin, 
-  precipitation, 
+function DayForecastCard({
+  time,
+  tempMax,
+  tempMin,
+  precipitation,
   weatherCode,
-  isToday = false
+  isToday = false,
 }: {
   time: string;
   tempMax: number;
@@ -86,13 +86,15 @@ function DayForecastCard({
   const weatherDescription = getWeatherDescription(weatherCode);
 
   return (
-    <div style={{ 
-      padding: '16px', 
-      border: '1px solid var(--color-border-divider-default)',
-      borderRadius: '8px',
-      backgroundColor: isToday ? 'var(--color-background-container-content)' : 'transparent',
-      textAlign: 'center'
-    }}>
+    <div
+      style={{
+        padding: '16px',
+        border: '1px solid var(--color-border-divider-default)',
+        borderRadius: '8px',
+        backgroundColor: isToday ? 'var(--color-background-container-content)' : 'transparent',
+        textAlign: 'center',
+      }}
+    >
       <SpaceBetween size="s">
         <Box>
           <Box variant="h4" color={isToday ? 'text-status-success' : undefined}>
@@ -102,22 +104,20 @@ function DayForecastCard({
             {date}
           </Box>
         </Box>
-        
+
         <Icon name={weatherIcon} size="normal" />
-        
+
         <Box variant="small" color="text-status-inactive">
           {weatherDescription}
         </Box>
-        
+
         <SpaceBetween size="xs">
-          <Box variant="h3">
-            {Math.round(tempMax)}°
-          </Box>
+          <Box variant="h3">{Math.round(tempMax)}°</Box>
           <Box variant="small" color="text-status-inactive">
             {Math.round(tempMin)}°
           </Box>
         </SpaceBetween>
-        
+
         {precipitation > 0 && (
           <Box variant="small" color="text-status-info">
             🌧 {Math.round(precipitation * 10) / 10}mm

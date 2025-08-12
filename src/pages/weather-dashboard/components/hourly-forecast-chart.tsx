@@ -18,18 +18,18 @@ interface HourlyForecastProps {
 
 const formatTime = (timeString: string): string => {
   const date = new Date(timeString);
-  return date.toLocaleTimeString('en-US', { 
-    hour: '2-digit', 
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
     minute: '2-digit',
-    hour12: false 
+    hour12: false,
   });
 };
 
 const formatDate = (timeString: string): string => {
   const date = new Date(timeString);
-  return date.toLocaleDateString('en-US', { 
-    month: 'short', 
-    day: 'numeric' 
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
   });
 };
 
@@ -39,7 +39,7 @@ function SimpleChart({
   unit,
   color = '#0073bb',
   maxValue,
-  times
+  times,
 }: {
   data: number[];
   label: string;
@@ -58,13 +58,15 @@ function SimpleChart({
       <Box variant="small" color="text-status-inactive" padding={{ bottom: 's' }}>
         {label}
       </Box>
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'end', 
-        height: '150px', 
-        gap: '2px',
-        marginBottom: '20px'
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'end',
+          height: '150px',
+          gap: '2px',
+          marginBottom: '20px',
+        }}
+      >
         {next24Hours.map((value, index) => {
           const height = ((value - min) / range) * 100;
           return (
@@ -77,41 +79,44 @@ function SimpleChart({
                 opacity: 0.8,
                 borderRadius: '2px 2px 0 0',
                 position: 'relative',
-                minHeight: '2px'
+                minHeight: '2px',
               }}
               title={`${Math.round(value)}${unit}`}
             >
               {index % 4 === 0 && (
-                <Box 
-                  variant="small" 
-                  style={{ 
-                    position: 'absolute', 
-                    top: '-15px', 
-                    left: '50%', 
+                <Box
+                  variant="small"
+                  style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '50%',
                     transform: 'translateX(-50%)',
                     whiteSpace: 'nowrap',
-                    fontSize: '10px'
+                    fontSize: '10px',
                   }}
                 >
-                  {Math.round(value)}{unit}
+                  {Math.round(value)}
+                  {unit}
                 </Box>
               )}
             </div>
           );
         })}
       </div>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between',
-        fontSize: '10px'
-      }}>
-        {next24Hours.map((_, index) => (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontSize: '10px',
+        }}
+      >
+        {next24Hours.map((_, index) =>
           index % 6 === 0 ? (
             <Box key={index} variant="small" color="text-status-inactive">
               {formatTime(times[index])}
             </Box>
-          ) : null
-        ))}
+          ) : null,
+        )}
       </div>
     </div>
   );
@@ -168,18 +173,18 @@ export function HourlyForecastChart({ hourly }: HourlyForecastProps) {
         {
           id: 'temperature',
           label: 'Temperature',
-          content: temperatureTab
+          content: temperatureTab,
         },
         {
           id: 'precipitation',
           label: 'Precipitation',
-          content: precipitationTab
+          content: precipitationTab,
         },
         {
           id: 'wind',
           label: 'Wind',
-          content: windTab
-        }
+          content: windTab,
+        },
       ]}
     />
   );

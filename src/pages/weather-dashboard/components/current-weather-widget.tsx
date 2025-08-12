@@ -63,7 +63,24 @@ const getWeatherIcon = (weatherCode: number, isDay: number): string => {
 };
 
 const getWindDirection = (degrees: number): string => {
-  const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  const directions = [
+    'N',
+    'NNE',
+    'NE',
+    'ENE',
+    'E',
+    'ESE',
+    'SE',
+    'SSE',
+    'S',
+    'SSW',
+    'SW',
+    'WSW',
+    'W',
+    'WNW',
+    'NW',
+    'NNW',
+  ];
   return directions[Math.round(degrees / 22.5) % 16];
 };
 
@@ -87,18 +104,26 @@ export function CurrentWeatherWidget({ current }: CurrentWeatherProps) {
 
         <SpaceBetween size="s">
           <Box>
-            <Box variant="small" color="text-status-inactive">Feels like</Box>
+            <Box variant="small" color="text-status-inactive">
+              Feels like
+            </Box>
             <Box variant="h4">{Math.round(current.temperature_2m)}°C</Box>
           </Box>
-          
+
           <Box>
-            <Box variant="small" color="text-status-inactive">Humidity</Box>
+            <Box variant="small" color="text-status-inactive">
+              Humidity
+            </Box>
             <Box variant="h4">{current.relative_humidity_2m}%</Box>
           </Box>
-          
+
           <Box>
-            <Box variant="small" color="text-status-inactive">Wind</Box>
-            <Box variant="h4">{Math.round(current.wind_speed_10m)} km/h {windDirection}</Box>
+            <Box variant="small" color="text-status-inactive">
+              Wind
+            </Box>
+            <Box variant="h4">
+              {Math.round(current.wind_speed_10m)} km/h {windDirection}
+            </Box>
           </Box>
         </SpaceBetween>
       </SpaceBetween>

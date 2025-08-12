@@ -38,9 +38,9 @@ export function WeatherMetricsWidget({ current }: WeatherMetricsProps) {
     return 'error';
   };
 
-  const temperaturePercent = Math.min(Math.max((current.temperature_2m + 20) / 60 * 100, 0), 100);
+  const temperaturePercent = Math.min(Math.max(((current.temperature_2m + 20) / 60) * 100, 0), 100);
   const humidityPercent = current.relative_humidity_2m;
-  const windPercent = Math.min(current.wind_speed_10m / 50 * 100, 100);
+  const windPercent = Math.min((current.wind_speed_10m / 50) * 100, 100);
 
   return (
     <Container header={<Header variant="h3">Weather Metrics</Header>}>
@@ -77,12 +77,16 @@ export function WeatherMetricsWidget({ current }: WeatherMetricsProps) {
 
         <SpaceBetween size="s">
           <Box>
-            <Box variant="small" color="text-status-inactive">Time of Day</Box>
+            <Box variant="small" color="text-status-inactive">
+              Time of Day
+            </Box>
             <Box variant="h4">{current.is_day ? 'Day' : 'Night'}</Box>
           </Box>
-          
+
           <Box>
-            <Box variant="small" color="text-status-inactive">Wind Direction</Box>
+            <Box variant="small" color="text-status-inactive">
+              Wind Direction
+            </Box>
             <Box variant="h4">{Math.round(current.wind_direction_10m)}°</Box>
           </Box>
         </SpaceBetween>

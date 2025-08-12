@@ -34,7 +34,7 @@ const demos = [
     route: '/weather-dashboard',
     title: 'Weather Dashboard',
     description: 'Real-time weather data with charts and forecasts.',
-    category: 'Dashboards'
+    category: 'Dashboards',
   },
   {
     route: '/delete-one-click',

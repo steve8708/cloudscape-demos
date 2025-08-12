@@ -32,25 +32,13 @@ export function App() {
   const locationActions = (
     <SpaceBetween direction="horizontal" size="s">
       <FormField label="Location">
-        <Input 
-          value={location} 
-          onChange={({ detail }) => setLocation(detail.value)}
-          placeholder="Enter city name"
-        />
+        <Input value={location} onChange={({ detail }) => setLocation(detail.value)} placeholder="Enter city name" />
       </FormField>
       <FormField label="Latitude">
-        <Input 
-          value={latitude} 
-          onChange={({ detail }) => setLatitude(detail.value)}
-          placeholder="52.52"
-        />
+        <Input value={latitude} onChange={({ detail }) => setLatitude(detail.value)} placeholder="52.52" />
       </FormField>
       <FormField label="Longitude">
-        <Input 
-          value={longitude} 
-          onChange={({ detail }) => setLongitude(detail.value)}
-          placeholder="13.41"
-        />
+        <Input value={longitude} onChange={({ detail }) => setLongitude(detail.value)} placeholder="13.41" />
       </FormField>
       <Button variant="primary">Update location</Button>
     </SpaceBetween>
