@@ -33,18 +33,20 @@ const formatDate = (timeString: string): string => {
   });
 };
 
-function SimpleChart({ 
-  data, 
-  label, 
-  unit, 
+function SimpleChart({
+  data,
+  label,
+  unit,
   color = '#0073bb',
-  maxValue
-}: { 
-  data: number[]; 
-  label: string; 
-  unit: string; 
+  maxValue,
+  times
+}: {
+  data: number[];
+  label: string;
+  unit: string;
   color?: string;
   maxValue?: number;
+  times: string[];
 }) {
   const next24Hours = data.slice(0, 24);
   const max = maxValue || Math.max(...next24Hours);
@@ -106,7 +108,7 @@ function SimpleChart({
         {next24Hours.map((_, index) => (
           index % 6 === 0 ? (
             <Box key={index} variant="small" color="text-status-inactive">
-              {formatTime(hourly.time[index])}
+              {formatTime(times[index])}
             </Box>
           ) : null
         ))}
@@ -118,40 +120,44 @@ function SimpleChart({
 export function HourlyForecastChart({ hourly }: HourlyForecastProps) {
   const temperatureTab = (
     <SpaceBetween size="m">
-      <SimpleChart 
-        data={hourly.temperature_2m} 
-        label="Temperature (°C)" 
+      <SimpleChart
+        data={hourly.temperature_2m}
+        label="Temperature (°C)"
         unit="°C"
         color="#e74c3c"
+        times={hourly.time}
       />
     </SpaceBetween>
   );
 
   const precipitationTab = (
     <SpaceBetween size="m">
-      <SimpleChart 
-        data={hourly.precipitation_probability} 
-        label="Precipitation Probability (%)" 
+      <SimpleChart
+        data={hourly.precipitation_probability}
+        label="Precipitation Probability (%)"
         unit="%"
         color="#3498db"
         maxValue={100}
+        times={hourly.time}
       />
-      <SimpleChart 
-        data={hourly.precipitation} 
-        label="Precipitation (mm)" 
+      <SimpleChart
+        data={hourly.precipitation}
+        label="Precipitation (mm)"
         unit="mm"
         color="#2ecc71"
+        times={hourly.time}
       />
     </SpaceBetween>
   );
 
   const windTab = (
     <SpaceBetween size="m">
-      <SimpleChart 
-        data={hourly.wind_speed_10m} 
-        label="Wind Speed (km/h)" 
+      <SimpleChart
+        data={hourly.wind_speed_10m}
+        label="Wind Speed (km/h)"
         unit="km/h"
         color="#9b59b6"
+        times={hourly.time}
       />
     </SpaceBetween>
   );
