@@ -13,26 +13,26 @@
   overflow-x: auto;
   padding-bottom: 8px;
   scroll-behavior: smooth;
-  
+
   // Custom scrollbar for webkit browsers
   &::-webkit-scrollbar {
     height: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: var(--color-background-container-content);
     border-radius: 4px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: var(--color-border-control-default);
     border-radius: 4px;
-    
+
     &:hover {
       background: var(--color-border-control-focused);
     }
   }
-  
+
   // Firefox scrollbar
   scrollbar-width: thin;
   scrollbar-color: var(--color-border-control-default) var(--color-background-container-content);
@@ -46,16 +46,16 @@
   border: 1px solid var(--color-border-divider-default);
   border-radius: 8px;
   transition: all 0.2s ease;
-  
+
   &:hover {
     border-color: var(--color-border-control-default);
     box-shadow: var(--shadow-container);
   }
-  
+
   &.forecast-card-today {
     background: var(--color-background-notification-blue);
     border-color: var(--color-border-status-info);
-    
+
     &:hover {
       border-color: var(--color-border-status-info);
     }
@@ -68,7 +68,7 @@
     min-width: 100px;
     padding: 12px 8px;
   }
-  
+
   .forecast-scroll {
     gap: 12px;
   }

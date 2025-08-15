@@ -14,16 +14,16 @@ import Spinner from '@cloudscape-design/components/spinner';
 import Grid from '@cloudscape-design/components/grid';
 import KeyValuePairs from '@cloudscape-design/components/key-value-pairs';
 import Badge from '@cloudscape-design/components/badge';
-import { 
-  WeatherData, 
-  Location, 
-  defaultLocations, 
-  fetchWeatherData, 
-  formatTemperature, 
-  formatHumidity, 
-  formatWindSpeed, 
+import {
+  WeatherData,
+  Location,
+  defaultLocations,
+  fetchWeatherData,
+  formatTemperature,
+  formatHumidity,
+  formatWindSpeed,
   formatPressure,
-  weatherCodes 
+  weatherCodes,
 } from './weather-api';
 import WeatherChartsGrid from './weather-charts';
 
@@ -74,10 +74,7 @@ export default function WeatherDashboardApp() {
       content={
         <ContentLayout
           header={
-            <Header
-              variant="h1"
-              description="Real-time weather data and forecasts powered by Open-Meteo API"
-            >
+            <Header variant="h1" description="Real-time weather data and forecasts powered by Open-Meteo API">
               Weather Dashboard
             </Header>
           }
@@ -106,24 +103,19 @@ export default function WeatherDashboardApp() {
 
             {currentWeather && (
               <Container header={<Header variant="h2">Current Weather</Header>}>
-                <Grid gridDefinition={[
-                  { colspan: { default: 12, s: 6, m: 3 } },
-                  { colspan: { default: 12, s: 6, m: 9 } }
-                ]}>
+                <Grid
+                  gridDefinition={[{ colspan: { default: 12, s: 6, m: 3 } }, { colspan: { default: 12, s: 6, m: 9 } }]}
+                >
                   <Box textAlign="center">
                     <SpaceBetween size="s">
-                      <Box fontSize="display-l">
-                        {weatherInfo?.icon || '🌤️'}
-                      </Box>
+                      <Box fontSize="display-l">{weatherInfo?.icon || '🌤️'}</Box>
                       <Box variant="h1" color="text-status-info">
                         {formatTemperature(currentWeather.temperature_2m)}
                       </Box>
-                      <Badge color="blue">
-                        {weatherInfo?.description || 'Unknown'}
-                      </Badge>
+                      <Badge color="blue">{weatherInfo?.description || 'Unknown'}</Badge>
                     </SpaceBetween>
                   </Box>
-                  
+
                   <KeyValuePairs
                     columns={2}
                     items={[

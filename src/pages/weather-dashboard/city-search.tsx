@@ -12,9 +12,11 @@ interface CitySearchProps {
   placeholder?: string;
 }
 
-export default function CitySearch({ onLocationSelect, placeholder = "Search for any city..." }: CitySearchProps) {
+export default function CitySearch({ onLocationSelect, placeholder = 'Search for any city...' }: CitySearchProps) {
   const [value, setValue] = useState('');
-  const [options, setOptions] = useState<{ value: string; label: string; description?: string; data: GeocodingResult }[]>([]);
+  const [options, setOptions] = useState<
+    { value: string; label: string; description?: string; data: GeocodingResult }[]
+  >([]);
   const [status, setStatus] = useState<'pending' | 'loading' | 'finished' | 'error'>('finished');
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
 
@@ -26,7 +28,7 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
     }
 
     setStatus('loading');
-    
+
     try {
       const results = await searchCities(query);
       const formattedOptions = results.map(result => ({
@@ -35,7 +37,7 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
         description: `${result.admin1 ? `${result.admin1}, ` : ''}${result.country}`,
         data: result,
       }));
-      
+
       setOptions(formattedOptions);
       setStatus('finished');
     } catch (error) {
@@ -45,15 +47,18 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
     }
   }, []);
 
-  const debouncedLoadItems = useCallback((query: string) => {
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
-    
-    searchTimeoutRef.current = setTimeout(() => {
-      handleLoadItems(query);
-    }, 300);
-  }, [handleLoadItems]);
+  const debouncedLoadItems = useCallback(
+    (query: string) => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+
+      searchTimeoutRef.current = setTimeout(() => {
+        handleLoadItems(query);
+      }, 300);
+    },
+    [handleLoadItems],
+  );
 
   const handleChange = (event: any) => {
     const newValue = event.detail.value;
@@ -72,7 +77,7 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
         country: result.country,
         admin1: result.admin1,
       };
-      
+
       onLocationSelect(location);
       setValue(selectedOption.value);
       setOptions([]);
@@ -97,7 +102,7 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
       loadingText="Searching cities..."
       errorText="Error occurred while searching"
       recoveryText="Retry"
-      finishedText={options.length === 0 && value.length >= 2 ? "No cities found" : undefined}
+      finishedText={options.length === 0 && value.length >= 2 ? 'No cities found' : undefined}
       placeholder={placeholder}
       empty={
         value.length < 2 ? (
@@ -107,9 +112,9 @@ export default function CitySearch({ onLocationSelect, placeholder = "Search for
         ) : undefined
       }
       statusType={status}
-      enteredTextLabel={(value) => `Use "${value}"`}
+      enteredTextLabel={value => `Use "${value}"`}
       ariaLabel="City search"
-      renderHighlightedAriaLive={(option) => option.label}
+      renderHighlightedAriaLive={option => option.label}
       expandToViewport={true}
     />
   );

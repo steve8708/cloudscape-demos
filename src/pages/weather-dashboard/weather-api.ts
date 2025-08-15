@@ -75,7 +75,10 @@ export const weatherCodes: Record<number, { description: string; icon: string }>
   95: { description: 'Thunderstorm', icon: '⛈️' },
 };
 
-export async function fetchWeatherData(location: Location, temperatureUnit: TemperatureUnit = 'celsius'): Promise<WeatherData> {
+export async function fetchWeatherData(
+  location: Location,
+  temperatureUnit: TemperatureUnit = 'celsius',
+): Promise<WeatherData> {
   const params = new URLSearchParams({
     latitude: location.latitude.toString(),
     longitude: location.longitude.toString(),
@@ -88,7 +91,7 @@ export async function fetchWeatherData(location: Location, temperatureUnit: Temp
   });
 
   const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
-  
+
   if (!response.ok) {
     throw new Error(`Weather API error: ${response.status}`);
   }

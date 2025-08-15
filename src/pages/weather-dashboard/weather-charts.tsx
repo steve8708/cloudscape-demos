@@ -9,7 +9,14 @@ import Header from '@cloudscape-design/components/header';
 import Grid from '@cloudscape-design/components/grid';
 import { LineChartProps } from '@cloudscape-design/components/line-chart';
 import { BarChartProps } from '@cloudscape-design/components/bar-chart';
-import { WeatherData, formatTemperature, formatHumidity, formatWindSpeed, formatPressure, TemperatureUnit } from './weather-api';
+import {
+  WeatherData,
+  formatTemperature,
+  formatHumidity,
+  formatWindSpeed,
+  formatPressure,
+  TemperatureUnit,
+} from './weather-api';
 
 const commonChartProps = {
   loadingText: 'Loading weather data...',
@@ -49,7 +56,7 @@ export function TemperatureChart({ weatherData, loading, temperatureUnit }: Weat
       title: 'Temperature',
       type: 'line',
       data: hourlyData,
-      valueFormatter: (value) => formatTemperature(value),
+      valueFormatter: value => formatTemperature(value),
     },
   ];
 
@@ -145,13 +152,13 @@ export function WeeklyForecastChart({ weatherData, loading, temperatureUnit }: W
       title: 'Max Temperature',
       type: 'line',
       data: dailyData.map(d => ({ x: d.x, y: d.yMax })),
-      valueFormatter: (value) => formatTemperature(value, temperatureUnit),
+      valueFormatter: value => formatTemperature(value, temperatureUnit),
     },
     {
       title: 'Min Temperature',
       type: 'line',
       data: dailyData.map(d => ({ x: d.x, y: d.yMin })),
-      valueFormatter: (value) => formatTemperature(value, temperatureUnit),
+      valueFormatter: value => formatTemperature(value, temperatureUnit),
     },
   ];
 
@@ -171,10 +178,10 @@ export function WeeklyForecastChart({ weatherData, loading, temperatureUnit }: W
           filterSelectedAriaLabel: 'selected',
           legendAriaLabel: 'Legend',
           chartAriaRoleDescription: 'Weekly temperature forecast line chart',
-          xTickFormatter: (date: Date) => 
-            date.toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric' 
+          xTickFormatter: (date: Date) =>
+            date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
             }),
         }}
       />
@@ -197,7 +204,7 @@ export function PrecipitationChart({ weatherData, loading, temperatureUnit }: We
       title: 'Precipitation',
       type: 'bar',
       data: precipData,
-      valueFormatter: (value) => `${value.toFixed(1)} mm`,
+      valueFormatter: value => `${value.toFixed(1)} mm`,
     },
   ];
 

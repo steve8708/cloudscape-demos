@@ -81,9 +81,7 @@ export default function ForecastScroll({ weatherData, temperatureUnit }: Forecas
 
                 {day.precipitation > 0 && (
                   <Box textAlign="center">
-                    <Badge color="blue">
-                      {day.precipitation.toFixed(1)}mm
-                    </Badge>
+                    <Badge color="blue">{day.precipitation.toFixed(1)}mm</Badge>
                   </Box>
                 )}
 

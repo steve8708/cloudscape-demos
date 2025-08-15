@@ -17,7 +17,7 @@ export default function TemperatureToggle({ value, onChange }: TemperatureToggle
       id: 'celsius' as const,
     },
     {
-      text: '°F', 
+      text: '°F',
       id: 'fahrenheit' as const,
     },
   ];
