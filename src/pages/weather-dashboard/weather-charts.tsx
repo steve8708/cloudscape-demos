@@ -9,7 +9,7 @@ import Header from '@cloudscape-design/components/header';
 import Grid from '@cloudscape-design/components/grid';
 import { LineChartProps } from '@cloudscape-design/components/line-chart';
 import { BarChartProps } from '@cloudscape-design/components/bar-chart';
-import { WeatherData, formatTemperature, formatHumidity, formatWindSpeed, formatPressure } from './weather-api';
+import { WeatherData, formatTemperature, formatHumidity, formatWindSpeed, formatPressure, TemperatureUnit } from './weather-api';
 
 const commonChartProps = {
   loadingText: 'Loading weather data...',
@@ -31,9 +31,10 @@ const dateFormatter = (date: Date) =>
 interface WeatherChartsProps {
   weatherData: WeatherData | null;
   loading: boolean;
+  temperatureUnit: TemperatureUnit;
 }
 
-export function TemperatureChart({ weatherData, loading }: WeatherChartsProps) {
+export function TemperatureChart({ weatherData, loading, temperatureUnit }: WeatherChartsProps) {
   if (!weatherData) {
     return null;
   }
@@ -75,7 +76,7 @@ export function TemperatureChart({ weatherData, loading }: WeatherChartsProps) {
   );
 }
 
-export function WeatherMetricsChart({ weatherData, loading }: WeatherChartsProps) {
+export function WeatherMetricsChart({ weatherData, loading, temperatureUnit }: WeatherChartsProps) {
   if (!weatherData) {
     return null;
   }
@@ -128,7 +129,7 @@ export function WeatherMetricsChart({ weatherData, loading }: WeatherChartsProps
   );
 }
 
-export function WeeklyForecastChart({ weatherData, loading }: WeatherChartsProps) {
+export function WeeklyForecastChart({ weatherData, loading, temperatureUnit }: WeatherChartsProps) {
   if (!weatherData) {
     return null;
   }
@@ -144,13 +145,13 @@ export function WeeklyForecastChart({ weatherData, loading }: WeatherChartsProps
       title: 'Max Temperature',
       type: 'line',
       data: dailyData.map(d => ({ x: d.x, y: d.yMax })),
-      valueFormatter: (value) => formatTemperature(value),
+      valueFormatter: (value) => formatTemperature(value, temperatureUnit),
     },
     {
       title: 'Min Temperature',
       type: 'line',
       data: dailyData.map(d => ({ x: d.x, y: d.yMin })),
-      valueFormatter: (value) => formatTemperature(value),
+      valueFormatter: (value) => formatTemperature(value, temperatureUnit),
     },
   ];
 
@@ -181,7 +182,7 @@ export function WeeklyForecastChart({ weatherData, loading }: WeatherChartsProps
   );
 }
 
-export function PrecipitationChart({ weatherData, loading }: WeatherChartsProps) {
+export function PrecipitationChart({ weatherData, loading, temperatureUnit }: WeatherChartsProps) {
   if (!weatherData) {
     return null;
   }
@@ -225,9 +226,10 @@ export function PrecipitationChart({ weatherData, loading }: WeatherChartsProps)
 interface WeatherChartsGridProps {
   weatherData: WeatherData | null;
   loading: boolean;
+  temperatureUnit: TemperatureUnit;
 }
 
-export default function WeatherChartsGrid({ weatherData, loading }: WeatherChartsGridProps) {
+export default function WeatherChartsGrid({ weatherData, loading, temperatureUnit }: WeatherChartsGridProps) {
   return (
     <Grid
       gridDefinition={[
@@ -237,10 +239,10 @@ export default function WeatherChartsGrid({ weatherData, loading }: WeatherChart
         { colspan: { default: 12, s: 6 } },
       ]}
     >
-      <TemperatureChart weatherData={weatherData} loading={loading} />
-      <WeatherMetricsChart weatherData={weatherData} loading={loading} />
-      <WeeklyForecastChart weatherData={weatherData} loading={loading} />
-      <PrecipitationChart weatherData={weatherData} loading={loading} />
+      <TemperatureChart weatherData={weatherData} loading={loading} temperatureUnit={temperatureUnit} />
+      <WeatherMetricsChart weatherData={weatherData} loading={loading} temperatureUnit={temperatureUnit} />
+      <WeeklyForecastChart weatherData={weatherData} loading={loading} temperatureUnit={temperatureUnit} />
+      <PrecipitationChart weatherData={weatherData} loading={loading} temperatureUnit={temperatureUnit} />
     </Grid>
   );
 }
