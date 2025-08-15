@@ -32,7 +32,21 @@ export interface Location {
   latitude: number;
   longitude: number;
   name: string;
+  country?: string;
+  admin1?: string;
 }
+
+export interface GeocodingResult {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  country: string;
+  admin1?: string;
+  admin2?: string;
+}
+
+export type TemperatureUnit = 'celsius' | 'fahrenheit';
 
 export const defaultLocations: Location[] = [
   { latitude: 52.52, longitude: 13.41, name: 'Berlin, Germany' },
@@ -61,7 +75,7 @@ export const weatherCodes: Record<number, { description: string; icon: string }>
   95: { description: 'Thunderstorm', icon: '⛈️' },
 };
 
-export async function fetchWeatherData(location: Location): Promise<WeatherData> {
+export async function fetchWeatherData(location: Location, temperatureUnit: TemperatureUnit = 'celsius'): Promise<WeatherData> {
   const params = new URLSearchParams({
     latitude: location.latitude.toString(),
     longitude: location.longitude.toString(),
@@ -70,6 +84,7 @@ export async function fetchWeatherData(location: Location): Promise<WeatherData>
     daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,weather_code',
     timezone: 'auto',
     forecast_days: '7',
+    temperature_unit: temperatureUnit === 'fahrenheit' ? 'fahrenheit' : 'celsius',
   });
 
   const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
@@ -81,8 +96,33 @@ export async function fetchWeatherData(location: Location): Promise<WeatherData>
   return response.json();
 }
 
-export function formatTemperature(temp: number): string {
-  return `${Math.round(temp)}°C`;
+export async function searchCities(query: string): Promise<GeocodingResult[]> {
+  if (query.length < 2) return [];
+
+  const params = new URLSearchParams({
+    name: query,
+    count: '10',
+    language: 'en',
+    format: 'json',
+  });
+
+  try {
+    const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?${params}`);
+    if (!response.ok) {
+      throw new Error(`Geocoding API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.results || [];
+  } catch (error) {
+    console.error('Error searching cities:', error);
+    return [];
+  }
+}
+
+export function formatTemperature(temp: number, unit: TemperatureUnit = 'celsius'): string {
+  const symbol = unit === 'fahrenheit' ? '°F' : '°C';
+  return `${Math.round(temp)}${symbol}`;
 }
 
 export function formatHumidity(humidity: number): string {
