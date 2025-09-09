@@ -166,7 +166,7 @@ export class WeatherAPIService {
     const [current, hourly, daily] = await Promise.all([
       this.getCurrentWeather(location),
       this.getHourlyForecast(location, 24),
-      this.getDailyForecast(location, 7),
+      this.getDailyForecast(location, 8),
     ]);
 
     return {

@@ -40,11 +40,11 @@ export function TemperatureChartWidget({ data }: TemperatureChartWidgetProps) {
         ]}
         xDomain={[chartData[0]?.x, chartData[chartData.length - 1]?.x]}
         yDomain={[
-          Math.min(...data.temperature.slice(0, 12)) - 2,
-          Math.max(...data.temperature.slice(0, 12)) + 2,
+          Math.min(...chartData.map(d => d.y)) - 2,
+          Math.max(...chartData.map(d => d.y)) + 2,
         ]}
         xTitle="Time"
-        yTitle="Temperature (°C)"
+        yTitle={`Temperature (${getUnitSymbol()})`}
         height={300}
         hideFilter
         hideLegend

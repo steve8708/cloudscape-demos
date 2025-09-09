@@ -12,6 +12,8 @@ import ColumnLayout from '@cloudscape-design/components/column-layout';
 import { DailyWeather, weatherAPI } from '../services/weather-api';
 import { useTemperatureUnit } from '../context/temperature-unit-context';
 
+import '../styles/daily-forecast.scss';
+
 interface DailyForecastWidgetProps {
   data: DailyWeather;
 }
@@ -47,21 +49,10 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
         </Header>
       }
     >
-      <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
-        <div style={{ display: 'flex', gap: '16px', minWidth: 'max-content' }}>
+      <div className="daily-forecast-container">
+        <div className="daily-forecast-grid">
           {cardItems.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                minWidth: '200px',
-                maxWidth: '200px',
-                border: '1px solid #e0e5e8',
-                borderRadius: '8px',
-                padding: '16px',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-              }}
-            >
+            <div key={item.id} className="daily-forecast-card">
               <SpaceBetween direction="vertical" size="s">
                 <div style={{ textAlign: 'center' }}>
                   <Box variant="h3">{item.dayName}</Box>
