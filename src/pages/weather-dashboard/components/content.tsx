@@ -8,12 +8,14 @@ import Alert from '@cloudscape-design/components/alert';
 import Spinner from '@cloudscape-design/components/spinner';
 
 import { weatherAPI, WeatherData, DEFAULT_LOCATION } from '../services/weather-api';
-import { CurrentWeatherWidget } from '../widgets/current-weather-widget';
-import { HourlyForecastWidget } from '../widgets/hourly-forecast-widget';
-import { DailyForecastWidget } from '../widgets/daily-forecast-widget';
-import { TemperatureChartWidget } from '../widgets/temperature-chart-widget';
-import { PrecipitationWidget } from '../widgets/precipitation-widget';
-import { WindWidget } from '../widgets/wind-widget';
+import {
+  CurrentWeatherWidget,
+  HourlyForecastWidget,
+  DailyForecastWidget,
+  TemperatureChartWidget,
+  PrecipitationWidget,
+  WindWidget,
+} from '../widgets';
 
 export function Content() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
