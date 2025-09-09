@@ -21,7 +21,7 @@ interface DailyForecastWidgetProps {
 export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
   const { convertTemperature, getUnitSymbol } = useTemperatureUnit();
 
-  const cardItems = data.time.slice(0, 7).map((time, index) => {
+  const cardItems = data.time.slice(0, 8).map((time, index) => {
     const weatherInfo = weatherAPI.getWeatherDescription(data.weatherCode[index]);
     const date = new Date(time);
     const dayName = date.toLocaleDateString([], { weekday: 'short' });
@@ -44,7 +44,7 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
   return (
     <Container
       header={
-        <Header description="7-day weather forecast">
+        <Header description="8-day weather forecast">
           Daily Forecast
         </Header>
       }
