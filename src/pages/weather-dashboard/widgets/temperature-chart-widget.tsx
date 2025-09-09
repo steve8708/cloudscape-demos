@@ -7,15 +7,18 @@ import Header from '@cloudscape-design/components/header';
 import LineChart from '@cloudscape-design/components/line-chart';
 
 import { HourlyWeather } from '../services/weather-api';
+import { useTemperatureUnit } from '../context/temperature-unit-context';
 
 interface TemperatureChartWidgetProps {
   data: HourlyWeather;
 }
 
 export function TemperatureChartWidget({ data }: TemperatureChartWidgetProps) {
+  const { convertTemperature, getUnitSymbol } = useTemperatureUnit();
+
   const chartData = data.time.slice(0, 12).map((time, index) => ({
     x: new Date(time),
-    y: data.temperature[index],
+    y: convertTemperature(data.temperature[index]),
   }));
 
   return (
@@ -32,7 +35,7 @@ export function TemperatureChartWidget({ data }: TemperatureChartWidgetProps) {
             title: 'Temperature',
             type: 'line',
             data: chartData,
-            valueFormatter: (value) => `${Math.round(value)}°C`,
+            valueFormatter: (value) => `${Math.round(value)}${getUnitSymbol()}`,
           },
         ]}
         xDomain={[chartData[0]?.x, chartData[chartData.length - 1]?.x]}

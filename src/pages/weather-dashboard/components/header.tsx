@@ -4,8 +4,10 @@ import React from 'react';
 
 import Header from '@cloudscape-design/components/header';
 import HelpPanel from '@cloudscape-design/components/help-panel';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import { ExternalLinkGroup, InfoLink, useHelpPanel } from '../../commons';
+import { TemperatureUnitPicker } from './temperature-unit-picker';
 
 export function WeatherDashboardMainInfo() {
   return (
@@ -39,7 +41,12 @@ export function WeatherDashboardHeader({ actions }: { actions: React.ReactNode }
     <Header
       variant="h1"
       info={<InfoLink onFollow={() => loadHelpPanelContent(<WeatherDashboardMainInfo />)} />}
-      actions={actions}
+      actions={
+        <SpaceBetween direction="horizontal" size="m">
+          <TemperatureUnitPicker />
+          {actions}
+        </SpaceBetween>
+      }
     >
       Weather Dashboard
     </Header>

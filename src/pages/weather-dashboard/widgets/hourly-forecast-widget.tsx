@@ -8,17 +8,20 @@ import Table from '@cloudscape-design/components/table';
 import Box from '@cloudscape-design/components/box';
 
 import { HourlyWeather, weatherAPI } from '../services/weather-api';
+import { useTemperatureUnit } from '../context/temperature-unit-context';
 
 interface HourlyForecastWidgetProps {
   data: HourlyWeather;
 }
 
 export function HourlyForecastWidget({ data }: HourlyForecastWidgetProps) {
+  const { convertTemperature, getUnitSymbol } = useTemperatureUnit();
+
   const tableItems = data.time.slice(0, 8).map((time, index) => {
     const weatherInfo = weatherAPI.getWeatherDescription(data.weatherCode[index]);
     return {
       time: new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      temperature: Math.round(data.temperature[index]),
+      temperature: Math.round(convertTemperature(data.temperature[index])),
       weather: weatherInfo,
       precipitation: data.precipitation[index],
       humidity: data.humidity[index],
@@ -55,7 +58,7 @@ export function HourlyForecastWidget({ data }: HourlyForecastWidgetProps) {
           {
             id: 'temperature',
             header: 'Temp',
-            cell: item => `${item.temperature}°C`,
+            cell: item => `${item.temperature}${getUnitSymbol()}`,
           },
           {
             id: 'precipitation',

@@ -9,6 +9,7 @@ import Box from '@cloudscape-design/components/box';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 
 import { CurrentWeather, WeatherLocation, weatherAPI } from '../services/weather-api';
+import { useTemperatureUnit } from '../context/temperature-unit-context';
 
 interface CurrentWeatherWidgetProps {
   data: CurrentWeather;
@@ -16,6 +17,7 @@ interface CurrentWeatherWidgetProps {
 }
 
 export function CurrentWeatherWidget({ data, location }: CurrentWeatherWidgetProps) {
+  const { convertTemperature, getUnitSymbol } = useTemperatureUnit();
   const weatherInfo = weatherAPI.getWeatherDescription(data.weatherCode);
   const lastUpdated = new Date(data.time).toLocaleTimeString();
 
@@ -30,7 +32,7 @@ export function CurrentWeatherWidget({ data, location }: CurrentWeatherWidgetPro
       <SpaceBetween size="l">
         <div style={{ textAlign: 'center' }}>
           <Box fontSize="heading-xl" fontWeight="bold" margin={{ bottom: 's' }}>
-            <span style={{ fontSize: '3rem' }}>{Math.round(data.temperature)}°C</span>
+            <span style={{ fontSize: '3rem' }}>{Math.round(convertTemperature(data.temperature))}{getUnitSymbol()}</span>
           </Box>
           <Box fontSize="heading-m" color="text-body-secondary">
             <span style={{ fontSize: '2rem', marginRight: '8px' }}>{weatherInfo.icon}</span>

@@ -11,6 +11,7 @@ import { CustomAppLayout } from '../commons/common-components';
 import { Content } from './components/content';
 import { WeatherDashboardHeader, WeatherDashboardMainInfo } from './components/header';
 import { WeatherDashboardSideNavigation } from './components/side-navigation';
+import { TemperatureUnitProvider } from './context/temperature-unit-context';
 
 import '@cloudscape-design/global-styles/dark-mode-utils.css';
 
@@ -26,22 +27,24 @@ export function App() {
   };
 
   return (
-    <HelpPanelProvider value={handleToolsContentChange}>
-      <CustomAppLayout
-        ref={appLayout}
-        content={
-          <SpaceBetween size="m">
-            <WeatherDashboardHeader actions={<Button variant="primary">Set Location</Button>} />
-            <Content />
-          </SpaceBetween>
-        }
-        breadcrumbs={<Breadcrumbs items={[{ text: 'Weather Dashboard', href: '#/weather-dashboard' }]} />}
-        navigation={<WeatherDashboardSideNavigation />}
-        tools={toolsContent}
-        toolsOpen={toolsOpen}
-        onToolsChange={({ detail }) => setToolsOpen(detail.open)}
-        notifications={<Notifications />}
-      />
-    </HelpPanelProvider>
+    <TemperatureUnitProvider>
+      <HelpPanelProvider value={handleToolsContentChange}>
+        <CustomAppLayout
+          ref={appLayout}
+          content={
+            <SpaceBetween size="m">
+              <WeatherDashboardHeader actions={<Button variant="primary">Set Location</Button>} />
+              <Content />
+            </SpaceBetween>
+          }
+          breadcrumbs={<Breadcrumbs items={[{ text: 'Weather Dashboard', href: '#/weather-dashboard' }]} />}
+          navigation={<WeatherDashboardSideNavigation />}
+          tools={toolsContent}
+          toolsOpen={toolsOpen}
+          onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+          notifications={<Notifications />}
+        />
+      </HelpPanelProvider>
+    </TemperatureUnitProvider>
   );
 }
