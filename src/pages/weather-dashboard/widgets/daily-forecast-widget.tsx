@@ -10,25 +10,28 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 
 import { DailyWeather, weatherAPI } from '../services/weather-api';
+import { useTemperatureUnit } from '../context/temperature-unit-context';
 
 interface DailyForecastWidgetProps {
   data: DailyWeather;
 }
 
 export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
-  const cardItems = data.time.slice(0, 5).map((time, index) => {
+  const { convertTemperature, getUnitSymbol } = useTemperatureUnit();
+
+  const cardItems = data.time.slice(0, 7).map((time, index) => {
     const weatherInfo = weatherAPI.getWeatherDescription(data.weatherCode[index]);
     const date = new Date(time);
     const dayName = date.toLocaleDateString([], { weekday: 'short' });
     const monthDay = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
-    
+
     return {
       id: index,
       dayName,
       monthDay,
       weather: weatherInfo,
-      tempMax: Math.round(data.temperatureMax[index]),
-      tempMin: Math.round(data.temperatureMin[index]),
+      tempMax: Math.round(convertTemperature(data.temperatureMax[index])),
+      tempMin: Math.round(convertTemperature(data.temperatureMin[index])),
       precipitation: data.precipitationSum[index],
       windSpeed: Math.round(data.windSpeedMax[index]),
       sunrise: new Date(data.sunrise[index]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -39,47 +42,44 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
   return (
     <Container
       header={
-        <Header description="5-day weather forecast">
+        <Header description="7-day weather forecast">
           Daily Forecast
         </Header>
       }
     >
-      <Cards
-        ariaLabels={{
-          itemSelectionLabel: (e, n) => `select ${n.dayName}`,
-          selectionGroupLabel: 'Daily forecast selection',
-        }}
-        cardDefinition={{
-          header: item => (
-            <SpaceBetween direction="vertical" size="xs">
-              <Box variant="h3">{item.dayName}</Box>
-              <Box variant="small" color="text-body-secondary">{item.monthDay}</Box>
-            </SpaceBetween>
-          ),
-          sections: [
-            {
-              id: 'weather',
-              content: item => (
-                <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '8px' }}>{item.weather.icon}</div>
+      <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
+        <div style={{ display: 'flex', gap: '16px', minWidth: 'max-content' }}>
+          {cardItems.map((item) => (
+            <div
+              key={item.id}
+              style={{
+                minWidth: '200px',
+                maxWidth: '200px',
+                border: '1px solid #e0e5e8',
+                borderRadius: '8px',
+                padding: '16px',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <SpaceBetween direction="vertical" size="s">
+                <div style={{ textAlign: 'center' }}>
+                  <Box variant="h3">{item.dayName}</Box>
+                  <Box variant="small" color="text-body-secondary">{item.monthDay}</Box>
+                </div>
+
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>{item.weather.icon}</div>
                   <Box variant="small">{item.weather.description}</Box>
                 </div>
-              ),
-            },
-            {
-              id: 'temperature',
-              content: item => (
-                <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <Box fontSize="heading-l">
-                    <span style={{ fontWeight: 'bold' }}>{item.tempMax}°</span>
-                    <span style={{ color: '#687078', marginLeft: '8px' }}>{item.tempMin}°</span>
+
+                <div style={{ textAlign: 'center' }}>
+                  <Box fontSize="heading-m">
+                    <span style={{ fontWeight: 'bold' }}>{item.tempMax}{getUnitSymbol()}</span>
+                    <span style={{ color: '#687078', marginLeft: '8px' }}>{item.tempMin}{getUnitSymbol()}</span>
                   </Box>
                 </div>
-              ),
-            },
-            {
-              id: 'details',
-              content: item => (
+
                 <ColumnLayout columns={2} variant="text-grid">
                   <div>
                     <Box variant="awsui-key-label">Precip</Box>
@@ -98,20 +98,11 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
                     <Box fontSize="body-s">{item.sunset}</Box>
                   </div>
                 </ColumnLayout>
-              ),
-            },
-          ],
-        }}
-        cardsPerRow={[
-          { cards: 1, minWidth: 0 },
-          { cards: 2, minWidth: 500 },
-          { cards: 3, minWidth: 800 },
-          { cards: 5, minWidth: 1200 },
-        ]}
-        items={cardItems}
-        trackBy="id"
-        visibleSections={['weather', 'temperature', 'details']}
-      />
+              </SpaceBetween>
+            </div>
+          ))}
+        </div>
+      </div>
     </Container>
   );
 }
