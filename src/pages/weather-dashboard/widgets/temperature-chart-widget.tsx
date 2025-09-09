@@ -22,27 +22,18 @@ export function TemperatureChartWidget({ data }: TemperatureChartWidgetProps) {
   }));
 
   return (
-    <Container
-      header={
-        <Header description="Next 12 hours temperature trend">
-          Temperature Trend
-        </Header>
-      }
-    >
+    <Container header={<Header description="Next 12 hours temperature trend">Temperature Trend</Header>}>
       <LineChart
         series={[
           {
             title: 'Temperature',
             type: 'line',
             data: chartData,
-            valueFormatter: (value) => `${Math.round(value)}${getUnitSymbol()}`,
+            valueFormatter: value => `${Math.round(value)}${getUnitSymbol()}`,
           },
         ]}
         xDomain={[chartData[0]?.x, chartData[chartData.length - 1]?.x]}
-        yDomain={[
-          Math.min(...chartData.map(d => d.y)) - 2,
-          Math.max(...chartData.map(d => d.y)) + 2,
-        ]}
+        yDomain={[Math.min(...chartData.map(d => d.y)) - 2, Math.max(...chartData.map(d => d.y)) + 2]}
         xTitle="Time"
         yTitle={`Temperature (${getUnitSymbol()})`}
         height={300}

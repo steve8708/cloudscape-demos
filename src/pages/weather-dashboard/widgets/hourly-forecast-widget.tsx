@@ -30,13 +30,7 @@ export function HourlyForecastWidget({ data }: HourlyForecastWidgetProps) {
   });
 
   return (
-    <Container
-      header={
-        <Header description="Next 8 hours detailed forecast">
-          Hourly Forecast
-        </Header>
-      }
-    >
+    <Container header={<Header description="Next 8 hours detailed forecast">Hourly Forecast</Header>}>
       <Table
         columnDefinitions={[
           {

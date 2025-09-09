@@ -24,12 +24,12 @@ export function WeatherDashboardMainInfo() {
       }
     >
       <p>
-        This weather dashboard displays real-time weather information and forecasts using the Open-Meteo API. 
-        It provides current conditions, hourly forecasts, and daily weather predictions for any location worldwide.
+        This weather dashboard displays real-time weather information and forecasts using the Open-Meteo API. It
+        provides current conditions, hourly forecasts, and daily weather predictions for any location worldwide.
       </p>
       <p>
-        The dashboard includes temperature trends, precipitation data, weather conditions, and interactive charts 
-        to help you monitor weather patterns effectively.
+        The dashboard includes temperature trends, precipitation data, weather conditions, and interactive charts to
+        help you monitor weather patterns effectively.
       </p>
     </HelpPanel>
   );

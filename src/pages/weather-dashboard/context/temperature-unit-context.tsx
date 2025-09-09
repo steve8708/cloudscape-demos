@@ -46,9 +46,5 @@ export function TemperatureUnitProvider({ children }: TemperatureUnitProviderPro
     getUnitSymbol,
   };
 
-  return (
-    <TemperatureUnitContext.Provider value={value}>
-      {children}
-    </TemperatureUnitContext.Provider>
-  );
+  return <TemperatureUnitContext.Provider value={value}>{children}</TemperatureUnitContext.Provider>;
 }

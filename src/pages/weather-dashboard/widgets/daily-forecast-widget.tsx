@@ -42,21 +42,17 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
   });
 
   return (
-    <Container
-      header={
-        <Header description="8-day weather forecast">
-          Daily Forecast
-        </Header>
-      }
-    >
+    <Container header={<Header description="8-day weather forecast">Daily Forecast</Header>}>
       <div className="daily-forecast-container">
         <div className="daily-forecast-grid">
-          {cardItems.map((item) => (
+          {cardItems.map(item => (
             <div key={item.id} className="daily-forecast-card">
               <SpaceBetween direction="vertical" size="s">
                 <div style={{ textAlign: 'center' }}>
                   <Box variant="h3">{item.dayName}</Box>
-                  <Box variant="small" color="text-body-secondary">{item.monthDay}</Box>
+                  <Box variant="small" color="text-body-secondary">
+                    {item.monthDay}
+                  </Box>
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
@@ -66,8 +62,14 @@ export function DailyForecastWidget({ data }: DailyForecastWidgetProps) {
 
                 <div style={{ textAlign: 'center' }}>
                   <Box fontSize="heading-m">
-                    <span style={{ fontWeight: 'bold' }}>{item.tempMax}{getUnitSymbol()}</span>
-                    <span style={{ color: '#687078', marginLeft: '8px' }}>{item.tempMin}{getUnitSymbol()}</span>
+                    <span style={{ fontWeight: 'bold' }}>
+                      {item.tempMax}
+                      {getUnitSymbol()}
+                    </span>
+                    <span style={{ color: '#687078', marginLeft: '8px' }}>
+                      {item.tempMin}
+                      {getUnitSymbol()}
+                    </span>
                   </Box>
                 </div>
 

@@ -22,17 +22,14 @@ export function CurrentWeatherWidget({ data, location }: CurrentWeatherWidgetPro
   const lastUpdated = new Date(data.time).toLocaleTimeString();
 
   return (
-    <Container
-      header={
-        <Header description={`Last updated: ${lastUpdated}`}>
-          Current Weather - {location.name}
-        </Header>
-      }
-    >
+    <Container header={<Header description={`Last updated: ${lastUpdated}`}>Current Weather - {location.name}</Header>}>
       <SpaceBetween size="l">
         <div style={{ textAlign: 'center' }}>
           <Box fontSize="heading-xl" fontWeight="bold" margin={{ bottom: 's' }}>
-            <span style={{ fontSize: '3rem' }}>{Math.round(convertTemperature(data.temperature))}{getUnitSymbol()}</span>
+            <span style={{ fontSize: '3rem' }}>
+              {Math.round(convertTemperature(data.temperature))}
+              {getUnitSymbol()}
+            </span>
           </Box>
           <Box fontSize="heading-m" color="text-body-secondary">
             <span style={{ fontSize: '2rem', marginRight: '8px' }}>{weatherInfo.icon}</span>

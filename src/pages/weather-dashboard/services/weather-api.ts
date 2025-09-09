@@ -80,7 +80,7 @@ export const WEATHER_CODES: Record<number, { description: string; icon: string }
 // Default location (New York City)
 export const DEFAULT_LOCATION: WeatherLocation = {
   latitude: 40.7128,
-  longitude: -74.0060,
+  longitude: -74.006,
   name: 'New York City',
 };
 
@@ -91,7 +91,10 @@ export class WeatherAPIService {
     const url = new URL(this.baseUrl);
     url.searchParams.set('latitude', location.latitude.toString());
     url.searchParams.set('longitude', location.longitude.toString());
-    url.searchParams.set('current', 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,relative_humidity_2m,surface_pressure,precipitation');
+    url.searchParams.set(
+      'current',
+      'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,relative_humidity_2m,surface_pressure,precipitation',
+    );
     url.searchParams.set('timezone', 'auto');
 
     const response = await fetch(url.toString());
@@ -140,7 +143,10 @@ export class WeatherAPIService {
     const url = new URL(this.baseUrl);
     url.searchParams.set('latitude', location.latitude.toString());
     url.searchParams.set('longitude', location.longitude.toString());
-    url.searchParams.set('daily', 'temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max,sunrise,sunset');
+    url.searchParams.set(
+      'daily',
+      'temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max,sunrise,sunset',
+    );
     url.searchParams.set('timezone', 'auto');
     url.searchParams.set('forecast_days', days.toString());
 

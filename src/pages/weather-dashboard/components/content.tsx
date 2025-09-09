@@ -37,7 +37,7 @@ export function Content() {
     };
 
     fetchWeatherData();
-    
+
     // Refresh data every 10 minutes
     const interval = setInterval(fetchWeatherData, 10 * 60 * 1000);
     return () => clearInterval(interval);

@@ -17,7 +17,24 @@ interface WindWidgetProps {
 }
 
 function getWindDirection(degrees: number): string {
-  const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  const directions = [
+    'N',
+    'NNE',
+    'NE',
+    'ENE',
+    'E',
+    'ESE',
+    'SE',
+    'SSE',
+    'S',
+    'SSW',
+    'SW',
+    'WSW',
+    'W',
+    'WNW',
+    'NW',
+    'NNW',
+  ];
   const index = Math.round(degrees / 22.5) % 16;
   return directions[index];
 }
@@ -33,22 +50,14 @@ export function WindWidget({ current, hourly }: WindWidgetProps) {
   const currentWindCategory = getWindSpeedCategory(current.windSpeed);
   const avgWindSpeed = hourly.windSpeed.slice(0, 12).reduce((a, b) => a + b, 0) / 12;
   const maxWindSpeed = Math.max(...hourly.windSpeed.slice(0, 12));
-  
+
   return (
-    <Container
-      header={
-        <Header description="Current wind conditions and 12-hour trend">
-          Wind Information
-        </Header>
-      }
-    >
+    <Container header={<Header description="Current wind conditions and 12-hour trend">Wind Information</Header>}>
       <SpaceBetween size="l">
         <ColumnLayout columns={2} variant="text-grid">
           <div>
             <Box variant="awsui-key-label">Current Speed</Box>
-            <Box fontSize="heading-s">
-              {Math.round(current.windSpeed)} km/h
-            </Box>
+            <Box fontSize="heading-s">{Math.round(current.windSpeed)} km/h</Box>
             <Box variant="small" color={currentWindCategory.color as any}>
               {currentWindCategory.category}
             </Box>
@@ -75,9 +84,7 @@ export function WindWidget({ current, hourly }: WindWidgetProps) {
           />
         </div>
 
-        <div style={{ transform: `rotate(${current.windDirection}deg)`, textAlign: 'center', fontSize: '2rem' }}>
-          ↑
-        </div>
+        <div style={{ transform: `rotate(${current.windDirection}deg)`, textAlign: 'center', fontSize: '2rem' }}>↑</div>
         <Box variant="small" textAlign="center" color="text-body-secondary">
           Wind direction indicator
         </Box>

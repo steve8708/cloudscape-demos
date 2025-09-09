@@ -21,20 +21,14 @@ export function PrecipitationWidget({ data }: PrecipitationWidgetProps) {
   const maxPrecipitation = Math.max(...data.precipitation.slice(0, 12));
 
   return (
-    <Container
-      header={
-        <Header description="Next 12 hours precipitation forecast">
-          Precipitation
-        </Header>
-      }
-    >
+    <Container header={<Header description="Next 12 hours precipitation forecast">Precipitation</Header>}>
       <BarChart
         series={[
           {
             title: 'Precipitation',
             type: 'bar',
             data: chartData,
-            valueFormatter: (value) => `${value}mm`,
+            valueFormatter: value => `${value}mm`,
           },
         ]}
         xTitle="Time"
