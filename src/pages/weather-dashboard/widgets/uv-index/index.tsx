@@ -27,7 +27,7 @@ function UVIndexWidget() {
           {uvLevel}
         </Box>
       </Box>
-      
+
       <ProgressBar
         value={(uvIndex / 11) * 100}
         variant="standalone"
