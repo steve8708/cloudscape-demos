@@ -32,8 +32,8 @@ export function WeatherMainInfo() {
         <div>
           <h3>Data sources</h3>
           <p>
-            Weather data is fetched from Open-Meteo API endpoints, including temperature, precipitation, wind speed,
-            and other meteorological information for various locations.
+            Weather data is fetched from Open-Meteo API endpoints, including temperature, precipitation, wind speed, and
+            other meteorological information for various locations.
           </p>
         </div>
       </SpaceBetween>
