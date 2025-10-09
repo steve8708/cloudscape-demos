@@ -74,7 +74,9 @@ export function WeatherWidget({ city, data }: WeatherWidgetProps) {
           </div>
           <div>
             <Box variant="awsui-key-label">Condition</Box>
-            <Box fontSize="heading-m">{data.weatherCode === 0 ? 'Clear' : data.weatherCode < 50 ? 'Cloudy' : 'Rainy'}</Box>
+            <Box fontSize="heading-m">
+              {data.weatherCode === 0 ? 'Clear' : data.weatherCode < 50 ? 'Cloudy' : 'Rainy'}
+            </Box>
           </div>
         </ColumnLayout>
       </SpaceBetween>
