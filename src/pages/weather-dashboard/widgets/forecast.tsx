@@ -28,9 +28,7 @@ export function Forecast() {
           sections: [
             {
               id: 'icon',
-              content: item => (
-                <div style={{ textAlign: 'center', fontSize: '48px' }}>{item.icon}</div>
-              ),
+              content: item => <div style={{ textAlign: 'center', fontSize: '48px' }}>{item.icon}</div>,
             },
             {
               id: 'condition',
