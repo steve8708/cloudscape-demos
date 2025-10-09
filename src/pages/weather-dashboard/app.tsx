@@ -9,7 +9,8 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { Breadcrumbs, HelpPanelProvider, Notifications } from '../commons';
 import { CustomAppLayout } from '../commons/common-components';
 import { WeatherContent } from './components/content';
-import { WeatherHeader, WeatherMainInfo } from './components/header';
+import { WeatherHeader } from './components/header';
+import { WeatherMainInfo } from './components/help-info';
 import { WeatherSideNavigation } from './components/side-navigation';
 
 import '@cloudscape-design/global-styles/dark-mode-utils.css';
