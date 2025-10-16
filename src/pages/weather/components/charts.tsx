@@ -149,7 +149,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
           i18nStrings={{
             ...commonChartProps.i18nStrings,
             xTickFormatter: dateTimeFormatter,
-            yTickFormatter: (value) => `${value}°C`,
+            yTickFormatter: value => `${value}°C`,
           }}
         />
       </Container>
@@ -174,7 +174,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
             i18nStrings={{
               ...commonChartProps.i18nStrings,
               xTickFormatter: dateTimeFormatter,
-              yTickFormatter: (value) => `${value} mm`,
+              yTickFormatter: value => `${value} mm`,
             }}
           />
         </Container>
@@ -198,7 +198,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
             i18nStrings={{
               ...commonChartProps.i18nStrings,
               xTickFormatter: dateTimeFormatter,
-              yTickFormatter: (value) => `${value} km/h`,
+              yTickFormatter: value => `${value} km/h`,
             }}
           />
         </Container>
@@ -224,7 +224,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
             i18nStrings={{
               ...commonChartProps.i18nStrings,
               xTickFormatter: dateTimeFormatter,
-              yTickFormatter: (value) => `${value}%`,
+              yTickFormatter: value => `${value}%`,
             }}
           />
         </Container>
@@ -253,7 +253,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
             ariaLabel="7-day maximum temperature forecast"
             i18nStrings={{
               ...commonChartProps.i18nStrings,
-              yTickFormatter: (value) => `${value}°C`,
+              yTickFormatter: value => `${value}°C`,
             }}
           />
         </Container>
@@ -283,7 +283,7 @@ export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
           ariaLabel="7-day precipitation forecast"
           i18nStrings={{
             ...commonChartProps.i18nStrings,
-            yTickFormatter: (value) => `${value} mm`,
+            yTickFormatter: value => `${value} mm`,
           }}
         />
       </Container>

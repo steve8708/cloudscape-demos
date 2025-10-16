@@ -71,10 +71,10 @@ export function App() {
     setSearchLoading(true);
     try {
       const response = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10&language=en&format=json`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10&language=en&format=json`,
       );
       const data = await response.json();
-      
+
       if (data.results) {
         setLocations(
           data.results.map((item: any) => ({
@@ -84,7 +84,7 @@ export function App() {
             longitude: item.longitude,
             country: item.country,
             admin1: item.admin1,
-          }))
+          })),
         );
       } else {
         setLocations([]);
@@ -100,18 +100,18 @@ export function App() {
   const fetchWeatherData = async (location: Location) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,weathercode,windspeed_10m,winddirection_10m,relativehumidity_2m&hourly=temperature_2m,precipitation,windspeed_10m,relativehumidity_2m,pressure_msl&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,sunrise,sunset&timezone=auto&forecast_days=7`
+        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,weathercode,windspeed_10m,winddirection_10m,relativehumidity_2m&hourly=temperature_2m,precipitation,windspeed_10m,relativehumidity_2m,pressure_msl&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,sunrise,sunset&timezone=auto&forecast_days=7`,
       );
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch weather data');
       }
-      
+
       const data = await response.json();
-      
+
       setWeatherData({
         current: {
           temperature: data.current.temperature_2m,
@@ -163,8 +163,8 @@ export function App() {
               <Autosuggest
                 onChange={({ detail }) => setSearchValue(detail.value)}
                 onSelect={({ detail }) => {
-                  const location = locations.find(loc => 
-                    `${loc.name}, ${loc.admin1 ? loc.admin1 + ', ' : ''}${loc.country}` === detail.value
+                  const location = locations.find(
+                    loc => `${loc.name}, ${loc.admin1 ? loc.admin1 + ', ' : ''}${loc.country}` === detail.value,
                   );
                   if (location) {
                     setSelectedLocation(location);
@@ -184,7 +184,8 @@ export function App() {
 
               {selectedLocation && (
                 <Header variant="h2">
-                  {selectedLocation.name}, {selectedLocation.admin1 ? `${selectedLocation.admin1}, ` : ''}{selectedLocation.country}
+                  {selectedLocation.name}, {selectedLocation.admin1 ? `${selectedLocation.admin1}, ` : ''}
+                  {selectedLocation.country}
                 </Header>
               )}
             </SpaceBetween>
@@ -211,11 +212,8 @@ export function App() {
                 dailyForecast={weatherData.daily}
                 location={selectedLocation}
               />
-              
-              <WeatherCharts
-                hourlyData={weatherData.hourly}
-                dailyData={weatherData.daily}
-              />
+
+              <WeatherCharts hourlyData={weatherData.hourly} dailyData={weatherData.daily} />
             </>
           )}
 

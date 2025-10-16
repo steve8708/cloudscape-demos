@@ -59,9 +59,7 @@ export function WeatherForecast({ currentWeather, dailyForecast, location }: Wea
       >
         <ColumnLayout columns={5} variant="text-grid">
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '64px', margin: '10px 0' }}>
-              {getWeatherIcon(currentWeather.weatherCode)}
-            </div>
+            <div style={{ fontSize: '64px', margin: '10px 0' }}>{getWeatherIcon(currentWeather.weatherCode)}</div>
             <Box variant="h1" fontSize="display-l">
               {formatTemperature(currentWeather.temperature)}
             </Box>
@@ -150,20 +148,40 @@ export function WeatherForecast({ currentWeather, dailyForecast, location }: Wea
                 content: item => (
                   <SpaceBetween size="xxs">
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Box variant="small" color="text-body-secondary">💧 Precipitation</Box>
+                      <Box variant="small" color="text-body-secondary">
+                        💧 Precipitation
+                      </Box>
                       <Box variant="small">{item.precipitation.toFixed(1)} mm</Box>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Box variant="small" color="text-body-secondary">💨 Wind</Box>
+                      <Box variant="small" color="text-body-secondary">
+                        💨 Wind
+                      </Box>
                       <Box variant="small">{item.windSpeed.toFixed(1)} km/h</Box>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Box variant="small" color="text-body-secondary">🌅 Sunrise</Box>
-                      <Box variant="small">{new Date(item.sunrise).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</Box>
+                      <Box variant="small" color="text-body-secondary">
+                        🌅 Sunrise
+                      </Box>
+                      <Box variant="small">
+                        {new Date(item.sunrise).toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false,
+                        })}
+                      </Box>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Box variant="small" color="text-body-secondary">🌇 Sunset</Box>
-                      <Box variant="small">{new Date(item.sunset).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</Box>
+                      <Box variant="small" color="text-body-secondary">
+                        🌇 Sunset
+                      </Box>
+                      <Box variant="small">
+                        {new Date(item.sunset).toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false,
+                        })}
+                      </Box>
                     </div>
                   </SpaceBetween>
                 ),
