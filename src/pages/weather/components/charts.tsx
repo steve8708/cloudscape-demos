@@ -8,7 +8,8 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import LineChart from '@cloudscape-design/components/line-chart';
 import BarChart from '@cloudscape-design/components/bar-chart';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
-import Box from '@cloudscape-design/components/box';
+
+import { commonChartProps } from '../chart-commons';
 
 interface WeatherChartsProps {
   hourlyData: {
@@ -28,28 +29,6 @@ interface WeatherChartsProps {
   };
 }
 
-const commonChartProps = {
-  loadingText: 'Loading chart',
-  errorText: 'Error loading data.',
-  recoveryText: 'Retry',
-  empty: (
-    <Box textAlign="center" color="inherit">
-      <b>No data available</b>
-      <Box variant="p" color="inherit">
-        There is no data available
-      </Box>
-    </Box>
-  ),
-  i18nStrings: {
-    filterLabel: 'Filter displayed data',
-    filterPlaceholder: 'Filter data',
-    filterSelectedAriaLabel: 'selected',
-    legendAriaLabel: 'Legend',
-    chartAriaRoleDescription: 'chart',
-    xAxisAriaRoleDescription: 'x axis',
-    yAxisAriaRoleDescription: 'y axis',
-  },
-};
 
 export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
   const hourlyTemperatureSeries = useMemo(() => {
