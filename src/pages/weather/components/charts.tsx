@@ -29,7 +29,6 @@ interface WeatherChartsProps {
   };
 }
 
-
 export function WeatherCharts({ hourlyData, dailyData }: WeatherChartsProps) {
   const hourlyTemperatureSeries = useMemo(() => {
     const next24Hours = hourlyData.time.slice(0, 24);
