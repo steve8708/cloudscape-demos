@@ -1,0 +1,7 @@
+When adding new pages make sure to link to them from the homepage in src/pages/index.tsx
+
+When using APIs like open meteo, be sure to do a web search first to learn exactly how to use it
+
+When generating dashboards, e.g. from open meteo, make sure to include some interactive charts
+
+If I link you to a linear ticket use the Linear MCP to pull the contents of it
