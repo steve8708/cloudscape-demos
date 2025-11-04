@@ -263,7 +263,7 @@ export default function Home() {
                 >
                   <SpaceBetween size="m">
                     <Header variant="h1" description="Production-grade cloud application patterns and interfaces">
-                      Dashboard Hub
+                      Welcome back Sid
                     </Header>
                     <Box variant="p" color="text-body-secondary">
                       Access powerful, enterprise-ready dashboards and tools designed for modern cloud operations.
