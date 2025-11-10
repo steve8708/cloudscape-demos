@@ -15,10 +15,16 @@ export async function searchCities(query: string): Promise<GeocodingResult[]> {
   }
 
   try {
-    const response = await fetch(`${GEOCODING_API}?name=${encodeURIComponent(query)}&count=10&language=en&format=json`);
+    const url = `${GEOCODING_API}?name=${encodeURIComponent(query)}&count=10&language=en&format=json`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch cities');
+      throw new Error(`Failed to fetch cities: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -45,10 +51,16 @@ export async function getWeatherData(latitude: number, longitude: number): Promi
       forecast_days: '7',
     });
 
-    const response = await fetch(`${WEATHER_API}?${params.toString()}`);
+    const url = `${WEATHER_API}?${params.toString()}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch weather data');
+      throw new Error(`Failed to fetch weather data: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
