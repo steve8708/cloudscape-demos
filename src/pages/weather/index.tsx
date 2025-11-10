@@ -101,9 +101,11 @@ export default function WeatherDashboard() {
         country: 'United States',
         admin1: 'California',
       };
-      handleLocationSelect(defaultLocation);
+      setSelectedLocation(defaultLocation);
+      setSearchValue(formatLocationName(defaultLocation));
+      loadWeatherData(defaultLocation);
     }
-  }, [handleLocationSelect]);
+  }, []);
 
   const currentWeather = weatherData
     ? {
