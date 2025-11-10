@@ -16,7 +16,7 @@ export async function searchCities(query: string): Promise<GeocodingResult[]> {
 
   try {
     const response = await fetch(`${GEOCODING_API}?name=${encodeURIComponent(query)}&count=10&language=en&format=json`);
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch cities');
     }
@@ -37,14 +37,16 @@ export async function getWeatherData(latitude: number, longitude: number): Promi
     const params = new URLSearchParams({
       latitude: latitude.toString(),
       longitude: longitude.toString(),
-      hourly: 'temperature_2m,precipitation,weathercode,windspeed_10m,winddirection_10m,relativehumidity_2m,cloudcover,visibility,pressure_msl',
-      daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset',
+      hourly:
+        'temperature_2m,precipitation,weathercode,windspeed_10m,winddirection_10m,relativehumidity_2m,cloudcover,visibility,pressure_msl',
+      daily:
+        'temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset',
       timezone: 'auto',
       forecast_days: '7',
     });
 
     const response = await fetch(`${WEATHER_API}?${params.toString()}`);
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch weather data');
     }

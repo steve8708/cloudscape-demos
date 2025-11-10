@@ -33,8 +33,8 @@ export default function WindChart({ hourlyData }: WindChartProps) {
       xDomain={[new Date(next24Hours[0]).getTime(), new Date(next24Hours[next24Hours.length - 1]).getTime()]}
       yDomain={[0, Math.max(...windSpeeds) + 5]}
       i18nStrings={{
-        xTickFormatter: (value) => formatTime(new Date(value as number).toISOString()),
-        yTickFormatter: (value) => `${Math.round(value as number)} km/h`,
+        xTickFormatter: value => formatTime(new Date(value as number).toISOString()),
+        yTickFormatter: value => `${Math.round(value as number)} km/h`,
       }}
       ariaLabel="24-hour wind speed forecast"
       height={300}

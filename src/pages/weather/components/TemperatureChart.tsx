@@ -33,8 +33,8 @@ export default function TemperatureChart({ hourlyData }: TemperatureChartProps) 
       xDomain={[new Date(next24Hours[0]).getTime(), new Date(next24Hours[next24Hours.length - 1]).getTime()]}
       yDomain={[Math.min(...temperatures) - 2, Math.max(...temperatures) + 2]}
       i18nStrings={{
-        xTickFormatter: (value) => formatTime(new Date(value as number).toISOString()),
-        yTickFormatter: (value) => `${Math.round(value as number)}°C`,
+        xTickFormatter: value => formatTime(new Date(value as number).toISOString()),
+        yTickFormatter: value => `${Math.round(value as number)}°C`,
       }}
       ariaLabel="24-hour temperature forecast"
       height={300}

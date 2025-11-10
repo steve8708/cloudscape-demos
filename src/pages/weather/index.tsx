@@ -16,7 +16,13 @@ import Button from '@cloudscape-design/components/button';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import { searchCities, getWeatherData } from './api';
 import { GeocodingResult, WeatherData } from './types';
-import { formatLocationName, formatTemperature, getWeatherIcon, getWeatherDescription, getWindDirection } from './utils';
+import {
+  formatLocationName,
+  formatTemperature,
+  getWeatherIcon,
+  getWeatherDescription,
+  getWindDirection,
+} from './utils';
 import TemperatureChart from './components/TemperatureChart';
 import PrecipitationChart from './components/PrecipitationChart';
 import WindChart from './components/WindChart';
@@ -51,23 +57,26 @@ export default function WeatherDashboard() {
   const loadWeatherData = useCallback(async (location: GeocodingResult) => {
     setLoading(true);
     setError(null);
-    
+
     const data = await getWeatherData(location.latitude, location.longitude);
-    
+
     if (data) {
       setWeatherData(data);
     } else {
       setError('Failed to load weather data. Please try again.');
     }
-    
+
     setLoading(false);
   }, []);
 
-  const handleLocationSelect = useCallback((location: GeocodingResult) => {
-    setSelectedLocation(location);
-    setSearchValue(formatLocationName(location));
-    loadWeatherData(location);
-  }, [loadWeatherData]);
+  const handleLocationSelect = useCallback(
+    (location: GeocodingResult) => {
+      setSelectedLocation(location);
+      setSearchValue(formatLocationName(location));
+      loadWeatherData(location);
+    },
+    [loadWeatherData],
+  );
 
   // Load default location (San Francisco) on mount
   useEffect(() => {
@@ -194,7 +203,8 @@ export default function WeatherDashboard() {
                           <div>
                             <Box variant="awsui-key-label">Wind</Box>
                             <Box variant="awsui-value-large">
-                              {Math.round(currentWeather.windSpeed)} km/h {getWindDirection(currentWeather.windDirection)}
+                              {Math.round(currentWeather.windSpeed)} km/h{' '}
+                              {getWindDirection(currentWeather.windDirection)}
                             </Box>
                           </div>
                           <div>

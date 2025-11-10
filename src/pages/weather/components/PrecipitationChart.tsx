@@ -27,7 +27,7 @@ export default function PrecipitationChart({ dailyData }: PrecipitationChartProp
     <BarChart
       series={series}
       i18nStrings={{
-        yTickFormatter: (value) => `${value} mm`,
+        yTickFormatter: value => `${value} mm`,
       }}
       ariaLabel="7-day precipitation forecast"
       height={300}

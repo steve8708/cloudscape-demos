@@ -28,7 +28,7 @@ export default function ForecastCards({ dailyData }: ForecastCardsProps) {
   return (
     <Cards
       cardDefinition={{
-        header: (item) => (
+        header: item => (
           <Box fontSize="heading-m" fontWeight="bold">
             {item.formattedDate}
           </Box>
@@ -36,7 +36,7 @@ export default function ForecastCards({ dailyData }: ForecastCardsProps) {
         sections: [
           {
             id: 'weather',
-            content: (item) => (
+            content: item => (
               <SpaceBetween size="xs" direction="vertical">
                 <Box textAlign="center" fontSize="display-l" padding={{ vertical: 's' }}>
                   {getWeatherIcon(item.weatherCode)}
@@ -49,7 +49,7 @@ export default function ForecastCards({ dailyData }: ForecastCardsProps) {
           },
           {
             id: 'temperature',
-            content: (item) => (
+            content: item => (
               <SpaceBetween size="xs" direction="vertical">
                 <Box>
                   <strong>High:</strong> {formatTemperature(item.maxTemp)}
@@ -62,7 +62,7 @@ export default function ForecastCards({ dailyData }: ForecastCardsProps) {
           },
           {
             id: 'details',
-            content: (item) => (
+            content: item => (
               <SpaceBetween size="xs" direction="vertical">
                 <Box>
                   <strong>Rain:</strong> {item.precipitation.toFixed(1)} mm
