@@ -42,10 +42,7 @@ export default function WeatherDataDisplay({ weatherData, selectedLocation }: We
       >
         <div className="current-weather">
           <Grid
-            gridDefinition={[
-              { colspan: { default: 12, xs: 12, s: 4 } },
-              { colspan: { default: 12, xs: 12, s: 8 } },
-            ]}
+            gridDefinition={[{ colspan: { default: 12, xs: 12, s: 4 } }, { colspan: { default: 12, xs: 12, s: 8 } }]}
           >
             <div className="current-weather-main">
               <Box fontSize="display-l" textAlign="center" padding={{ vertical: 'm' }}>

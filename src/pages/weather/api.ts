@@ -19,7 +19,7 @@ export async function searchCities(query: string): Promise<GeocodingResult[]> {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -55,7 +55,7 @@ export async function getWeatherData(latitude: number, longitude: number): Promi
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
