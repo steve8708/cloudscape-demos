@@ -37,15 +37,22 @@ export default function WeatherDashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchLoading, setSearchLoading] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Debounced city search
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (searchValue.trim().length >= 2) {
         setSearchLoading(true);
-        const results = await searchCities(searchValue);
-        setSearchOptions(results);
-        setSearchLoading(false);
+        try {
+          const results = await searchCities(searchValue);
+          setSearchOptions(results);
+        } catch (err) {
+          console.error('Error during city search:', err);
+          setSearchOptions([]);
+        } finally {
+          setSearchLoading(false);
+        }
       } else {
         setSearchOptions([]);
       }
@@ -58,15 +65,19 @@ export default function WeatherDashboard() {
     setLoading(true);
     setError(null);
 
-    const data = await getWeatherData(location.latitude, location.longitude);
-
-    if (data) {
-      setWeatherData(data);
-    } else {
-      setError('Failed to load weather data. Please try again.');
+    try {
+      const data = await getWeatherData(location.latitude, location.longitude);
+      if (data) {
+        setWeatherData(data);
+      } else {
+        setError('Failed to load weather data. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error loading weather data:', err);
+      setError('An error occurred while loading weather data.');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }, []);
 
   const handleLocationSelect = useCallback(
@@ -78,18 +89,21 @@ export default function WeatherDashboard() {
     [loadWeatherData],
   );
 
-  // Load default location (San Francisco) on mount
+  // Load default location (San Francisco) on mount only once
   useEffect(() => {
-    const defaultLocation: GeocodingResult = {
-      id: 5391959,
-      name: 'San Francisco',
-      latitude: 37.7749,
-      longitude: -122.4194,
-      country: 'United States',
-      admin1: 'California',
-    };
-    handleLocationSelect(defaultLocation);
-  }, [handleLocationSelect]);
+    if (!isInitialized) {
+      const defaultLocation: GeocodingResult = {
+        id: 5391959,
+        name: 'San Francisco',
+        latitude: 37.7749,
+        longitude: -122.4194,
+        country: 'United States',
+        admin1: 'California',
+      };
+      handleLocationSelect(defaultLocation);
+      setIsInitialized(true);
+    }
+  }, [isInitialized, handleLocationSelect]);
 
   const currentWeather = weatherData
     ? {
