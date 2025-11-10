@@ -208,6 +208,12 @@ const dashboards = [
     description: 'Amazon S3 data upload and storage.',
     category: 'Integration',
   },
+  {
+    route: '/weather',
+    title: 'Weather Dashboard',
+    description: 'Real-time weather forecasts with interactive charts and 7-day outlook.',
+    category: 'Dashboards',
+  },
 ];
 
 // Get unique categories

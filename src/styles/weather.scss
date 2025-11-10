@@ -1,0 +1,52 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
+
+.current-weather {
+  padding: 1rem 0;
+
+  &-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+}
+
+// Forecast cards layout
+.awsui-cards-list {
+  display: flex;
+  flex-direction: row;
+}
+
+// Weather card styling
+.weather-card {
+  border-radius: 8px;
+  padding: 1rem;
+  background: var(--color-background-container-content);
+
+  &-icon {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  &-temp {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &-description {
+    text-align: center;
+    color: var(--color-text-body-secondary);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .current-weather {
+    &-main {
+      margin-bottom: 1rem;
+    }
+  }
+}
