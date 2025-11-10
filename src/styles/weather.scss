@@ -13,12 +13,18 @@
   }
 }
 
+// Forecast cards layout
+.awsui-cards-list {
+  display: flex;
+  flex-direction: row;
+}
+
 // Weather card styling
 .weather-card {
   border-radius: 8px;
   padding: 1rem;
   background: var(--color-background-container-content);
-  
+
   &-icon {
     font-size: 3rem;
     text-align: center;
