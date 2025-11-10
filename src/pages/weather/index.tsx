@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import AppLayout from '@cloudscape-design/components/app-layout';
 import ContentLayout from '@cloudscape-design/components/content-layout';
 import Header from '@cloudscape-design/components/header';
@@ -37,7 +37,7 @@ export default function WeatherDashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitializedRef = useRef(false);
 
   // Debounced city search
   useEffect(() => {
@@ -91,7 +91,8 @@ export default function WeatherDashboard() {
 
   // Load default location (San Francisco) on mount only once
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true;
       const defaultLocation: GeocodingResult = {
         id: 5391959,
         name: 'San Francisco',
@@ -101,9 +102,8 @@ export default function WeatherDashboard() {
         admin1: 'California',
       };
       handleLocationSelect(defaultLocation);
-      setIsInitialized(true);
     }
-  }, [isInitialized, handleLocationSelect]);
+  }, [handleLocationSelect]);
 
   const currentWeather = weatherData
     ? {
