@@ -36,8 +36,7 @@ export async function fetchWeatherData(latitude: number, longitude: number, time
       'precipitation',
       'weathercode',
       'windspeed_10m',
-      'humidity_2m',
-      'pressure_msl',
+      'relative_humidity_2m',
       'uv_index',
     ].join(','),
     daily: [
