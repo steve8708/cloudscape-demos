@@ -4,14 +4,11 @@ import React from 'react';
 
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
-import Cards from '@cloudscape-design/components/cards';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import Icon from '@cloudscape-design/components/icon';
-import ProgressBar from '@cloudscape-design/components/progress-bar';
 
 import { WeatherData } from '../types';
-import { getWeatherInfo, formatTemperature, formatPrecipitation } from '../weather-utils';
+import { getWeatherEmoji, getWeatherInfo, formatTemperature, formatPrecipitation } from '../weather-utils';
 
 interface WeeklyForecastProps {
   daily: WeatherData['daily'];
@@ -50,98 +47,83 @@ export function WeeklyForecast({ daily, timezone }: WeeklyForecastProps) {
 
   return (
     <Container header={<Header variant="h2">7-Day Forecast</Header>}>
-      <Cards
-        cardDefinition={{
-          header: item => {
-            const weatherInfo = getWeatherInfo(item.weatherCode);
-            return (
-              <SpaceBetween size="xs" direction="horizontal" alignItems="center">
-                <Icon name={weatherInfo.icon} size="medium" />
-                <Box fontWeight="bold">{item.dayName}</Box>
-              </SpaceBetween>
-            );
-          },
-          sections: [
-            {
-              id: 'date',
-              content: item => (
-                <Box variant="small" color="text-body-secondary">
-                  {new Date(item.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    timeZone: timezone,
-                  })}
-                </Box>
-              ),
-            },
-            {
-              id: 'conditions',
-              content: item => {
-                const weatherInfo = getWeatherInfo(item.weatherCode);
-                return (
-                  <Box variant="small" color="text-body-secondary">
-                    {weatherInfo.description}
-                  </Box>
-                );
-              },
-            },
-            {
-              id: 'temperature',
-              header: 'Temperature',
-              content: item => (
-                <Box>
-                  <Box display="inline" fontWeight="bold">
-                    {formatTemperature(item.tempMax)}
-                  </Box>
-                  {' / '}
-                  <Box display="inline" color="text-body-secondary">
-                    {formatTemperature(item.tempMin)}
-                  </Box>
-                </Box>
-              ),
-            },
-            {
-              id: 'precipitation',
-              header: 'Precipitation',
-              content: item => (
-                <SpaceBetween size="xs">
-                  <Box>{formatPrecipitation(item.precipitation)}</Box>
-                  <ProgressBar
-                    value={item.precipitationProbability}
-                    variant="standalone"
-                    label={`${Math.round(item.precipitationProbability)}% chance`}
-                    description="Probability"
-                    additionalInfo=""
-                  />
-                </SpaceBetween>
-              ),
-            },
-            {
-              id: 'details',
-              header: 'Details',
-              content: item => (
-                <SpaceBetween size="xxs">
-                  <Box variant="small">
-                    Wind: <strong>{Math.round(item.windSpeed)} km/h</strong>
-                  </Box>
-                  <Box variant="small">
-                    UV Index: <strong>{Math.round(item.uvIndex)}</strong>
-                  </Box>
-                </SpaceBetween>
-              ),
-            },
-          ],
+      <div
+        style={{
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          paddingBottom: '12px',
+          marginRight: '-16px',
+          marginLeft: '-16px',
+          paddingRight: '16px',
+          paddingLeft: '16px',
         }}
-        cardsPerRow={[
-          { cards: 1, minWidth: 0 },
-          { cards: 2, minWidth: 500 },
-          { cards: 3, minWidth: 800 },
-          { cards: 4, minWidth: 1000 },
-          { cards: 7, minWidth: 1400 },
-        ]}
-        items={forecast}
-        trackBy="date"
-      />
+      >
+        <div
+          style={{
+            display: 'flex',
+            gap: '12px',
+            minWidth: 'min-content',
+          }}
+        >
+          {forecast.map(day => {
+            const weatherInfo = getWeatherInfo(day.weatherCode);
+            const weatherEmoji = getWeatherEmoji(day.weatherCode);
+            const dateObj = new Date(day.date);
+            const dateStr = dateObj.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              timeZone: timezone,
+            });
+
+            return (
+              <div
+                key={day.date}
+                style={{
+                  flexShrink: 0,
+                  width: '160px',
+                  padding: '16px',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                }}
+              >
+                <Box fontWeight="bold">{day.dayName}</Box>
+                <Box variant="small" color="text-body-secondary">
+                  {dateStr}
+                </Box>
+
+                <div style={{ fontSize: '48px', lineHeight: '1' }}>{weatherEmoji}</div>
+
+                <Box variant="small" color="text-body-secondary">
+                  {weatherInfo.description}
+                </Box>
+
+                <SpaceBetween size="xxs">
+                  <Box>
+                    <Box display="inline" fontWeight="bold">
+                      {Math.round(day.tempMax)}°
+                    </Box>
+                    <Box display="inline" color="text-body-secondary" margin={{ left: 'xs' }}>
+                      {Math.round(day.tempMin)}°
+                    </Box>
+                  </Box>
+                </SpaceBetween>
+
+                <Box variant="small">
+                  💧 {Math.round(day.precipitationProbability)}%
+                </Box>
+
+                <Box variant="small">
+                  💨 {Math.round(day.windSpeed)} km/h
+                </Box>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </Container>
   );
 }
