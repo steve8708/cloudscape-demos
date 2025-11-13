@@ -156,7 +156,23 @@ export function App() {
             </Container>
 
             {error && (
-              <Alert type="error" dismissible onDismiss={() => setError(null)}>
+              <Alert
+                type="error"
+                dismissible
+                onDismiss={() => setError(null)}
+                action={
+                  selectedLocation ? (
+                    <Button
+                      onClick={() => {
+                        setError(null);
+                        handleLocationSelect(selectedLocation);
+                      }}
+                    >
+                      Retry
+                    </Button>
+                  ) : undefined
+                }
+              >
                 {error}
               </Alert>
             )}
