@@ -202,7 +202,11 @@ export function App() {
 
                 <Grid gridDefinition={[{ colspan: { default: 12, s: 6 } }, { colspan: { default: 12, s: 6 } }]}>
                   <WindChart hourly={weatherData.hourly} timezone={weatherData.timezone} />
-                  <HumidityChart hourly={weatherData.hourly} daily={weatherData.daily} timezone={weatherData.timezone} />
+                  <HumidityChart
+                    hourly={weatherData.hourly}
+                    daily={weatherData.daily}
+                    timezone={weatherData.timezone}
+                  />
                 </Grid>
               </>
             )}

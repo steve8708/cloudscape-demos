@@ -112,13 +112,9 @@ export function WeeklyForecast({ daily, timezone }: WeeklyForecastProps) {
                   </Box>
                 </SpaceBetween>
 
-                <Box variant="small">
-                  💧 {Math.round(day.precipitationProbability)}%
-                </Box>
+                <Box variant="small">💧 {Math.round(day.precipitationProbability)}%</Box>
 
-                <Box variant="small">
-                  💨 {Math.round(day.windSpeed)} km/h
-                </Box>
+                <Box variant="small">💨 {Math.round(day.windSpeed)} km/h</Box>
               </div>
             );
           })}
