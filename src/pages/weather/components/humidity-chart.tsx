@@ -19,7 +19,7 @@ export function HumidityChart({ hourly, daily, timezone }: HumidityChartProps) {
   // Get next 48 hours of data
   const humidityData = hourly.time.slice(0, 48).map((time, index) => ({
     x: new Date(time),
-    y: hourly.humidity_2m[index],
+    y: hourly.relative_humidity_2m[index],
   }));
 
   const uvData = hourly.time.slice(0, 48).map((time, index) => ({
