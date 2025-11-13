@@ -54,17 +54,24 @@ export async function fetchWeatherData(latitude: number, longitude: number, time
     timezone: timezone || 'auto',
   });
 
+  const url = `${WEATHER_API}?${params.toString()}`;
+  console.log('Fetching weather from:', url);
+
   try {
-    const response = await fetch(`${WEATHER_API}?${params.toString()}`);
+    const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error('Failed to fetch weather data');
+      const errorText = await response.text();
+      console.error('Weather API error response:', response.status, errorText);
+      throw new Error(`Weather API returned ${response.status}: ${errorText}`);
     }
 
     const data: WeatherData = await response.json();
+    console.log('Weather data received:', data);
     return data;
   } catch (error) {
-    console.error('Error fetching weather data:', error);
-    throw error;
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error fetching weather data:', errorMessage);
+    throw new Error(`Failed to fetch weather data: ${errorMessage}`);
   }
 }
