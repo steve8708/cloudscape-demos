@@ -32,8 +32,7 @@ export interface WeatherData {
     precipitation: number[];
     weathercode: number[];
     windspeed_10m: number[];
-    humidity_2m: number[];
-    pressure_msl: number[];
+    relative_humidity_2m: number[];
     uv_index: number[];
   };
   daily: {
