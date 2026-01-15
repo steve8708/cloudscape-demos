@@ -46,6 +46,12 @@ const dashboards = [
     category: 'Dashboards',
   },
   {
+    route: '/network-admin-dashboard',
+    title: 'Network Administration Dashboard',
+    description: 'Network traffic, credit usage, and device management dashboard.',
+    category: 'Dashboards',
+  },
+  {
     route: '/delete-one-click',
     title: 'Quick Delete',
     description: 'Streamlined resource deletion workflow.',
