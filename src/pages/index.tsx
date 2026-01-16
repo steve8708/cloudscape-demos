@@ -46,6 +46,12 @@ const dashboards = [
     category: 'Dashboards',
   },
   {
+    route: '/weather-dashboard',
+    title: 'Weather Dashboard',
+    description: 'Real-time weather dashboard powered by Open-Meteo API.',
+    category: 'Dashboards',
+  },
+  {
     route: '/delete-one-click',
     title: 'Quick Delete',
     description: 'Streamlined resource deletion workflow.',
