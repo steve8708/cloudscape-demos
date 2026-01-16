@@ -34,6 +34,12 @@ const dashboards = [
     category: 'Applications',
   },
   {
+    route: '/weather',
+    title: 'Weather Dashboard',
+    description: 'Weather forecast powered by Open Meteo API.',
+    category: 'Dashboards',
+  },
+  {
     route: '/configurable-dashboard',
     title: 'Configurable Dashboard',
     description: 'Customizable dashboard with dynamic widget management.',
